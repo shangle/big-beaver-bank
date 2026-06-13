@@ -45,6 +45,26 @@ const CATEGORY_COLORS = {
   "Equipment": "#7c2d12"     // Rust
 };
 
+// Default payroll roster
+const defaultRoster = [
+  { name: "Dwight Schrute", routing: "021000021", account: "948201", salary: 4500.00 },
+  { name: "Jim Halpert", routing: "021000021", account: "928401", salary: 4200.00 },
+  { name: "Pam Beesly", routing: "021000021", account: "882019", salary: 3800.00 }
+];
+
+// Default ticketing system inbox
+const defaultTickets = [
+  { id: "TKT-88491", subject: "eStatement Audits", dept: "Treasury", messages: [
+    { sender: "System", text: "Ticket opened automatically for eStatement Audits." },
+    { sender: "Staff", text: "Your corporate account eStatements are ready for download. Please verify your balance ledger." }
+  ]},
+  { id: "TKT-99120", subject: "MFA Authentication", dept: "Fraud", messages: [
+    { sender: "System", text: "Ticket opened by user." },
+    { sender: "User", text: "I need to confirm if my MFA settings are active." },
+    { sender: "Staff", text: "MFA triggers have been enabled for large ACH wires and payroll batches. Security confirmed." }
+  ]}
+];
+
 document.addEventListener('DOMContentLoaded', () => {
   let currentUser = localStorage.getItem('bbb_active_session');
 
@@ -779,11 +799,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- BUSINESS DIRECT DEPOSIT / NACHA GENERATOR ---
-  const defaultRoster = [
-    { name: "Dwight Schrute", routing: "021000021", account: "948201", salary: 4500.00 },
-    { name: "Jim Halpert", routing: "021000021", account: "928401", salary: 4200.00 },
-    { name: "Pam Beesly", routing: "021000021", account: "882019", salary: 3800.00 }
-  ];
 
   function setupPayrollRoster(username) {
     if (!payrollRosterBody) return;
@@ -1023,17 +1038,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- SECURE MESSAGING DESK (TICKETING INBOX) ---
-  const defaultTickets = [
-    { id: "TKT-88491", subject: "eStatement Audits", dept: "Treasury", messages: [
-      { sender: "System", text: "Ticket opened automatically for eStatement Audits." },
-      { sender: "Staff", text: "Your corporate account eStatements are ready for download. Please verify your balance ledger." }
-    ]},
-    { id: "TKT-99120", subject: "MFA Authentication", dept: "Fraud", messages: [
-      { sender: "System", text: "Ticket opened by user." },
-      { sender: "User", text: "I need to confirm if my MFA settings are active." },
-      { sender: "Staff", text: "MFA triggers have been enabled for large ACH wires and payroll batches. Security confirmed." }
-    ]}
-  ];
 
   function setupSecureMessaging(username) {
     if (!ticketThreads) return;
