@@ -316,7 +316,7 @@
             </div>
             <div class="input-group" style="margin-bottom: 16px;">
               <label for="ach-routing">Recipient Routing Transit Number</label>
-              <input type="text" id="ach-routing" pattern="[0-9]{9}" placeholder="9 Digits (e.g., 071000288)" required>
+              <input type="text" id="ach-routing" pattern="[0-9]{9}" placeholder="9 Digits (e.g., 987654321)" required>
             </div>
             <div class="input-group" style="margin-bottom: 16px;">
               <label for="ach-account">Recipient Account Number</label>
@@ -401,7 +401,7 @@
         <!-- 4. Deposit Checks Tab -->
         <div id="tab-deposit" class="banking-tab-pane banking-tab-content">
           <h3>Mobile Check Deposit</h3>
-          <p class="tab-desc">Deposit checks instantly using your device camera or uploading an endorsed check draft image file.</p>
+          <p class="tab-desc">Deposit checks instantly using your device camera, uploading an endorsed check draft file, or using a preloaded sample check draft.</p>
           
           <form id="deposit-form">
             <div class="input-group" style="margin-bottom: 20px;">
@@ -411,19 +411,71 @@
                 <option value="savings">Savings</option>
               </select>
             </div>
-            
-            <div class="deposit-camera-area" id="camera-trigger">
-              <div class="deposit-camera-icon">
-                <svg viewBox="0 0 24 24"><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+
+            <!-- Capture Methods Selection -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+              <button type="button" id="btn-method-file" class="page-btn" style="margin: 0; padding: 10px; font-size: 12.5px; display: flex; align-items: center; justify-content: center; gap: 6px; background-color: var(--primary-color); color: #fff; border-color: var(--primary-color);">
+                📂 Upload File
+              </button>
+              <button type="button" id="btn-method-webcam" class="page-btn" style="margin: 0; padding: 10px; font-size: 12.5px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                📷 Use Webcam
+              </button>
+              <button type="button" id="btn-method-sample" class="page-btn" style="margin: 0; padding: 10px; font-size: 12.5px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                📝 Use Sample Check
+              </button>
+            </div>
+
+            <!-- Hidden file inputs -->
+            <input type="file" id="check-file-input" style="display: none;" accept="image/*">
+
+            <!-- Webcam Capture Viewport (Hidden by default) -->
+            <div id="webcam-viewport" style="display: none; width: 100%; border: 2px solid var(--border-color); border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 20px; position: relative; aspect-ratio: 16/9; background-color: #000;">
+              <video id="webcam-stream" autoplay playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+              <div style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 10;">
+                <button type="button" id="btn-capture-snap" class="btn-login" style="background-color: #10b981; border-color: #10b981; color: #fff; padding: 6px 16px; margin: 0; font-size: 13px;">Capture Frame</button>
+                <button type="button" id="btn-capture-close" class="btn-login" style="background-color: #ef4444; border-color: #ef4444; color: #fff; padding: 6px 16px; margin: 0; font-size: 13px;">Turn Off</button>
               </div>
-              <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">Click to Capture Check Image</div>
-              <div style="font-size: 12px; color: var(--text-muted);">Must be endorsed on back: "For mobile deposit only at Big Beaver Bank".</div>
-              <input type="file" id="check-file-input" style="display: none;" accept="image/*">
+              <!-- Box overlay for check outline -->
+              <div style="position: absolute; top: 15%; left: 10%; width: 80%; height: 70%; border: 2px dashed rgba(255,255,255,0.7); border-radius: 4px; pointer-events: none; display: flex; align-items: center; justify-content: center; z-index: 5;">
+                <span style="color: rgba(255,255,255,0.7); font-size: 11px; font-family: sans-serif; font-weight: bold; background-color: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 4px;">Align Check Draft Within Frame</span>
+              </div>
+            </div>
+
+            <!-- Sample Check Template Selector (Only visible in Sample mode) -->
+            <div id="sample-selector-area" style="display: none; margin-bottom: 20px; padding: 15px; border: 1px solid var(--border-color); border-radius: 4px; background-color: var(--bg-light);">
+              <label for="sample-check-template" style="font-size: 13px; font-weight: 600; display: block; margin-bottom: 6px;">Select Fictional Check Draft</label>
+              <select id="sample-check-template" class="cms-select" style="padding: 8px;">
+                <option value="initech">Initech Corporation - Payroll Draft ($2,450.00)</option>
+                <option value="omegamart">Omega Mart Inc - Product Clearing ($18,500.00)</option>
+                <option value="weyland">Weyland-Yutani Corp - Relativistic Freight Voucher ($125,000.00)</option>
+                <option value="dharma">Dharma Initiative - Sub-Oceanic Research Grant ($482,000.00)</option>
+              </select>
+            </div>
+
+            <!-- Check Display Area (Shows file preview, webcam capture, or sample canvas check) -->
+            <div id="check-display-container" style="display: none; width: 100%; border: 1px dashed var(--border-color); border-radius: var(--radius-sm); padding: 16px; background-color: var(--bg-white); margin-bottom: 20px; text-align: center;">
+              <h4 style="font-size: 12px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; font-family: sans-serif;">Captured Document Preview</h4>
+              <div style="display: flex; justify-content: center; align-items: center; min-height: 150px; overflow: hidden; border: 1px solid var(--border-color); border-radius: 4px; background-color: #f8fafc; position: relative;">
+                <!-- Preview elements -->
+                <img id="check-preview-img" style="display: none; max-width: 100%; max-height: 250px; object-fit: contain;">
+                <canvas id="check-canvas" width="600" height="260" style="display: none; max-width: 100%; height: auto; border: 1px solid #cbd5e1; background-color: #fff;"></canvas>
+                
+                <!-- Scanning/OCR Loader Overlay -->
+                <div id="ocr-loading-overlay" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255,255,255,0.9); flex-direction: column; align-items: center; justify-content: center; gap: 12px; z-index: 15;">
+                  <div style="width: 32px; height: 32px; border: 3px solid var(--border-color); border-top-color: var(--primary-color); border-radius: 50%; animation: spin 1s infinite linear;"></div>
+                  <div id="ocr-status-text" style="font-size: 12.5px; font-weight: 600; color: var(--primary-color);">Reading MICR line data...</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- OCR Console Log Output -->
+            <div id="ocr-console" style="display: none; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: #0f172a; color: #38bdf8; font-family: monospace; font-size: 11px; padding: 15px; margin-bottom: 20px; line-height: 1.5; text-align: left; white-space: pre-wrap; overflow-x: auto;">
+              <!-- Captured MICR fields logged here -->
             </div>
 
             <div class="input-group" style="margin-bottom: 24px;">
               <label for="deposit-amount">Check Amount ($)</label>
-              <input type="number" id="deposit-amount" min="1" max="500000" step="100" placeholder="$0.00" required>
+              <input type="number" id="deposit-amount" min="1" max="500000" step="0.01" placeholder="$0.00" required>
             </div>
             <button type="submit" class="btn-form-submit">Verify & Submit Draft</button>
           </form>

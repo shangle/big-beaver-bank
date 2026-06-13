@@ -113,6 +113,48 @@
         </tr>
       </tbody>
     </table>
+
+    <!-- Checking Account Selector Wizard -->
+    <div style="max-width: 600px; margin: 40px auto 0; background-color: var(--bg-cream); border: 1.5px solid var(--border-color); border-radius: var(--radius-sm); padding: 24px; box-shadow: var(--shadow-sm);">
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 20px; color: var(--primary-color); text-align: center; margin-bottom: 8px;">Checking Account Selector Wizard</h3>
+      <p style="font-size: 13px; color: var(--text-muted); text-align: center; margin-bottom: 20px;">Find the account that best matches your financial habits.</p>
+      
+      <div id="wizard-questions">
+        <div style="margin-bottom: 16px;">
+          <label style="font-size: 13.5px; font-weight: 600; display: block; margin-bottom: 6px;">1. What is your typical average monthly balance?</label>
+          <select id="wiz-balance" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 13px;">
+            <option value="low">Under $500</option>
+            <option value="mid">$500 to $4,999</option>
+            <option value="high">$5,000 or more</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <label style="font-size: 13.5px; font-weight: 600; display: block; margin-bottom: 6px;">2. Do you plan to set up monthly Direct Deposit?</label>
+          <select id="wiz-dd" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 13px;">
+            <option value="yes">Yes, regularly</option>
+            <option value="no">No, or irregular</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <label style="font-size: 13.5px; font-weight: 600; display: block; margin-bottom: 6px;">3. How often do you use non-Big Beaver Bank ATMs?</label>
+          <select id="wiz-atm" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 13px;">
+            <option value="rare">Rarely or Never</option>
+            <option value="sometimes">1-2 times a month</option>
+            <option value="often">Frequently (weekly)</option>
+          </select>
+        </div>
+
+        <button id="wiz-submit-btn" class="btn-login" style="width: 100%; font-weight: 600; padding: 10px; border-radius: 4px; cursor: pointer;">Find My Perfect Account</button>
+      </div>
+
+      <div id="wizard-result" style="display: none; text-align: center; padding: 16px; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: 4px;">
+        <h4 id="wiz-result-title" style="font-size: 18px; color: var(--primary-color); margin-bottom: 8px;">Summit Choice Checking</h4>
+        <p id="wiz-result-desc" style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;"></p>
+        <button id="wiz-reset-btn" class="btn-login" style="padding: 6px 12px; font-size: 11px; margin: 0; background-color: var(--text-muted); border-color: var(--text-muted);">Retake Wizard</button>
+      </div>
+    </div>
   </section>
 
   <!-- Savings Section -->

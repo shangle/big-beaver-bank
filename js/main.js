@@ -28,8 +28,8 @@ const init = () => {
   const copyRoutingEl = document.getElementById('copy-routing');
   if (copyRoutingEl) {
     copyRoutingEl.addEventListener('click', () => {
-      navigator.clipboard.writeText("071000288").then(() => {
-        alert("Routing Transit Number (071000288) copied to clipboard.");
+      navigator.clipboard.writeText("987654321").then(() => {
+        alert("Routing Transit Number (987654321) copied to clipboard.");
       });
     });
   }
@@ -97,7 +97,7 @@ const init = () => {
           <p style="margin-bottom: 12px;"><strong>Step 2:</strong> Choose your checking or savings account as funding source, and enter recipient routing/account credentials.</p>
           <p style="margin-bottom: 12px;"><strong>Step 3:</strong> Input the dollar amount and click 'Authorize Wire Dispatch'. Transfers clear dynamically via the ACH network.</p>
           <div style="background-color: var(--primary-color); color: #fff; padding: 12px; border-radius: 4px; font-size: 12px; font-family: monospace;">
-            [ACH AUTHORIZED] $2,500.00 -> Routing 071000288
+            [ACH AUTHORIZED] $2,500.00 -> Routing 987654321
           </div>
         `
       },
@@ -130,7 +130,7 @@ const init = () => {
           <p style="margin-bottom: 12px;"><strong>Step 2:</strong> Configure your ACH Company settings (Company name,EIN,SEC code) and employee payroll roster.</p>
           <p style="margin-bottom: 12px;"><strong>Step 3:</strong> Click 'Compile NACHA File' to build the fixed-width 94-character Fed-compliant log, then download to transmit.</p>
           <div style="background-color: var(--bg-light); color: var(--text-dark); border: 1px solid var(--border-color); padding: 10px; border-radius: 4px; font-family: monospace; font-size: 10px; overflow-x: auto; white-space: pre;">
-101 07100028801234567892606131034A094...
+101 98765432101234567892606131034A094...
 5220VANDELAY IND       ...
           </div>
         `
@@ -339,6 +339,47 @@ const init = () => {
     
     // Initial run
     performSearch();
+  }
+
+  // --- CHECKING ACCOUNT SELECTOR WIZARD ---
+  const wizSubmitBtn = document.getElementById('wiz-submit-btn');
+  const wizResetBtn = document.getElementById('wiz-reset-btn');
+  const wizQuestions = document.getElementById('wizard-questions');
+  const wizResult = document.getElementById('wizard-result');
+
+  if (wizSubmitBtn && wizQuestions && wizResult) {
+    wizSubmitBtn.addEventListener('click', () => {
+      const balance = document.getElementById('wiz-balance').value;
+      const dd = document.getElementById('wiz-dd').value;
+      const atm = document.getElementById('wiz-atm').value;
+
+      let recTitle = "Summit Choice Checking";
+      let recDesc = "Our basic, no-fee checking option. Perfect for everyday transactions without worrying about monthly maintenance fees.";
+
+      if (balance === 'high') {
+        recTitle = "Prestige Interest Checking";
+        recDesc = "Our premium account designed for higher balances. It earns 0.15% APY interest and provides unlimited non-network ATM fee rebates globally, meaning you'll save on average $2.50 every time you check your balance.";
+      } else if (dd === 'yes') {
+        recTitle = "Community First Checking";
+        recDesc = "A great mid-tier checking account. Set up monthly direct deposit to waive the $5.00 service charge, and get your first 2 non-network ATM fees waived automatically each month.";
+      } else if (atm === 'often') {
+        recTitle = "Prestige Interest Checking";
+        recDesc = "Even if your balance is moderate, if you use non-network ATMs frequently, the unlimited ATM fee rebates of our Prestige account will save you more than its monthly service fee!";
+      }
+
+      document.getElementById('wiz-result-title').textContent = recTitle;
+      document.getElementById('wiz-result-desc').textContent = recDesc;
+
+      wizQuestions.style.display = 'none';
+      wizResult.style.display = 'block';
+    });
+
+    if (wizResetBtn) {
+      wizResetBtn.addEventListener('click', () => {
+        wizQuestions.style.display = 'block';
+        wizResult.style.display = 'none';
+      });
+    }
   }
 };
 

@@ -30,7 +30,18 @@ const FICTIONAL_ENTITIES = [
   { name: "Los Pollos Hermanos", category: "Marketing", type: "withdrawal", desc: "Catering: Executive Board Quarterly Meeting" },
   { name: "Wonka Candy Industries", category: "Operations", type: "deposit", desc: "Royalty: Golden Ticket Retail Operations" },
   { name: "Big Beaver Energy", category: "Marketing", type: "withdrawal", desc: "ACH Debit: Corporate Branded Workwear & Safety Apparel" },
-  { name: "Cyberdyne Systems", category: "Equipment", type: "withdrawal", desc: "Purchase: Neural Net Mainframe Cooling Elements" }
+  { name: "Cyberdyne Systems", category: "Equipment", type: "withdrawal", desc: "Purchase: Neural Net Mainframe Cooling Elements" },
+  { name: "Acme Corporation", category: "Inventory", type: "withdrawal", desc: "Wire Out: Jet-Powered Unicycle Delivery Contract" },
+  { name: "Hooli", category: "Utilities", type: "withdrawal", desc: "ACH Debit: Nucleus Server Platform Cloud Load Balancer" },
+  { name: "Soylent Corporation", category: "Inventory", type: "deposit", desc: "ACH Direct Deposit: High-Protein Marine Algae Settlement" },
+  { name: "Initech Payroll", category: "Operations", type: "withdrawal", desc: "Direct Deposit Payroll: QA Engineering Dept" },
+  { name: "Dharma Station Swan", category: "Utilities", type: "withdrawal", desc: "ACH Payment: Electromagnet Shield Reactor Fuel Rods" },
+  { name: "Weyland-Yutani Xenomorph Division", category: "Audit", type: "withdrawal", desc: "Wire Transfer: Outpost Containment Facility Audit Fee" },
+  { name: "Dunder Mifflin Sabre", category: "Inventory", type: "deposit", desc: "Wire In: Bulk Printer Paper Wholesale Contract" },
+  { name: "Vandelay Latex Division", category: "Inventory", type: "deposit", desc: "ACH Credit: Raw Polyisoprene Rubber Export Sweep" },
+  { name: "Acme Pyrotechnics", category: "Logistics", type: "withdrawal", desc: "Direct Debit: Explosive Tennis Ball Freight Clearing" },
+  { name: "Soylent Green Co.", category: "Operations", type: "deposit", desc: "Direct Deposit: Plankton Nutrient Supply Clearance" },
+  { name: "Hooli Nucleus Dev", category: "Audit", type: "withdrawal", desc: "Bill Pay: Compression Algorithm Testing Consultation" }
 ];
 
 // Budget Category Colors
@@ -744,31 +755,421 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- MOBILE CHECK DEPOSIT SUBMIT ---
-  if (cameraTrigger) {
-    cameraTrigger.addEventListener('click', () => {
+  // --- MOBILE CHECK DEPOSIT OVERHAUL (PHASE 90) ---
+  let activeCheckSource = null; // 'file', 'webcam', 'sample'
+  let activeCheckAmount = 0;
+  let videoStream = null;
+
+  const btnMethodFile = document.getElementById('btn-method-file');
+  const btnMethodWebcam = document.getElementById('btn-method-webcam');
+  const btnMethodSample = document.getElementById('btn-method-sample');
+  const webcamViewport = document.getElementById('webcam-viewport');
+  const webcamStream = document.getElementById('webcam-stream');
+  const btnCaptureSnap = document.getElementById('btn-capture-snap');
+  const btnCaptureClose = document.getElementById('btn-capture-close');
+  const sampleSelectorArea = document.getElementById('sample-selector-area');
+  const sampleCheckTemplate = document.getElementById('sample-check-template');
+  const checkDisplayContainer = document.getElementById('check-display-container');
+  const checkPreviewImg = document.getElementById('check-preview-img');
+  const checkCanvas = document.getElementById('check-canvas');
+  const ocrLoadingOverlay = document.getElementById('ocr-loading-overlay');
+  const ocrStatusText = document.getElementById('ocr-status-text');
+  const ocrConsole = document.getElementById('ocr-console');
+  const depositAmountInput = document.getElementById('deposit-amount');
+
+  // Helper: Number to Words for Check drawing
+  function numberToWords(amount) {
+    const main = Math.floor(amount);
+    const cents = Math.round((amount - main) * 100);
+    const units = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+    const tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+    
+    function convertUnderThousand(num) {
+      if (num < 20) return units[num];
+      const digit = num % 10;
+      const tenIdx = Math.floor(num / 10);
+      return tens[tenIdx] + (digit ? " " + units[digit] : "");
+    }
+    
+    let words = "";
+    if (main >= 100000) {
+      const thousands = Math.floor(main / 1000);
+      const remainder = main % 1000;
+      const hundreds = Math.floor(thousands / 100);
+      const tensUnits = thousands % 100;
+      words += units[hundreds] + " Hundred " + convertUnderThousand(tensUnits) + " Thousand ";
+      words += convertUnderThousand(remainder);
+    } else if (main >= 1000) {
+      const thousands = Math.floor(main / 1000);
+      const remainder = main % 1000;
+      words += convertUnderThousand(thousands) + " Thousand " + convertUnderThousand(remainder);
+    } else {
+      words += convertUnderThousand(main);
+    }
+    return words.trim() + ` and ${cents}/100`;
+  }
+
+  // Draw Sample Check Canvas
+  function drawSampleCheck(template) {
+    if (!checkCanvas) return;
+    const ctx = checkCanvas.getContext('2d');
+    
+    // Reset canvas dimensions
+    checkCanvas.width = 600;
+    checkCanvas.height = 260;
+    
+    // Background (Soft green/gold safety paper texture mock)
+    ctx.fillStyle = "#f1f5f9";
+    ctx.fillRect(0, 0, checkCanvas.width, checkCanvas.height);
+    
+    ctx.fillStyle = "#e2e8f0";
+    for(let i=0; i<checkCanvas.width; i+=20) {
+      ctx.fillRect(i, 0, 10, checkCanvas.height);
+    }
+    ctx.fillStyle = "rgba(255,255,255,0.85)";
+    ctx.fillRect(0, 0, checkCanvas.width, checkCanvas.height);
+
+    // Border
+    ctx.strokeStyle = "#475569";
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(8, 8, checkCanvas.width - 16, checkCanvas.height - 16);
+    
+    let coName = "";
+    let coAddress = "";
+    let amount = 0;
+    let memoText = "";
+    let sigText = "";
+    
+    if (template === 'initech') {
+      coName = "INITECH CORPORATION";
+      coAddress = "4120 Freemont Ave, Austin, TX 78759";
+      amount = 2450.00;
+      memoText = "Direct Deposit Payroll / TPS Compliance Audit";
+      sigText = "Bill Lumbergh";
+    } else if (template === 'omegamart') {
+      coName = "OMEGA MART INC";
+      coAddress = "999 Anomalous Way, Las Vegas, NV 89109";
+      amount = 18500.00;
+      memoText = "Glitch Lemon Sourcing Settlement";
+      sigText = "The Whole Lemon Desk";
+    } else if (template === 'weyland') {
+      coName = "WEYLAND-YUTANI CORPORATION";
+      coAddress = "Off-World Logistics Command, Gateway Station";
+      amount = 125000.00;
+      memoText = "Relativistic Cargo Freight Lease WY-882-B";
+      sigText = "J. Weyland";
+    } else if (template === 'dharma') {
+      coName = "THE DHARMA INITIATIVE";
+      coAddress = "Swan Station Research Grid, Sector 4-8";
+      amount = 482000.00;
+      memoText = "Geothermal Reactor Shield Sub-Allocation";
+      sigText = "Alvar Hanso";
+    }
+
+    // Header text
+    ctx.fillStyle = "#1e293b";
+    ctx.font = "bold 13px monospace";
+    ctx.fillText(coName, 24, 34);
+    ctx.font = "9px monospace";
+    ctx.fillText(coAddress, 24, 46);
+
+    // Check number
+    const checkNum = "22045";
+    ctx.font = "bold 13px monospace";
+    ctx.fillText(checkNum, checkCanvas.width - 60, 34);
+
+    // Date
+    ctx.font = "11px monospace";
+    ctx.fillText("Date: " + new Date().toLocaleDateString(), checkCanvas.width - 170, 60);
+
+    // Payee
+    ctx.font = "12px monospace";
+    ctx.fillText("PAY TO THE ORDER OF: " + currentUser.toUpperCase(), 24, 94);
+    ctx.beginPath();
+    ctx.moveTo(174, 98);
+    ctx.lineTo(checkCanvas.width - 150, 98);
+    ctx.strokeStyle = "#94a3b8";
+    ctx.stroke();
+
+    // Amount box
+    ctx.strokeRect(checkCanvas.width - 134, 78, 110, 22);
+    ctx.font = "bold 13px monospace";
+    ctx.fillText("$" + amount.toLocaleString('en-US', { minimumFractionDigits: 2 }), checkCanvas.width - 124, 93);
+
+    // Words
+    ctx.font = "10px monospace";
+    ctx.fillText("Amount: " + numberToWords(amount) + " Dollars", 24, 128);
+    ctx.beginPath();
+    ctx.moveTo(74, 132);
+    ctx.lineTo(checkCanvas.width - 24, 132);
+    ctx.stroke();
+
+    // Bank
+    ctx.font = "bold 11px monospace";
+    ctx.fillText("BIG BEAVER BANK", 24, 168);
+    ctx.font = "italic 8px monospace";
+    ctx.fillText("Staging Clearing Depot", 24, 178);
+
+    // Memo
+    ctx.font = "10px monospace";
+    ctx.fillText("MEMO: " + memoText, 24, 210);
+    ctx.beginPath();
+    ctx.moveTo(64, 214);
+    ctx.lineTo(240, 214);
+    ctx.stroke();
+
+    // Signature
+    ctx.font = "italic 16px Brush Script MT, cursive, sans-serif";
+    ctx.fillText(sigText, checkCanvas.width - 180, 204);
+    ctx.beginPath();
+    ctx.moveTo(checkCanvas.width - 194, 214);
+    ctx.lineTo(checkCanvas.width - 24, 214);
+    ctx.stroke();
+
+    // MICR (routing transit 987654321 is invalid)
+    ctx.font = "bold 14px monospace";
+    ctx.fillText(`⑆987654321⑆  ⑈000109923⑈  ${checkNum}`, 100, 242);
+  }
+
+  // Method selector buttons click handlers
+  if (btnMethodFile) {
+    btnMethodFile.addEventListener('click', () => {
+      activeCheckSource = 'file';
+      btnMethodFile.style.backgroundColor = 'var(--primary-color)';
+      btnMethodFile.style.color = '#fff';
+      btnMethodFile.style.borderColor = 'var(--primary-color)';
+      
+      btnMethodWebcam.style.backgroundColor = '';
+      btnMethodWebcam.style.color = '';
+      btnMethodWebcam.style.borderColor = '';
+      btnMethodSample.style.backgroundColor = '';
+      btnMethodSample.style.color = '';
+      btnMethodSample.style.borderColor = '';
+
+      sampleSelectorArea.style.display = 'none';
+      stopWebcam();
       checkFileInput.click();
     });
   }
 
-  if (checkFileInput) {
-    checkFileInput.addEventListener('change', () => {
-      if (checkFileInput.files.length > 0) {
-        cameraTrigger.style.borderColor = 'var(--primary-color)';
-        cameraTrigger.querySelector('div').textContent = "Captures Endorsed: " + checkFileInput.files[0].name;
+  if (btnMethodWebcam) {
+    btnMethodWebcam.addEventListener('click', () => {
+      activeCheckSource = 'webcam';
+      btnMethodWebcam.style.backgroundColor = 'var(--primary-color)';
+      btnMethodWebcam.style.color = '#fff';
+      btnMethodWebcam.style.borderColor = 'var(--primary-color)';
+      
+      btnMethodFile.style.backgroundColor = '';
+      btnMethodFile.style.color = '';
+      btnMethodFile.style.borderColor = '';
+      btnMethodSample.style.backgroundColor = '';
+      btnMethodSample.style.color = '';
+      btnMethodSample.style.borderColor = '';
+
+      sampleSelectorArea.style.display = 'none';
+      startWebcam();
+    });
+  }
+
+  if (btnMethodSample) {
+    btnMethodSample.addEventListener('click', () => {
+      activeCheckSource = 'sample';
+      btnMethodSample.style.backgroundColor = 'var(--primary-color)';
+      btnMethodSample.style.color = '#fff';
+      btnMethodSample.style.borderColor = 'var(--primary-color)';
+      
+      btnMethodFile.style.backgroundColor = '';
+      btnMethodFile.style.color = '';
+      btnMethodFile.style.borderColor = '';
+      btnMethodWebcam.style.backgroundColor = '';
+      btnMethodWebcam.style.color = '';
+      btnMethodWebcam.style.borderColor = '';
+
+      stopWebcam();
+      sampleSelectorArea.style.display = 'block';
+      checkDisplayContainer.style.display = 'block';
+      checkPreviewImg.style.display = 'none';
+      checkCanvas.style.display = 'block';
+
+      // Load initial selected template check
+      const t = sampleCheckTemplate.value;
+      drawSampleCheck(t);
+      runMockOcrScan(t);
+    });
+  }
+
+  if (sampleCheckTemplate) {
+    sampleCheckTemplate.addEventListener('change', () => {
+      if (activeCheckSource === 'sample') {
+        const t = sampleCheckTemplate.value;
+        drawSampleCheck(t);
+        runMockOcrScan(t);
       }
     });
   }
 
+  // Handle file select
+  if (checkFileInput) {
+    checkFileInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        const file = e.target.files[0];
+        checkDisplayContainer.style.display = 'block';
+        checkCanvas.style.display = 'none';
+        checkPreviewImg.style.display = 'block';
+        checkPreviewImg.src = URL.createObjectURL(file);
+        
+        runMockOcrScan('upload', file.name);
+      }
+    });
+  }
+
+  // Webcam stream handlers
+  function startWebcam() {
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+        .then(stream => {
+          videoStream = stream;
+          webcamStream.srcObject = stream;
+          webcamViewport.style.display = 'block';
+          checkDisplayContainer.style.display = 'none';
+          ocrConsole.style.display = 'none';
+        })
+        .catch(err => {
+          alert("Webcam Access Denied: Please upload an image file instead.");
+          console.error(err);
+        });
+    } else {
+      alert("Webcam API not supported in this browser. Please upload an image file instead.");
+    }
+  }
+
+  function stopWebcam() {
+    if (videoStream) {
+      videoStream.getTracks().forEach(track => track.stop());
+      videoStream = null;
+    }
+    webcamViewport.style.display = 'none';
+  }
+
+  if (btnCaptureClose) {
+    btnCaptureClose.addEventListener('click', stopWebcam);
+  }
+
+  if (btnCaptureSnap) {
+    btnCaptureSnap.addEventListener('click', () => {
+      if (!videoStream) return;
+      
+      checkDisplayContainer.style.display = 'block';
+      checkPreviewImg.style.display = 'none';
+      checkCanvas.style.display = 'block';
+      
+      checkCanvas.width = 600;
+      checkCanvas.height = 337;
+      const ctx = checkCanvas.getContext('2d');
+      ctx.drawImage(webcamStream, 0, 0, checkCanvas.width, checkCanvas.height);
+      
+      stopWebcam();
+      runMockOcrScan('webcam');
+    });
+  }
+
+  // Mock OCR Scan Flow
+  function runMockOcrScan(mode, extraInfo = '') {
+    ocrLoadingOverlay.style.display = 'flex';
+    ocrConsole.style.display = 'none';
+    ocrStatusText.textContent = "Locating document boundaries...";
+
+    setTimeout(() => {
+      ocrStatusText.textContent = "Reading MICR transit codeline...";
+    }, 1000);
+
+    setTimeout(() => {
+      ocrStatusText.textContent = "Verifying signature & payee lines...";
+    }, 2000);
+
+    setTimeout(() => {
+      ocrLoadingOverlay.style.display = 'none';
+      
+      let amount = 0;
+      let routing = "";
+      let account = "";
+      let payeeName = currentUser.toUpperCase();
+      let company = "";
+
+      if (mode === 'initech') {
+        company = "INITECH CORP";
+        amount = 2450.00;
+        routing = "987654321";
+        account = "000109923";
+      } else if (mode === 'omegamart') {
+        company = "OMEGA MART INC";
+        amount = 18500.00;
+        routing = "987654321";
+        account = "000109923";
+      } else if (mode === 'weyland') {
+        company = "WEYLAND-YUTANI CORP";
+        amount = 125000.00;
+        routing = "987654321";
+        account = "000109923";
+      } else if (mode === 'dharma') {
+        company = "THE DHARMA INITIATIVE";
+        amount = 482000.00;
+        routing = "987654321";
+        account = "000109923";
+      } else if (mode === 'webcam') {
+        company = "CAMERA_CAPTURE_DRAFT";
+        amount = 1250.00;
+        routing = "987654321";
+        account = "88392019";
+      } else {
+        // file upload
+        company = extraInfo.toUpperCase().substring(0, 20) || "UPLOADED_IMAGE";
+        amount = 1500.00;
+        routing = "987654321";
+        account = "99042941";
+      }
+
+      activeCheckAmount = amount;
+      depositAmountInput.value = amount;
+
+      // Print OCR logs (invalid routing checksum is explicitly called out)
+      ocrConsole.innerHTML = `[BBB OCR SCAN CONSOLE INITIALIZED]
+--------------------------------------------------
+DOCUMENT FRAME STATUS   : BOUNDARIES VALIDATED (100% CONFIDENCE)
+DOCUMENT EXPOSURE VALUE : OPTIMAL (AGC CALIBRATED)
+READING codeline...
+MICR STRIP DETECTED     : ⑆${routing}⑆ ⑈${account}⑈ 22045
+ROUTE TRANSIT ANALYSIS  : CODE [${routing}] EXTRACTED
+ACCOUNT CODE ANALYSIS   : CODE [${account}] EXTRACTED
+TRANSACTION AMOUNT      : $${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+PAYEE RECOGNITION       : DETECTED [${payeeName}] (MATCHES CURRENT ACTIVE PROFILE)
+SIGNATURE ANALYSIS      : ENDORSEMENT DETECTED (VALID SIGN-OFF)
+
+[ROUTING NUMBER AUDIT NOTICE]:
+RoutingTransitNumber ${routing} is identified as: BIG BEAVER BANK clearance root.
+*WARNING: Standard MOD 10 checksum fails. Clearing via Satirical Exception Clearing Desk (Section 12-B).*
+--------------------------------------------------
+STATUS: SUCCESS. Amount field auto-filled. Verify draft and click submit.`;
+      
+      ocrConsole.style.display = 'block';
+    }, 3000);
+  }
+
+  // Handle form submission
   if (depositForm) {
     depositForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const depAcc = document.getElementById('deposit-to').value;
-      const amount = parseFloat(document.getElementById('deposit-amount').value);
+      const amount = parseFloat(depositAmountInput.value);
 
       if (!amount || amount <= 0) return;
-      if (checkFileInput.files.length === 0) {
-        showBannerNotification("Compliance Alert: Image capture of check front/back is required.", "error");
+      if (!activeCheckSource) {
+        showBannerNotification("Compliance Alert: Image capture or sample check selection is required.", "error");
+        return;
+      }
+
+      if (activeCheckSource === 'sample' && Math.abs(amount - activeCheckAmount) > 0.01) {
+        showBannerNotification("Scan Warning: Submitted amount does not match OCR scanned amount of $" + activeCheckAmount.toLocaleString(), "error");
         return;
       }
 
@@ -791,10 +1192,14 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       localStorage.setItem(`bbb_txns_${currentUser}`, JSON.stringify(txns));
 
+      // Reset
       depositForm.reset();
-      cameraTrigger.style.borderColor = 'var(--border-color)';
-      cameraTrigger.querySelector('div').textContent = "Click to Capture Check Image";
-      showBannerNotification(`Mobile Deposit Verified: $${amount.toLocaleString()} credited to reserves.`, "success");
+      stopWebcam();
+      checkDisplayContainer.style.display = 'none';
+      ocrConsole.style.display = 'none';
+      activeCheckSource = null;
+
+      showBannerNotification(`Mobile Deposit Verified: $${amount.toLocaleString()} credited to reserves. Clearing route: exception bypass.`, "success");
     });
   }
 
@@ -822,7 +1227,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      roster.push({ name: name, routing: "071000288", account: acc, salary: amt });
+      roster.push({ name: name, routing: "987654321", account: acc, salary: amt });
       localStorage.setItem(`bbb_roster_${username}`, JSON.stringify(roster));
       renderRosterUI(roster);
 
@@ -914,7 +1319,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const time = new Date().toTimeString().slice(0, 5).replace(/:/g, '');
 
     // 1. File Header Record (1)
-    file += `101 071000288${pad(coId, 10, '0')}${today}${time}A094101Big Beaver Bank     ${pad(coName, 18)}\r\n`;
+    file += `101 987654321${pad(coId, 10, '0')}${today}${time}A094101Big Beaver Bank     ${pad(coName, 18)}\r\n`;
 
     // 2. Batch Header Record (5)
     file += `5220${pad(coName, 16)}${pad("", 20)}${coId}${sec}Payroll   ${today}${today}   1${dfi}0000001\r\n`;
@@ -979,7 +1384,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div style="text-align: right;">
             <strong>STATEMENT PERIOD:</strong> ${month.toUpperCase()}<br>
             <strong>DATE COMPILED:</strong> ${new Date().toLocaleDateString()}<br>
-            <strong>ROUTING NO:</strong> 071000288
+            <strong>ROUTING NO:</strong> 987654321
           </div>
         </div>
 
