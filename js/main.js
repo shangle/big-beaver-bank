@@ -30,6 +30,15 @@ const init = () => {
     copyRoutingEl.addEventListener('click', () => {
       navigator.clipboard.writeText("987654321").then(() => {
         alert("Routing Transit Number (987654321) copied to clipboard.");
+      }).catch(() => {
+        // Fallback for browsers that block clipboard API
+        const ta = document.createElement('textarea');
+        ta.value = '987654321';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        alert("Routing Transit Number (987654321) copied to clipboard.");
       });
     });
   }

@@ -58,9 +58,9 @@ const CATEGORY_COLORS = {
 
 // Default payroll roster
 const defaultRoster = [
-  { name: "Dwight Schrute", routing: "021000021", account: "948201", salary: 4500.00 },
-  { name: "Jim Halpert", routing: "021000021", account: "928401", salary: 4200.00 },
-  { name: "Pam Beesly", routing: "021000021", account: "882019", salary: 3800.00 }
+  { name: "Dwight Schrute", routing: "987654321", account: "948201", salary: 4500.00 },
+  { name: "Jim Halpert", routing: "987654321", account: "928401", salary: 4200.00 },
+  { name: "Pam Beesly", routing: "987654321", account: "882019", salary: 3800.00 }
 ];
 
 // Default ticketing system inbox
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Check deposit
   const depositForm = document.getElementById('deposit-form');
-  const cameraTrigger = document.getElementById('camera-trigger');
+  // camera-trigger removed — capture handled by method buttons
   const checkFileInput = document.getElementById('check-file-input');
 
   // Payroll
@@ -332,7 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (labelEscrow) labelEscrow.textContent = nicknames.escrow;
 
     // Update select dropdown texts dynamically
-    const updateOptions = (selectId, prefixText) => {
+    const updateOptions = (selectId) => {
       const select = document.getElementById(selectId);
       if (select) {
         select.options[0].text = `${nicknames.checking} (Acct ••••-7291)`;
@@ -380,7 +380,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const baseDate = new Date(2026, 5, 13, 10, 0, 0);
 
     for (let i = 0; i < 200; i++) {
-      const seed = i + username.charCodeAt(0 % username.length);
+      const seed = i + username.charCodeAt(i % username.length);
       const entity = FICTIONAL_ENTITIES[seed % FICTIONAL_ENTITIES.length];
       const offsetMinutes = i * 420; // stagger spacing
       const txnDate = new Date(baseDate.getTime() - offsetMinutes * 60 * 1000);
@@ -404,6 +404,12 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
     return txnList;
+  }
+
+  function saveAndRefreshTransactions(txns) {
+    localStorage.setItem(`bbb_txns_${currentUser}`, JSON.stringify(txns));
+    renderLedger(txns);
+    drawBudgetChart(txns);
   }
 
   function renderLedger(txns) {
@@ -521,7 +527,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.fillStyle = '#ffffff';
     ctx.fill();
 
-    ctx.fillStyle = 'var(--text-dark)';
+    ctx.fillStyle = '#1f2723';
     ctx.font = 'bold 10px sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
