@@ -1,0 +1,1158 @@
+/* 
+ * Big Beaver Bank (BBB) Master Stylesheet
+ * Est. 2026. Fictional Private Banking Design.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+:root {
+  --primary-color: #0b2f1d; /* Deep Forest Green */
+  --primary-hover: #071f13;
+  --secondary-color: #1b2220; /* Slate Gray */
+  --accent-color: #c5a059; /* Warm Gold */
+  --accent-hover: #b08d4a;
+  --bg-cream: #FAF9F6; /* Premium bank paper color */
+  --bg-white: #ffffff;
+  --bg-light: #f3f5f4;
+  --text-dark: #1e2622;
+  --text-muted: #5e6b64;
+  --text-light: #ffffff;
+  --border-color: #dbe2de;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.02);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--text-dark);
+  background-color: var(--bg-cream);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 600;
+  color: var(--primary-color);
+  line-height: 1.25;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent-color);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Header & Navigation */
+header {
+  background-color: var(--bg-white);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Disclaimer Banner */
+.disclaimer-banner {
+  background-color: #eef1ef;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 6px 0;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+.disclaimer-banner .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.disclaimer-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #cbd5e1;
+  color: #1e293b;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 700;
+  font-size: 9px;
+  text-transform: uppercase;
+}
+
+.disclaimer-text {
+  text-transform: uppercase;
+  font-size: 10px;
+  text-align: right;
+}
+
+.header-main {
+  padding: 18px 0;
+}
+
+.header-main .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.logo svg {
+  fill: var(--accent-color);
+  width: 32px;
+  height: 32px;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 32px;
+  align-items: center;
+}
+
+nav a {
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--secondary-color);
+  border-bottom: 2px solid transparent;
+  padding: 4px 0;
+}
+
+nav a:hover, nav a.active {
+  color: var(--primary-color);
+  border-color: var(--accent-color);
+}
+
+.btn-login {
+  background-color: var(--primary-color);
+  color: var(--text-light) !important;
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s ease;
+  border: 1px solid var(--primary-color);
+}
+
+.btn-login:hover {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+  color: var(--text-light);
+}
+
+.btn-login svg {
+  fill: currentColor;
+  width: 14px;
+  height: 14px;
+}
+
+/* Hamburger Menu for Mobile */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: var(--primary-color);
+  margin-bottom: 6px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.menu-toggle span:last-child {
+  margin-bottom: 0;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(rgba(11, 47, 29, 0.88), rgba(11, 47, 29, 0.95)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%230b2f1d"/><circle cx="50" cy="50" r="40" stroke="%23c5a059" stroke-width="0.5" fill="none" opacity="0.1"/></svg>');
+  color: var(--text-light);
+  padding: 80px 0 90px;
+  text-align: center;
+}
+
+.hero h1 {
+  color: var(--text-light);
+  font-size: 48px;
+  max-width: 800px;
+  margin: 0 auto 20px;
+  font-weight: 700;
+}
+
+.hero p {
+  font-size: 18px;
+  color: #a7bfae;
+  max-width: 600px;
+  margin: 0 auto 30px;
+  font-weight: 300;
+}
+
+.hero .btn-primary {
+  background-color: var(--accent-color);
+  color: var(--secondary-color);
+  padding: 12px 28px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 16px;
+  display: inline-block;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  border: none;
+}
+
+.hero .btn-primary:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+/* Grid & Cards */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin: 60px 0;
+}
+
+.card {
+  background-color: var(--bg-white);
+  border: 1px solid var(--border-color);
+  padding: 32px;
+  border-radius: var(--radius-sm);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent-color);
+}
+
+.card-icon {
+  margin-bottom: 20px;
+  color: var(--accent-color);
+}
+
+.card-icon svg {
+  width: 40px;
+  height: 40px;
+  fill: currentColor;
+}
+
+.card h3 {
+  margin-bottom: 12px;
+  font-size: 20px;
+}
+
+.card p {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Feature Panel */
+.feature-panel {
+  padding: 80px 0;
+  background-color: var(--bg-white);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.feature-layout {
+  display: flex;
+  gap: 60px;
+  align-items: center;
+}
+
+.feature-text {
+  flex: 1;
+}
+
+.feature-text h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.feature-text p {
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.feature-image {
+  flex: 1;
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  background-color: var(--bg-cream);
+  border-radius: var(--radius-sm);
+}
+
+.feature-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Mortgage/Loan Calculator */
+.calc-section {
+  padding: 80px 0;
+}
+
+.calc-container {
+  background-color: var(--bg-white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 40px;
+  max-width: 900px;
+  margin: 40px auto 0;
+  box-shadow: var(--shadow-md);
+}
+
+.calc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.calc-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--secondary-color);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.input-group input, .input-group select {
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 15px;
+  background-color: var(--bg-cream);
+  transition: border-color 0.2s;
+}
+
+.input-group input:focus, .input-group select:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  background-color: var(--bg-white);
+}
+
+.calc-results {
+  background-color: var(--bg-light);
+  padding: 30px;
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--accent-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.result-label {
+  font-size: 14px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.result-value {
+  font-size: 42px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.result-breakdown {
+  width: 100%;
+  border-top: 1px solid var(--border-color);
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.breakdown-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.breakdown-label {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.breakdown-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--secondary-color);
+}
+
+/* Testimonials */
+.testimonials-section {
+  padding: 80px 0;
+  background-color: var(--bg-white);
+  border-top: 1px solid var(--border-color);
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.testimonial-card {
+  border: 1px solid var(--border-color);
+  padding: 30px;
+  background-color: var(--bg-cream);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.testimonial-text {
+  font-style: italic;
+  font-size: 15px;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+}
+
+.testimonial-author {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--primary-color);
+}
+
+.testimonial-company {
+  font-size: 12px;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Blog Index & Articles */
+.blog-header {
+  text-align: center;
+  padding: 60px 0;
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-bottom: 60px;
+}
+
+.blog-card {
+  background-color: var(--bg-white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-color);
+}
+
+.blog-card-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.blog-card-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.blog-card-title {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.blog-card-title a {
+  color: var(--primary-color);
+}
+
+.blog-card-excerpt {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  flex-grow: 1;
+}
+
+.blog-card-link {
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.blog-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 60px;
+}
+
+.page-btn {
+  padding: 8px 14px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-white);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.page-btn:hover, .page-btn.active {
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  border-color: var(--primary-color);
+}
+
+/* Single Article Layout */
+.article-container {
+  max-width: 800px;
+  margin: 40px auto 80px;
+  background-color: var(--bg-white);
+  border: 1px solid var(--border-color);
+  padding: 48px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+.article-meta {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.article-title {
+  font-size: 40px;
+  margin-bottom: 24px;
+}
+
+.article-content {
+  font-size: 16px;
+  color: var(--text-dark);
+  line-height: 1.8;
+}
+
+.article-content p {
+  margin-bottom: 20px;
+}
+
+.article-content h2 {
+  font-size: 24px;
+  margin: 36px 0 16px;
+}
+
+.article-content h3 {
+  font-size: 19px;
+  margin: 28px 0 12px;
+}
+
+.article-content ul, .article-content ol {
+  margin-bottom: 20px;
+  padding-left: 24px;
+}
+
+.article-content li {
+  margin-bottom: 8px;
+}
+
+.article-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+
+/* About Page Disclaimer Banner */
+.about-disclaimer-box {
+  background-color: #fef08a;
+  border: 1px solid #facc15;
+  color: #854d0e;
+  padding: 24px;
+  border-radius: var(--radius-sm);
+  margin: 40px 0;
+  font-size: 15px;
+}
+
+.about-disclaimer-box h4 {
+  color: #854d0e;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+/* Online Banking Simulator */
+.banking-page {
+  background-color: #f0f2f1;
+  min-height: 100vh;
+}
+
+.login-card {
+  max-width: 420px;
+  margin: 80px auto;
+  background-color: var(--bg-white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 40px;
+  box-shadow: var(--shadow-lg);
+}
+
+.login-card h2 {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.login-card p {
+  font-size: 14px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.alert-error {
+  background-color: #fef2f2;
+  border: 1px solid #fca5a5;
+  color: #b91c1c;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  margin-bottom: 20px;
+  display: none;
+}
+
+/* Banking Dashboard Layout */
+.banking-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: calc(100vh - 120px);
+}
+
+.banking-sidebar {
+  background-color: var(--secondary-color);
+  color: var(--text-light);
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.user-profile {
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.user-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 18px;
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+.user-role {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 4px;
+}
+
+.banking-menu {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-grow: 1;
+}
+
+.banking-menu-item button {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.7);
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: inherit;
+}
+
+.banking-menu-item button svg {
+  fill: currentColor;
+  width: 16px;
+  height: 16px;
+}
+
+.banking-menu-item button:hover, .banking-menu-item button.active {
+  color: var(--text-light);
+  background-color: rgba(255,255,255,0.08);
+}
+
+.banking-menu-item button.active {
+  border-left: 3px solid var(--accent-color);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding-left: 13px;
+}
+
+.banking-content {
+  padding: 40px;
+  overflow-y: auto;
+}
+
+.dashboard-title {
+  margin-bottom: 30px;
+  font-size: 32px;
+}
+
+/* Accounts Summary Grid */
+.accounts-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.account-card {
+  background-color: var(--bg-white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.account-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: var(--primary-color);
+}
+
+.account-card.savings::before {
+  background-color: var(--accent-color);
+}
+
+.account-card.escrow::before {
+  background-color: var(--secondary-color);
+}
+
+.account-type {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.account-number {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  font-family: monospace;
+}
+
+.account-balance {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+/* Transaction Ledger Section */
+.ledger-card {
+  background-color: var(--bg-white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+}
+
+.ledger-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.ledger-filters {
+  display: flex;
+  gap: 12px;
+}
+
+.search-input {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-family: inherit;
+  width: 220px;
+}
+
+.filter-select {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-family: inherit;
+  background-color: var(--bg-white);
+}
+
+/* Scrollable Transaction Table */
+.transaction-container {
+  max-height: 450px;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+.transaction-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+}
+
+.transaction-table th {
+  background-color: var(--bg-light);
+  padding: 14px 18px;
+  font-weight: 600;
+  color: var(--secondary-color);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.transaction-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.transaction-table tr:hover {
+  background-color: #f9fafb;
+}
+
+.txn-date {
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.txn-desc {
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+.txn-category {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  background-color: var(--bg-light);
+  padding: 3px 8px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.txn-amount {
+  font-weight: 600;
+  text-align: right;
+}
+
+.amount-credit {
+  color: #16a34a;
+}
+
+.amount-debit {
+  color: #dc2626;
+}
+
+/* Form Tabs Content */
+.banking-tab-content {
+  display: none;
+  background-color: var(--bg-white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 40px;
+  box-shadow: var(--shadow-sm);
+  max-width: 650px;
+}
+
+.banking-tab-content.active {
+  display: block;
+}
+
+.banking-tab-content h3 {
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.banking-tab-content p.tab-desc {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+.btn-form-submit {
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%;
+}
+
+.btn-form-submit:hover {
+  background-color: var(--primary-hover);
+}
+
+.deposit-camera-area {
+  border: 2px dashed var(--border-color);
+  padding: 40px;
+  text-align: center;
+  border-radius: var(--radius-md);
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.deposit-camera-area:hover {
+  border-color: var(--accent-color);
+}
+
+.deposit-camera-icon svg {
+  width: 48px;
+  height: 48px;
+  fill: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.modal-notification {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  padding: 18px 24px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(150%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.modal-notification.show {
+  transform: translateY(0);
+}
+
+.modal-notification.success {
+  border-left: 4px solid var(--accent-color);
+}
+
+/* Footer Section */
+footer {
+  background-color: var(--secondary-color);
+  color: #a7bfae;
+  padding: 60px 0 40px;
+  font-size: 14px;
+  border-top: 4px solid var(--primary-color);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 40px;
+}
+
+.footer-about h3 {
+  color: var(--text-light);
+  margin-bottom: 16px;
+  font-size: 20px;
+}
+
+.footer-about p {
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
+
+.footer-links h4 {
+  color: var(--text-light);
+  margin-bottom: 16px;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.footer-links ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-links a {
+  color: #a7bfae;
+}
+
+.footer-links a:hover {
+  color: var(--text-light);
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer-copy {
+  font-size: 12px;
+}
+
+.footer-fdic-subtle {
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 992px) {
+  .grid-3, .blog-grid, .testimonials-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .accounts-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-3, .blog-grid, .testimonials-grid, .footer-grid {
+    grid-template-columns: 1fr;
+  }
+  .feature-layout {
+    flex-direction: column;
+  }
+  .calc-grid {
+    grid-template-columns: 1fr;
+  }
+  .banking-layout {
+    grid-template-columns: 1fr;
+  }
+  .menu-toggle {
+    display: block;
+  }
+  nav {
+    display: none;
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--bg-white);
+    box-shadow: var(--shadow-lg);
+    border-bottom: 1px solid var(--border-color);
+  }
+  nav.open {
+    display: block;
+  }
+  nav ul {
+    flex-direction: column;
+    padding: 24px;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .disclaimer-banner .container {
+    flex-direction: column;
+    text-align: center;
+    gap: 6px;
+  }
+  .disclaimer-text {
+    text-align: center;
+  }
+}

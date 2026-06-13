@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corporate Online Banking | Big Beaver Bank</title>
+  <meta name="description" content="Access the secure commercial banking portal of Big Beaver Bank. Manage corporate cash reserves and structured transactions.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="banking-page">
+
+  <!-- Top Header Disclaimer Banner -->
+  <div class="disclaimer-banner">
+    <div class="container">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span class="disclaimer-badge">NOT FDIC</span>
+        <span>A Fictional Corporate Entity</span>
+      </div>
+      <div class="disclaimer-text">
+        NOT FDIC-INSURED • BACKED BY NO FEDERAL GOVERNMENT • FOR SATIRICAL USE ONLY • MEMBER BEAVER ENTERPRISES
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Area -->
+  <div id="login-container" class="container">
+    <div class="login-card">
+      <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+        <svg viewBox="0 0 24 24" width="48" height="48" style="fill: var(--primary-color);">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+        </svg>
+      </div>
+      <h2>Secure Portal Access</h2>
+      <p>Enter your institutional credentials to access corporate treasury operations.</p>
+      
+      <div id="login-error" class="alert-error"></div>
+
+      <form id="login-form">
+        <div class="input-group" style="margin-bottom: 20px;">
+          <label for="username">Username</label>
+          <input type="text" id="username" placeholder="e.g., vandelay_exec" required>
+        </div>
+        <div class="input-group" style="margin-bottom: 24px;">
+          <label for="password">Security Password</label>
+          <input type="password" id="password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn-form-submit">Establish Secure Session</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Dashboard Area (Hidden on Load) -->
+  <div id="dashboard-container" style="display: none;">
+    <!-- Dashboard Header -->
+    <header>
+      <div class="header-main" style="padding: 12px 0;">
+        <div class="container" style="max-width: 1400px;">
+          <a href="index.html" class="logo">
+            <svg viewBox="0 0 24 24" width="28" height="28">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+            </svg>
+            Big Beaver Bank
+          </a>
+          <div style="font-size: 13px; color: var(--text-muted); font-weight: 500;">
+            TREASURY SERVICES PORTAL
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sidebar & Work Area Layout -->
+    <div class="banking-layout">
+      <!-- Sidebar Navigation -->
+      <aside class="banking-sidebar">
+        <div>
+          <div class="user-profile">
+            <div class="user-name" id="display-username">User Session</div>
+            <div class="user-role" id="display-role">Corporate Administrator</div>
+          </div>
+          <ul class="banking-menu">
+            <li class="banking-menu-item">
+              <button class="active" data-tab="tab-dashboard">
+                <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                Balances & Ledger
+              </button>
+            </li>
+            <li class="banking-menu-item">
+              <button data-tab="tab-transfer">
+                <svg viewBox="0 0 24 24"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>
+                Transfer Funds
+              </button>
+            </li>
+            <li class="banking-menu-item">
+              <button data-tab="tab-deposit">
+                <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+                Mobile Check Deposit
+              </button>
+            </li>
+            <li class="banking-menu-item">
+              <button data-tab="tab-loan">
+                <svg viewBox="0 0 24 24"><path d="M5 21h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zm2-14h10v2H7V7zm0 4h10v2H7v-2zm0 4h7v2H7v-2z"/></svg>
+                Apply for Commercial Credit
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <button id="logout-btn" class="banking-menu-item" style="width: 100%; border: none; background: none; color: #fca5a5; font-family: inherit; font-size: 14px; text-align: left; padding: 12px 16px; cursor: pointer; display: flex; align-items: center; gap: 12px;">
+            <svg viewBox="0 0 24 24" style="fill: currentColor; width: 16px; height: 16px;"><path d="M13 3h-2v10h2V3zm4.72 2.28l-1.41 1.41A6.97 6.97 0 0 1 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-1.91.76-3.64 2-4.91L5.59 4.67A8.92 8.92 0 0 0 3 12c0 4.97 4.02 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.28-6.72z"/></svg>
+            Terminate Session
+          </button>
+        </div>
+      </aside>
+
+      <!-- Work Content Area -->
+      <main class="banking-content">
+        <!-- 1. Balances & Ledger Tab -->
+        <div id="tab-dashboard" class="banking-tab-pane">
+          <h2 class="dashboard-title">Liquidity Overview</h2>
+          
+          <!-- Accounts Summary Grid -->
+          <div class="accounts-summary">
+            <div class="account-card checking">
+              <div class="account-type">Commercial Checking</div>
+              <div class="account-number">Acct No: ••••-7291</div>
+              <div class="account-balance" id="balance-checking">$4,582,912.44</div>
+            </div>
+            <div class="account-card savings">
+              <div class="account-type">Corporate Yield Savings</div>
+              <div class="account-number">Acct No: ••••-3304</div>
+              <div class="account-balance" id="balance-savings">$12,940,230.12</div>
+            </div>
+            <div class="account-card escrow">
+              <div class="account-type">Fiduciary Escrow</div>
+              <div class="account-number">Acct No: ••••-0081</div>
+              <div class="account-balance" id="balance-escrow">$75,000,000.00</div>
+            </div>
+          </div>
+
+          <!-- Transaction Ledger -->
+          <div class="ledger-card">
+            <div class="ledger-header">
+              <h3 style="font-size: 20px;">Institutional Transaction Ledger</h3>
+              <div class="ledger-filters">
+                <input type="text" id="ledger-search" class="search-input" placeholder="Filter descriptions...">
+                <select id="ledger-filter-type" class="filter-select">
+                  <option value="all">All Categories</option>
+                  <option value="deposit">Deposits</option>
+                  <option value="withdrawal">Withdrawals</option>
+                </select>
+              </div>
+            </div>
+            <div class="transaction-container">
+              <table class="transaction-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th style="text-align: right;">Amount</th>
+                  </tr>
+                </thead>
+                <tbody id="transaction-body">
+                  <!-- Generated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Transfer Funds Tab -->
+        <div id="tab-transfer" class="banking-tab-pane banking-tab-content">
+          <h3>Commercial Funds Transfer</h3>
+          <p class="tab-desc">Initiate immediate liquidity transfers between internal checking/savings accounts or dispatch wire transfers to registered external entities.</p>
+          
+          <form id="transfer-form">
+            <div class="input-group" style="margin-bottom: 20px;">
+              <label for="transfer-from">Source Account</label>
+              <select id="transfer-from" required>
+                <option value="checking">Commercial Checking (Acct ••••-7291)</option>
+                <option value="savings">Corporate Yield Savings (Acct ••••-3304)</option>
+              </select>
+            </div>
+            <div class="input-group" style="margin-bottom: 20px;">
+              <label for="transfer-to">Destination Entity / Account</label>
+              <select id="transfer-to" required>
+                <option value="checking-internal">Commercial Checking (Internal)</option>
+                <option value="savings-internal">Corporate Yield Savings (Internal)</option>
+                <option value="ext-bbe">Big Beaver Energy Corp (Corporate Merch Operations)</option>
+                <option value="ext-omega">Omega Mart (Citrus Settlement Account)</option>
+                <option value="ext-weyland">Weyland-Yutani Corp (Planetary Infrastructure)</option>
+                <option value="ext-vandelay">Vandelay Industries (Latex Futures Settlement)</option>
+                <option value="ext-dharma">Dharma Initiative (Island Support Fund)</option>
+                <option value="ext-initech">Initech Corp (Quality Assurance Audits)</option>
+                <option value="ext-globex">Globex Corporation (Sub-Mountain Grid Funding)</option>
+              </select>
+            </div>
+            <div class="input-group" style="margin-bottom: 24px;">
+              <label for="transfer-amount">Amount (USD)</label>
+              <input type="number" id="transfer-amount" min="1" max="1000000" step="100" placeholder="$0.00" required>
+            </div>
+            <button type="submit" class="btn-form-submit">Authorize Funds Transfer</button>
+          </form>
+        </div>
+
+        <!-- 3. Deposit Checks Tab -->
+        <div id="tab-deposit" class="banking-tab-pane banking-tab-content">
+          <h3>Mobile Check Deposit</h3>
+          <p class="tab-desc">Deposit institutional drafts and commercial checks directly into your checking account using your camera or file upload.</p>
+          
+          <form id="deposit-form">
+            <div class="input-group" style="margin-bottom: 20px;">
+              <label for="deposit-to">Deposit Destination</label>
+              <select id="deposit-to" required>
+                <option value="checking">Commercial Checking (Acct ••••-7291)</option>
+                <option value="savings">Corporate Yield Savings (Acct ••••-3304)</option>
+              </select>
+            </div>
+            
+            <div class="deposit-camera-area" id="camera-trigger">
+              <div class="deposit-camera-icon">
+                <svg viewBox="0 0 24 24"><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+              </div>
+              <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">Click to Capture Check Image</div>
+              <div style="font-size: 12px; color: var(--text-muted);">Ensure the check is flat, well-lit, and fully endorsed.</div>
+              <input type="file" id="check-file-input" style="display: none;" accept="image/*">
+            </div>
+
+            <div class="input-group" style="margin-bottom: 24px;">
+              <label for="deposit-amount">Check Value (USD)</label>
+              <input type="number" id="deposit-amount" min="1" max="500000" step="100" placeholder="$0.00" required>
+            </div>
+            <button type="submit" class="btn-form-submit">Submit Check for Verification</button>
+          </form>
+        </div>
+
+        <!-- 4. Apply for Credit Line Tab -->
+        <div id="tab-loan" class="banking-tab-pane banking-tab-content">
+          <h3>Apply for Commercial Credit</h3>
+          <p class="tab-desc">Secure additional revolving credit facilities or infrastructure development financing backed by corporate assets.</p>
+          
+          <form id="loan-form">
+            <div class="input-group" style="margin-bottom: 20px;">
+              <label for="loan-purpose">Credit Facility Purpose</label>
+              <select id="loan-purpose" required>
+                <option value="anomalous">Anomalous Supply Chain Stabilization</option>
+                <option value="space">Deep-Space Mining Rig Infrastructure</option>
+                <option value="latex">Latex Import Contracts and Inventory Hedging</option>
+                <option value="research">Electromagnetic Research Facilities</option>
+                <option value="corporate">Paper Distribution Expansion & Mergers</option>
+              </select>
+            </div>
+            <div class="input-group" style="margin-bottom: 20px;">
+              <label for="loan-collateral">Primary Collateral Class</label>
+              <select id="loan-collateral" required>
+                <option value="timber">Timber Reserves / Forest Claims</option>
+                <option value="citrus">Omega Mart Dimensional Lemon Stocks</option>
+                <option value="metals">Heavy Elements / Space Ore Claims</option>
+                <option value="paper">High-Volume Bond Paper Inventory</option>
+                <option value="scientific">Remote Island Real Estate Holds</option>
+              </select>
+            </div>
+            <div class="input-group" style="margin-bottom: 24px;">
+              <label for="loan-request-amount">Credit Limit Requested (USD)</label>
+              <input type="number" id="loan-request-amount" min="100000" max="100000000" step="100000" placeholder="$0.00" required>
+            </div>
+            <button type="submit" class="btn-form-submit">Submit Underwriting Application</button>
+          </form>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Notification Banner -->
+  <div id="notification-banner" class="modal-notification success">
+    <div id="notification-msg">Transaction completed successfully.</div>
+  </div>
+
+  <script src="js/banking.js"></script>
+</body>
+</html>
