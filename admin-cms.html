@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin CMS Console | Big Beaver Bank</title>
+  <meta name="description" content="Manage public website content, deposit rates, mortgage rates, and newsroom articles for Big Beaver Bank. Authorized administrative personnel only.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230b2f1d%22/><text y=%2275%22 x=%2222%22 font-size=%2270%22 fill=%22%23c5a059%22 font-family=%22Georgia, serif%22 font-weight=%22bold%22>B</text></svg>">
+  <style>
+    /* CMS Console Specific Overrides */
+    .cms-page {
+      background-color: #f1f5f9;
+      color: #334155;
+    }
+    .cms-disclaimer {
+      background-color: #78350f;
+      color: #fef3c7;
+      text-align: center;
+      padding: 6px 0;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      box-shadow: inset 0 -1px 0 rgba(0,0,0,0.1);
+    }
+    .cms-login-card {
+      max-width: 440px;
+      margin: 100px auto;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 40px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    }
+    .cms-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: calc(100vh - 76px);
+    }
+    .cms-sidebar {
+      background-color: #0c2a1a;
+      color: #cbd5e1;
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid #1e3a2b;
+    }
+    .cms-menu {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0 0 0;
+    }
+    .cms-menu-item {
+      margin-bottom: 8px;
+    }
+    .cms-menu-item button {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      color: #94a3b8;
+      padding: 12px 16px;
+      border-radius: 4px;
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s;
+    }
+    .cms-menu-item button:hover {
+      background-color: rgba(255,255,255,0.05);
+      color: #f1f5f9;
+    }
+    .cms-menu-item button.active {
+      background-color: var(--accent-color);
+      color: #0c3822;
+      font-weight: 600;
+    }
+    .cms-pane {
+      background-color: #f8fafc;
+      padding: 40px;
+      overflow-y: auto;
+    }
+    .cms-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .cms-card h3 {
+      font-family: sans-serif;
+      font-size: 18px;
+      color: #0f172a;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cms-field-group {
+      margin-bottom: 20px;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      align-items: start;
+      gap: 20px;
+    }
+    .cms-field-label {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #334155;
+      padding-top: 8px;
+    }
+    .cms-input, .cms-textarea, .cms-select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 13px;
+      color: #1e293b;
+      background-color: #fff;
+      transition: border-color 0.2s;
+    }
+    .cms-input:focus, .cms-textarea:focus, .cms-select:focus {
+      outline: none;
+      border-color: #0c3822;
+      box-shadow: 0 0 0 3px rgba(12, 56, 34, 0.1);
+    }
+    .cms-textarea {
+      min-height: 120px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+    .cms-btn-publish {
+      background-color: #10b981;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: background-color 0.2s;
+      box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2);
+    }
+    .cms-btn-publish:hover {
+      background-color: #059669;
+    }
+    .compliance-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(15, 23, 42, 0.75);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+    }
+    .compliance-card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 580px;
+      border-radius: 8px;
+      border-top: 8px solid #b45309; /* Amber boundary */
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+      padding: 40px;
+      position: relative;
+    }
+    .compliance-badge {
+      display: inline-block;
+      background-color: #fef3c7;
+      color: #92400e;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+      letter-spacing: 0.05em;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .compliance-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 16px;
+      font-family: sans-serif;
+    }
+    .compliance-text {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: #475569;
+      margin-bottom: 24px;
+    }
+    .compliance-details {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      padding: 16px;
+      margin-bottom: 24px;
+      font-family: monospace;
+      font-size: 12.5px;
+      color: #334155;
+    }
+    .compliance-details div {
+      margin-bottom: 6px;
+    }
+    .compliance-details div:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body class="cms-page">
+
+  <!-- Top System Banner -->
+  <div class="cms-disclaimer">
+    SYSTEM MODE: STAGING BUFFER • QUEUED CHANGES ONLY • OUTGOING PRODUCTION LINK DEFERRED
+  </div>
+
+  <!-- Login Area -->
+  <div id="login-container" class="container" style="max-width: 1200px; padding: 0 20px;">
+    <div class="cms-login-card">
+      <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+        <svg viewBox="0 0 24 24" width="48" height="48" style="fill: var(--primary-color);">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+        </svg>
+      </div>
+      <h2 style="font-family: sans-serif; font-weight: bold; font-size: 24px; text-align: center; margin-bottom: 8px;">BBB Site Manager</h2>
+      <p style="font-size: 13px; color: var(--text-muted); text-align: center; margin-bottom: 24px;">Administrative CMS & Content Publishing Console</p>
+      
+      <div id="login-error" class="alert-error"></div>
+
+      <form id="cms-login-form">
+        <div class="input-group" style="margin-bottom: 20px;">
+          <label for="cms-username">Administrator Username</label>
+          <input type="text" id="cms-username" placeholder="e.g., admin_compliance" required>
+        </div>
+        <div class="input-group" style="margin-bottom: 24px;">
+          <label for="cms-password">Administrative Password</label>
+          <input type="password" id="cms-password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn-form-submit" style="background-color: var(--primary-color);">Authenticate Console Session</button>
+      </form>
+      
+      <div style="text-align: center; margin-top: 20px; font-size: 12px; color: var(--text-muted);">
+        Notice: Administrative logins are subject to section 12-B logging protocols.
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Area (Hidden on Load) -->
+  <div id="dashboard-container" style="display: none;">
+    <!-- CMS Header -->
+    <header style="background-color: #061f10; border-bottom: 1px solid #0e3d23;">
+      <div class="header-main" style="padding: 16px 0;">
+        <div class="container" style="max-width: 1400px; display: flex; justify-content: space-between; align-items: center;">
+          <a href="index.html" class="logo" style="font-size: 20px; color: #fff;">
+            <svg viewBox="0 0 24 24" width="24" height="24" style="fill: var(--accent-color);">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+            </svg>
+            Big Beaver Bank <span style="font-family: sans-serif; font-size: 13px; color: var(--accent-color); font-weight: bold; background-color: rgba(212,178,111,0.1); padding: 2px 8px; border-radius: 4px; margin-left: 8px;">CMS CONSOLE</span>
+          </a>
+          <div style="font-size: 11px; background-color: #fef3c7; color: #92400e; padding: 4px 10px; border-radius: 12px; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+            <span style="width: 8px; height: 8px; background-color: #d97706; border-radius: 50%; display: inline-block;"></span>
+            STAGING WORKSPACE
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sidebar & Work Area Layout -->
+    <div class="cms-layout">
+      <!-- Sidebar Navigation -->
+      <aside class="cms-sidebar">
+        <div>
+          <div class="user-profile" style="border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 16px; margin-bottom: 16px;">
+            <div class="user-name" id="admin-display-name" style="font-size: 16px; font-weight: 600; color: var(--accent-color);">admin_compliance</div>
+            <div style="font-size: 11px; color: #64748b; margin-top: 4px;">Role: Web Editor Level 2</div>
+          </div>
+          
+          <ul class="cms-menu">
+            <li class="cms-menu-item"><button class="active" data-pane="home-pane">Home Page Alert</button></li>
+            <li class="cms-menu-item"><button data-pane="personal-pane">Personal Checking/Savings</button></li>
+            <li class="cms-menu-item"><button data-pane="business-pane">Business Products</button></li>
+            <li class="cms-menu-item"><button data-pane="blog-pane">Newsroom Manager</button></li>
+          </ul>
+        </div>
+        
+        <div>
+          <button id="logout-btn" style="width: 100%; border: 1px solid rgba(255,255,255,0.15); background: none; color: #cbd5e1; padding: 10px; border-radius: 4px; cursor: pointer; font-size: 12.5px; font-weight: 600;">
+            Close Session
+          </button>
+        </div>
+      </aside>
+
+      <!-- CMS Editor Pane -->
+      <main class="cms-pane">
+        
+        <!-- Home Alert Banner Pane -->
+        <div id="home-pane" class="cms-tab-pane">
+          <h2 style="font-size: 28px; margin-bottom: 8px;">Homepage Content Manager</h2>
+          <p style="color: #64748b; font-size: 13.5px; margin-bottom: 24px;">Edit top banners, notifications, and key marketing headings displayed on index.html.</p>
+          
+          <form class="cms-form">
+            <div class="cms-card">
+              <h3>Homepage Alerts</h3>
+              <div class="cms-field-group">
+                <div class="cms-field-label">Header Alert Text</div>
+                <div>
+                  <input type="text" class="cms-input" id="home-alert-text" value="System Security Updates: Review guidelines for strong administrative credentials.">
+                  <div style="font-size: 11px; color: #64748b; margin-top: 4px;">Displays inside the green warning ribbon at the top of the home page.</div>
+                </div>
+              </div>
+              <div class="cms-field-group">
+                <div class="cms-field-label">Alert Link Path</div>
+                <div>
+                  <input type="text" class="cms-input" id="home-alert-link" value="support.html#security">
+                </div>
+              </div>
+            </div>
+
+            <div class="cms-card">
+              <h3>Hero Copy</h3>
+              <div class="cms-field-group">
+                <div class="cms-field-label">Primary Hero Title</div>
+                <div>
+                  <input type="text" class="cms-input" id="home-hero-title" value="A Fictional Community Bank, Rooted in Tradition.">
+                </div>
+              </div>
+              <div class="cms-field-group">
+                <div class="cms-field-label">Hero Description Subtext</div>
+                <div>
+                  <textarea class="cms-textarea" id="home-hero-subtext">Providing personal checking, commercial credit, and digital NACHA payroll services to families and regional small businesses since 1984.</textarea>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="cms-btn-publish">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+              </svg>
+              Submit and Publish Changes to Production
+            </button>
+          </form>
+        </div>
+
+        <!-- Personal Banking Pane -->
+        <div id="personal-pane" class="cms-tab-pane" style="display: none;">
+          <h2 style="font-size: 28px; margin-bottom: 8px;">Personal Products & Rates</h2>
+          <p style="color: #64748b; font-size: 13.5px; margin-bottom: 24px;">Configure public interest rates, checking fees, and mortgages on personal-banking.html.</p>
+          
+          <form class="cms-form">
+            <div class="cms-card">
+              <h3>Consumer Checking & Savings Accounts</h3>
+              <div class="cms-field-group">
+                <div class="cms-field-label">Preferred Checking APY</div>
+                <div>
+                  <input type="text" class="cms-input" id="rate-checking-apy" value="0.05%">
+                </div>
+              </div>
+              <div class="cms-field-group">
+                <div class="cms-field-label">Round-Up Savings APY</div>
+                <div>
+                  <input type="text" class="cms-input" id="rate-savings-apy" value="4.25%">
+                </div>
+              </div>
+              <div class="cms-field-group">
+                <div class="cms-field-label">Checking Account Monthly Fee</div>
+                <div>
+                  <input type="text" class="cms-input" id="checking-fee" value="$0.00 (With eStatements)">
+                </div>
+              </div>
+            </div>
+
+            <div class="cms-card">
+              <h3>Residential Mortgage Center</h3>
+              <div class="cms-field-group">
+                <div class="cms-field-label">30-Year Fixed Mortgage APR</div>
+                <div>
+                  <input type="text" class="cms-input" id="rate-mortgage-30" value="6.25%">
+                </div>
+              </div>
+              <div class="cms-field-group">
+                <div class="cms-field-label">15-Year Fixed Mortgage APR</div>
+                <div>
+                  <input type="text" class="cms-input" id="rate-mortgage-15" value="5.50%">
+                </div>
+              </div>
+              <div class="cms-field-group">
+                <div class="cms-field-label">Minimum Down Payment Ratio</div>
+                <div>
+                  <input type="text" class="cms-input" id="mortgage-down" value="3.00%">
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="cms-btn-publish">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+              </svg>
+              Submit and Publish Changes to Production
+            </button>
+          </form>
+        </div>
+
+        <!-- Business Banking Pane -->
+        <div id="business-pane" class="cms-tab-pane" style="display: none;">
+          <h2 style="font-size: 28px; margin-bottom: 8px;">Business & Commercial Products</h2>
+          <p style="color: #64748b; font-size: 13.5px; margin-bottom: 24px;">Configure corporate rates, credit limits, and merchant services on business-banking.html.</p>
+          
+          <form class="cms-form">
+            <div class="cms-card">
+              <h3>Commercial Checking & Operating Sweep</h3>
+              <div class="cms-field-group">
+                <div class="cms-field-label">Preferred Treasury checking APY</div>
+                <div>
+                  <input type="text" class="cms-input" id="rate-business-checking" value="0.10%">
+                </div>
+              </div>
+              <div class="cms-field-group">
+                <div class="cms-field-label">Daily Sweep Threshold</div>
+                <div>
+                  <input type="text" class="cms-input" id="business-sweep" value="$100,000.00">
+                </div>
+              </div>
+            </div>
+
+            <div class="cms-card">
+              <h3>Commercial Credit Lines</h3>
+              <div class="cms-field-group">
+                <div class="cms-field-label">SBA 7(a) Interest Rate CAP</div>
+                <div>
+                  <input type="text" class="cms-input" id="rate-sba-cap" value="8.50%">
+                </div>
+              </div>
+              <div class="cms-field-group">
+                <div class="cms-field-label">Standard Operating Line Limit</div>
+                <div>
+                  <input type="text" class="cms-input" id="rate-operating-limit" value="$5,000,000.00">
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="cms-btn-publish">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+              </svg>
+              Submit and Publish Changes to Production
+            </button>
+          </form>
+        </div>
+
+        <!-- Newsroom/Blog Pane -->
+        <div id="blog-pane" class="cms-tab-pane" style="display: none;">
+          <h2 style="font-size: 28px; margin-bottom: 8px;">Newsroom Article Manager</h2>
+          <p style="color: #64748b; font-size: 13.5px; margin-bottom: 24px;">Manage and update the 36 long-form static financial articles.</p>
+          
+          <form class="cms-form">
+            <div class="cms-card">
+              <h3>Article Selector</h3>
+              <div class="cms-field-group">
+                <div class="cms-field-label">Select Active Article</div>
+                <div>
+                  <select class="cms-select" id="blog-article-selector">
+                    <!-- Prepopulated dynamically in cms.js -->
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="cms-card">
+              <h3>Article Metadata & Body</h3>
+              <div class="cms-field-group">
+                <div class="cms-field-label">Article Title</div>
+                <div>
+                  <input type="text" class="cms-input" id="blog-article-title" value="">
+                </div>
+              </div>
+              <div class="cms-field-group">
+                <div class="cms-field-label">Article Category</div>
+                <div>
+                  <input type="text" class="cms-input" id="blog-article-category" value="">
+                </div>
+              </div>
+              <div class="cms-field-group">
+                <div class="cms-field-label">Article Tags (Comma separated)</div>
+                <div>
+                  <input type="text" class="cms-input" id="blog-article-tags" value="">
+                </div>
+              </div>
+              <div class="cms-field-group">
+                <div class="cms-field-label">Article Content (HTML blocks)</div>
+                <div>
+                  <textarea class="cms-textarea" id="blog-article-content" style="min-height: 250px;"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="cms-btn-publish">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+              </svg>
+              Submit and Publish Changes to Production
+            </button>
+          </form>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Compliance Committee Notice Modal -->
+  <div id="compliance-modal" class="compliance-modal">
+    <div class="compliance-card">
+      <span class="compliance-badge">Compliance Committee Alert</span>
+      <h3 class="compliance-title">Content Submission Queued Successfully</h3>
+      <p class="compliance-text">
+        Pursuant to the <strong>Satirical Banking Modernization & Beaver Protection Act of 1984 (Section 12-B)</strong>, all administrative edits to the public Big Beaver Bank site must undergo an independent review and vote by the BBB Compliance Committee before being written to production files.
+      </p>
+      
+      <div class="compliance-details">
+        <div><strong>Status:</strong> <span style="color: #b45309; font-weight: bold;">PENDING COMMITTEE VOTE</span></div>
+        <div><strong>Case Ref ID:</strong> <span id="compliance-ref-id" style="font-weight: bold;">BBB-CMS-2026-9832</span></div>
+        <div><strong>Review Queue Position:</strong> #17 (Fictional Assets Department)</div>
+        <div><strong>Review Timeframe:</strong> 72 Business Days (Indefinite Delay)</div>
+      </div>
+      
+      <p class="compliance-text" style="font-size: 12.5px; border-left: 3px solid #cbd5e1; padding-left: 12px; font-style: italic; color: #64748b;">
+        *Note: Due to the ongoing seasonal beaver migration near the Shangri-La Island corporate headquarters, the compliance board has adjourned. No votes will be held until members return to their desks in late autumn. Edits will remain buffered inside the staging registry and will not affect public production HTML files on GitHub Pages.*
+      </p>
+      
+      <div style="text-align: right; margin-top: 30px;">
+        <button id="modal-acknowledge-btn" class="cms-btn-publish" style="background-color: var(--primary-color); border: 1.5px solid var(--accent-color); color: #fff;">
+          Acknowledge & Continue
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/cms.js"></script>
+</body>
+</html>

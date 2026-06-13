@@ -3,7 +3,7 @@
  * Manages mobile menus, calculators, branch locator (Leaflet/Nominatim), and demo tours.
  */
 
-document.addEventListener('DOMContentLoaded', () => {
+const init = () => {
   // --- MOBILE NAVIGATION menu ---
   const menuToggle = document.querySelector('.menu-toggle');
   const nav = document.querySelector('nav');
@@ -340,4 +340,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial run
     performSearch();
   }
-});
+};
+
+// Check if ready state is already interactive or complete
+if (document.readyState === 'interactive' || document.readyState === 'complete') {
+  init();
+} else {
+  document.addEventListener('DOMContentLoaded', init);
+}

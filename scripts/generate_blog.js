@@ -396,7 +396,7 @@ const renderArticle = (article, index) => {
       </div>
       <div class="footer-bottom">
         <div class="footer-copy">
-          &copy; 2026 Big Beaver Bank. All rights reserved. Equal Housing Lender.
+          &copy; 2026 Big Beaver Bank. All rights reserved. Equal Housing Lender. | <a href="../admin-cms.html" style="color: var(--text-muted); text-decoration: underline;">Admin Portal</a>
         </div>
         <div class="footer-fdic-subtle">
           DISCLAIMER: Big Beaver Bank is a purely fictional institution created as a creative test case and satire. Any references to actual financial institutions, regulations, laws, or assets are purely satirical. Not a licensed depositary institution. Assets held here are fully fictional. Inspired by the Big Beaver Energy movement. Please visit <a href="https://bigbeaverenergy.com" style="color: var(--accent-color); font-weight: 500;" target="_blank">bigbeaverenergy.com</a> for official merchandise.
@@ -536,7 +536,7 @@ const renderBlogIndex = (articleList) => {
       </div>
       <div class="footer-bottom">
         <div class="footer-copy">
-          &copy; 2026 Big Beaver Bank. All rights reserved. Equal Housing Lender.
+          &copy; 2026 Big Beaver Bank. All rights reserved. Equal Housing Lender. | <a href="admin-cms.html" style="color: var(--text-muted); text-decoration: underline;">Admin Portal</a>
         </div>
         <div class="footer-fdic-subtle">
           DISCLAIMER: Big Beaver Bank is a purely fictional institution created as a creative test case and satire. Any references to actual financial institutions, regulations, laws, or assets are purely satirical. Not a licensed depositary institution. Assets held here are fully fictional. Inspired by the Big Beaver Energy movement. Please visit <a href="https://bigbeaverenergy.com" style="color: var(--accent-color); font-weight: 500;" target="_blank">bigbeaverenergy.com</a> for official merchandise.
