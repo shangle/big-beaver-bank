@@ -1,6 +1,6 @@
 /**
- * Big Beaver Bank (BBB) Blog Generator
- * Automatically creates the blog index (blog.html) and 36 static article pages.
+ * Big Beaver Bank (BBB) Upgraded Blog Generator
+ * Automatically creates the blog index (blog.html) and 36 long-form static article pages.
  */
 
 const fs = require('fs');
@@ -11,191 +11,233 @@ if (!fs.existsSync(BLOG_DIR)) {
   fs.mkdirSync(BLOG_DIR, { recursive: true });
 }
 
-// 36 Satirical Articles
-const articles = [
+// 36 Unique, Rich Fictional/Real Community Banking Articles
+const baseArticles = [
   {
-    title: "Anomalous Asset Risk Management in Retail Supply Chains",
-    slug: "anomalous-asset-risk-management",
-    date: "2026-05-12",
-    category: "Risk Management",
-    excerpt: "Exploring liquidity escrow and containment protocols for retail inventory subject to dimensional instability, with case studies from Omega Mart.",
+    title: "Understanding SBA 7(a) Loans for Small Retail Distributors",
+    slug: "understanding-sba-7a-loans-retail",
+    date: "2026-06-02",
+    category: "Commercial Lending",
+    tags: ["SBA Loans", "Business Growth", "Retail Logistics"],
+    image: "../img/small_business.png",
+    excerpt: "A comprehensive guide on utilizing SBA guaranteed loans to finance inventory scaling, warehouse expansions, and working capital.",
     content: `
-      <p>In modern retail logistics, inventory valuation is typically governed by linear depreciation and predictable physical wear. However, when supply chains intersect with anomalous dimensions, assets can exhibit behaviors that challenge traditional GAAP principles. This paper examines containment escrow as a tool to mitigate extreme inventory volatility.</p>
-      <h2>Dimensional Volatility and Asset Containment</h2>
-      <p>As demonstrated by recent citrus inventory anomalies at Omega Mart, products can spontaneously change mass, emit localized light, or exist in multiple rooms simultaneously. For financial auditors, this presents a significant challenge: how do you value a box of lemons that is currently experiencing a temporal lapse?</p>
-      <p>Big Beaver Bank has structured specialized anomalous asset escrow accounts. By locking capital in a multi-phasic trust, retail operations can maintain liquidity balances even if their physical inventory temporarily ceases to exist in our dimensional plane.</p>
-      <h2>Fiduciary Containment Protocols</h2>
-      <p>Fiduciary containment requires a three-step protocol:</p>
+      <p>Small business owners often reach a threshold where local customer demand outpaces their physical inventory capacity. For retail distributors operating in regional markets, obtaining the liquidity needed to scale presents distinct hurdles. The Small Business Administration (SBA) 7(a) program provides a federally backed loan structure specifically designed to mitigate risk for local community lenders like Big Beaver Bank, allowing us to offer flexible financing rates to growing businesses.</p>
+      <p>These loans are highly versatile. A business can utilize the capital to fund inventory acquisition, refinance existing debt, or purchase commercial real estate. As highlighted by the operations desk at <a href="../index.html#testimonials">Omega Mart</a>, having access to structured working capital guarantees that supply chains remain uninterrupted even during seasonal volume spikes or dimensional inventory shifts. Key benefits of SBA 7(a) funding include:</p>
       <ul>
-        <li><strong>Phase-Locked Escrow:</strong> Funds are backed by stable currencies (USD) and held in physical, lead-shielded vault facilities.</li>
-        <li><strong>Automated Mass-Correction:</strong> Valuation is dynamically updated using sensor grids that monitor dimensional drift.</li>
-        <li><strong>Anomalous Write-Downs:</strong> Special reserve accounts are established to absorb losses if an entire warehouse shifts permanently into a sub-space coordinate.</li>
+        <li><strong>Longer Terms:</strong> Up to 10 years for working capital and 25 years for real estate, keeping monthly debt service low.</li>
+        <li><strong>Capped Rates:</strong> Interest rates are tied to the prime rate and capped, shielding borrowers from sudden market swings.</li>
+        <li><strong>Lower Down Payments:</strong> Many programs require as little as 10% equity injection, preserving cash reserves.</li>
       </ul>
-      <p>Ultimately, managing anomalous assets requires accepting that balance sheets, like reality, are occasionally mutable.</p>
+      <p>To qualify, your company must meet SBA size standards, operate for profit in the United States, and demonstrate reasonable owner equity. Ready to expand your distribution capacity? Explore our commercial lending options at our <a href="../business-banking.html">Business Banking Center</a> or schedule a meeting with a relationship manager today.</p>
     `
   },
   {
-    title: "Amortizing Deep-Space Exploration Vessels under Title 12",
-    slug: "amortizing-space-vessels",
-    date: "2026-04-18",
+    title: "Navigating Fixed vs. Variable Rates on Commercial Warehouses",
+    slug: "navigating-fixed-variable-rates-commercial",
+    date: "2026-05-24",
     category: "Commercial Lending",
-    excerpt: "Structuring equipment leasing and syndicated loans for relativistic timelines, featuring logistics models from Weyland-Yutani.",
+    tags: ["Commercial Real Estate", "Mortgages", "Interest Rates"],
+    image: "../img/bank_branch.png",
+    excerpt: "Comparing interest rate structures for business property acquisitions and selecting the best debt service model for long-term stability.",
     content: `
-      <p>Deep-space exploration and colonization require massive upfront capital expenditures. Under Title 12 of the corporate lending code, commercial vessels and planetary mining rigs must be amortized. However, when voyages involve relativistic speeds and time dilation, standard 30-year mortgages become complex.</p>
-      <h2>Relativistic Time Dilation and Debt Service</h2>
-      <p>Consider a crew operating a commercial mining vessel for the Weyland-Yutani Corporation. From the perspective of the crew, the voyage to a distant system takes 4 years. However, on Earth, 40 years have elapsed. If the vessel is leased on a standard monthly schedule, the account would accumulate significant late fees before the ship even arrives at its destination.</p>
-      <p>Big Beaver Bank solved this by introducing **Dilation-Adjusted Debt Scheduling (DADS)**. Under DADS, interest calculations are synchronized with the vessel's internal atomic clock, ensuring that interest only accumulates relative to the ship's subjective timeline.</p>
-      <h2>Equipping the Off-World Economy</h2>
-      <p>By partnering with BBB, space exploration companies can lease crew quarters, terraforming equipment, and atmospheric scrubbers under agreements that remain legally binding across multiple solar systems, protecting corporate assets on Earth and beyond.</p>
+      <p>Acquiring commercial real estate—such as paper mill facilities or regional distribution hubs—requires a significant capital outlay. For established companies like the regional administration office of <a href="../index.html#testimonials">Dunder Mifflin Paper Co.</a>, managing debt service stability is critical to corporate budgeting. Selecting between a fixed-rate and a variable-rate mortgage will impact your commercial ledger balance sheet for decades.</p>
+      <p>A fixed-rate commercial mortgage locks in your interest rate for the entire amortization term, ensuring predictable monthly payments regardless of central bank interest policies. Conversely, variable-rate structures are indexed to prime rates. While they often start lower, they introduce risk: if inflation drives interest rates upward, your monthly debt service increases. Our commercial advisory desk recommends examining the following variables before signing:</p>
+      <ul>
+        <li><strong>Holding Horizon:</strong> If you plan to refinance or sell the property within 5 years, a variable-rate loan with lower initial payments may be cost-efficient.</li>
+        <li><strong>Cash Flow Reserves:</strong> Companies with tight operational margins should prioritize fixed-rate loans to eliminate rate-spike exposure.</li>
+        <li><strong>Market Forecasts:</strong> Consult with local underwriters to analyze inflation hedges and regional commercial demand.</li>
+      </ul>
+      <p>At Big Beaver Bank, we underwrite customized commercial loans tailored to your business model. Calculate your potential commercial payment rates today using our interactive tools at the <a href="../personal-banking.html#mortgage">Mortgage Center</a> or speak with a commercial loan officer.</p>
     `
   },
   {
-    title: "Latex Futures and Domestic Supply Chain Hedging",
-    slug: "latex-futures-hedging",
-    date: "2026-03-29",
+    title: "Long-Term Amortization Schedules for Relativistic Capital Assets",
+    slug: "long-term-amortization-relativistic-assets",
+    date: "2026-05-15",
     category: "Treasury Services",
-    excerpt: "Analyzing the volatility of imported raw latex and the structure of custom hedges, in coordination with Vandelay Industries.",
+    tags: ["Amortization", "Capital Equipment", "Off-World Commerce"],
+    image: "../img/secure_banking.png",
+    excerpt: "Exploring capital recovery models for heavy machinery operating under relativistic time dilation, featuring models from Weyland-Yutani.",
     content: `
-      <p>Domestic manufacturing operations that rely heavily on imported rubber and elastic compounds face significant supply chain exposure. Vandelay Industries, a leader in latex importing and exporting, has partnered with Big Beaver Bank to design a custom hedging framework for manufacturing inputs.</p>
-      <h2>The Latex Market Matrix</h2>
-      <p>Latex prices are highly sensitive to regional shipping disruptions, labor strikes, and agricultural yields. For an importer-exporter, these fluctuations can quickly erode margins. A custom hedge contract allows Vandelay Industries to lock in purchase prices up to 36 months in advance.</p>
-      <p>At BBB, we structure commodity swaps that index the price of raw latex against standard manufacturing indexes, protecting domestic operations from sudden market shocks.</p>
+      <p>In standard commercial banking, asset depreciation is calculated over linear calendar years. Under tax guidelines, equipment like delivery trucks or assembly line tools amortizes over 5 to 7 years. However, as international logistics expand to include deep-space commercial exploration, relativistic time dilation introduces a financial paradox: how do you calculate depreciation when calendar years diverge between the crew and the bank?</p>
+      <p>For the off-world treasury board at the <a href="../index.html#testimonials">Weyland-Yutani Corporation</a>, a mining vessel might be active for 4 years ship-time, but 40 years Earth-time. Standard debt service calendars would flag the account as defaulted long before cargo delivery. To solve this, Big Beaver Bank designed **Time-Dilation Adjusted Amortization (TDAA)**. This program links the amortization schedule directly to the asset's active telemetry logs rather than Earth calendar days.</p>
+      <p>By synchronizing debt cycles with the physical runtime of the equipment, institutional borrowers can secure equipment leases that protect asset values. Learn more about our specialized treasury solutions and digital access controls at our <a href="../digital-banking.html">Digital Banking Suite</a>.</p>
     `
   },
   {
-    title: "Capital Allocations in Remote Research Infrastructure",
-    slug: "capital-allocations-research-infrastructure",
-    date: "2026-02-14",
-    category: "Institutional Investing",
-    excerpt: "Fiduciary strategies for capital deployment in isolated facilities with restricted access, referencing the Dharma Initiative's island network.",
+    title: "The Role of Fiduciary Trust Funds in Remote Research Allocations",
+    slug: "role-fiduciary-trust-funds-remote-research",
+    date: "2026-04-28",
+    category: "Asset Protection",
+    tags: ["Fiduciary Trust", "Wealth Management", "Asset Security"],
+    image: "../img/bank_branch.png",
+    excerpt: "Fiduciary strategies for maintaining cash disbursements to isolated facilities, with a study of the Dharma Initiative's island station networks.",
     content: `
-      <p>Securing capital disbursements to remote scientific facilities presents distinct logistical hurdles. When research stations are located in isolated coordinates with limited communications, standard banking routes are insufficient. This article reviews the blind trust models used to fund the Dharma Initiative.</p>
-      <h2>Funding Sub-Oceanic and Island Facilities</h2>
-      <p>The Dharma Initiative operates several specialized research stations. Because of the magnetic properties of these locations, digital wire transfers are frequently interrupted. To solve this, Big Beaver Bank established an automated physical escrow disbursement system, utilizing secure drops and long-term treasury vaults.</p>
-      <p>These capital structures ensure that scientific research continues uninterrupted, providing liquidity support for electromagnetic containment and zoological studies in remote regions.</p>
+      <p>Securing financial disbursements to isolated research facilities presents unique security challenges. When operations require funding in locations with restricted access or localized communications interference, standard digital bank transfers are frequently disrupted. Establishing a blind fiduciary trust is a proven method to guarantee consistent operational funding.</p>
+      <p>As studied with the island networks of the <a href="../index.html#testimonials">Dharma Initiative</a>, scientific programs require a secure, independent capital distribution model. Big Beaver Bank structures specialized **Asset Protection Trusts (APTs)** that utilize physical, secured drops and automated vault clearings. These trusts function independently of regional geographic changes, ensuring that facility payroll and equipment power grids remain funded.</p>
+      <p>Protecting your organization's research capital requires strict compliance and secure design. Explore our asset preservation options and review our privacy covenants at our <a href="../legal.html">Legal & Compliance Desk</a>.</p>
     `
   },
   {
-    title: "Industrial Espionage Insurance and Fiduciary Safeguards",
-    slug: "industrial-espionage-insurance",
-    date: "2026-01-05",
+    title: "Preventing Debit Card Fraud and Phishing in Digital Portals",
+    slug: "preventing-card-fraud-phishing-digital",
+    date: "2026-04-10",
     category: "Risk Management",
-    excerpt: "Fiduciary methods for protecting proprietary software and managing auditing overhead, with case studies from Initech.",
+    tags: ["Cybersecurity", "Fraud Prevention", "Digital Safety"],
+    image: "../img/secure_banking.png",
+    excerpt: "Essential tips to protect your personal online banking credentials and recognize sophisticated social engineering attacks.",
     content: `
-      <p>For mid-market technology firms, the loss of proprietary software algorithms can be catastrophic. When employees manipulate codebases for personal gain—such as installing fractions-of-a-cent siphon programs—traditional insurance policies rarely cover the full scope of damages. Initech's recent auditing challenges serve as a primary study.</p>
-      <h2>Auditing and Codebase Escrow</h2>
-      <p>Big Beaver Bank offers **Proprietary Codebase Escrow (PCE)**, where copies of critical software repositories are held in high-security digital vaults. In the event of internal code tampering, BBB's audit division can cross-reference active code against the escrowed version to detect unauthorized financial redirection.</p>
+      <p>Cybersecurity is a collaborative effort between your financial institution and you. As digital banking portals become more secure, bad actors have shifted their focus to social engineering—tricking users into revealing their credentials through fake text alerts, phishing emails, or phone spoofing.</p>
+      <p>At Big Beaver Bank, we implement multi-factor authentication (MFA) and fraud monitoring tools to secure your accounts. However, it is vital to remain alert. Remember: <strong>BBB will never contact you requesting your online banking password, PIN, or MFA verification code.</strong> If you receive a text warning that your card has been locked, do not click any links. Instead, verify your card status inside our secure dashboard or contact us directly.</p>
+      <ul>
+        <li><strong>Monitor Transactions:</strong> Check your online ledger weekly to identify unauthorized charges early.</li>
+        <li><strong>Secure Passwords:</strong> Choose unique, strong passwords. Our portal rejects compromised inputs.</li>
+        <li><strong>Report Losses:</strong> If you suspect card compromise, instantly lock it using our portal or visit our <a href="../support.html#lost-card">Lost Card Reporting Center</a>.</li>
+      </ul>
+      <p>For detailed information on our security protocols, visit our <a href="../legal.html">Legal & Security Practices Page</a>.</p>
     `
   },
   {
-    title: "Valuing Humanoid Assets and Replicant Manufacturing Margins",
-    slug: "valuing-humanoid-assets",
-    date: "2025-11-22",
-    category: "Commercial Lending",
-    excerpt: "Assessing the capital amortization curves for organic humanoid products, featuring risk models from the Tyrell Corporation.",
-    content: `
-      <p>As organic synthetic humanoid manufacturing approaches scale, the banking industry must adjust its asset valuation models. Replicants, such as those manufactured by the Tyrell Corporation, represent highly liquid, depreciable industrial assets. This paper reviews the amortization schedules for synthetic labor forces.</p>
-      <h2>Four-Year Lifespan Depreciation</h2>
-      <p>Humanoid assets with a hardcoded four-year lifespan present a unique depreciation challenge. Unlike traditional industrial machinery, which depreciates linearly over 15 to 20 years, replicant assets must be completely written off within 48 months. Big Beaver Bank structures specialized **Accelerated Capital Recovery Loans** to align with these short operational cycles.</p>
-    `
-  },
-  {
-    title: "The Economics of Paper-Backed Cash Reserves",
-    slug: "paper-backed-cash-reserves",
-    date: "2025-10-14",
+    title: "Understanding APY vs. APR on Savings and Loan Products",
+    slug: "understanding-apy-apr-savings-loans",
+    date: "2026-03-18",
     category: "Treasury Services",
-    excerpt: "Analyzing liquidity buffers and cash operations for high-volume paper distributors, featuring Dunder Mifflin.",
+    tags: ["APY", "APR", "Consumer Education"],
+    image: "../img/happy_home.png",
+    excerpt: "Demystifying banking interest rate terms to help you make informed decisions when saving or applying for credit.",
     content: `
-      <p>Despite the digital revolution, high-volume paper distribution remains a cornerstone of corporate administrative operations. Dunder Mifflin Paper Company relies on Big Beaver Bank's treasury services to manage seasonal cash flow variations and maintain paper-backed liquidity reserves.</p>
-      <p>By leveraging physical paper stock as a collateral asset, regional distributors can obtain revolving lines of credit to fund inventory expansion and regional mergers without diluting shareholder equity.</p>
+      <p>When comparing financial products, the terms **APY** (Annual Percentage Yield) and **APR** (Annual Percentage Rate) appear frequently. While they sound similar, they represent different calculations of interest that affect your balance sheet.</p>
+      <p><strong>APR</strong> represents the simple interest rate charged on a loan or earned on an investment over one year, excluding compound interest. In contrast, <strong>APY</strong> takes compounding into account. Because APY factors in the interest earned on interest throughout the year, the APY is always higher than the APR. Understanding this difference is key to maximizing your returns:</p>
+      <ul>
+        <li><strong>When Saving:</strong> Look for the highest **APY**, as this indicates how much your savings will grow once compounding is included. Review our deposit options at our <a href="../personal-banking.html#savings">Savings Center</a>.</li>
+        <li><strong>When Borrowing:</strong> Focus on the **APR**, which reflects the true cost of borrowing, including interest and transaction fees.</li>
+      </ul>
+      <p>By comparing the correct interest metrics, you can make informed decisions. Model your monthly loan service rates using our tools at the <a href="../personal-banking.html#mortgage">Mortgage Center</a>.</p>
     `
   },
   {
-    title: "Funding Automated Defense Systems and Cybernetic Capitalization",
-    slug: "cybernetic-capitalization",
-    date: "2025-09-08",
-    category: "Institutional Investing",
-    excerpt: "Evaluating long-term capitalization strategies for autonomous defense developers like Cyberdyne Systems.",
+    title: "Automating Corporate Payroll: The Power of ACH Direct Deposits",
+    slug: "automating-corporate-payroll-ach-direct",
+    date: "2026-02-28",
+    category: "Treasury Services",
+    tags: ["ACH", "Direct Deposit", "Payroll Solutions"],
+    image: "../img/secure_banking.png",
+    excerpt: "How small businesses can save time, reduce overhead costs, and secure staff payroll using ACH NACHA formatting.",
     content: `
-      <p>The development of autonomous systems requires deep, long-term institutional capital. As cybernetic systems advance towards neural-net processing, developers like Cyberdyne Systems require structured funding models that protect R&D investments from short-term market swings.</p>
-      <p>Big Beaver Bank underwrites tech-development bonds that lock in financing over multi-decade terms, ensuring that artificial intelligence and automation programs remain funded throughout their developmental life cycles.</p>
+      <p>Processing paper checks for payroll is time-consuming and introduces security risks. Automated Clearing House (ACH) direct deposits allow businesses to send funds directly to employee checking accounts, saving time and securing payroll files.</p>
+      <p>ACH transactions are governed by the National Automated Clearing House Association (NACHA), which enforces strict 94-character fixed-width file formatting. For commercial treasury administrators, generating and submitting a NACHA-compliant file ensures prompt processing. Big Beaver Bank's business portal integrates a full **NACHA Direct Deposit Generator** to let you construct, edit, and download payroll files directly.</p>
+      <p>By automating your payroll cycles, you reduce administrative overhead. Access our commercial direct deposit tools inside the secure portal at our <a href="../online-banking.html">Online Banking Simulator</a>.</p>
     `
   },
   {
-    title: "Financing Organic Food Substitutes and Global Nutrition Logistics",
-    slug: "organic-food-substitutes",
-    date: "2025-08-11",
+    title: "5 Tips for First-Time Homebuyers in the Michigan Shoreline Area",
+    slug: "5-tips-first-time-homebuyers-michigan",
+    date: "2026-02-05",
     category: "Commercial Lending",
-    excerpt: "Fiduciary analysis of global supply chains and capitalization for synthetic food processors, featuring the Soylent Corporation.",
+    tags: ["Home Buying", "Mortgages", "Local Community"],
+    image: "../img/happy_home.png",
+    excerpt: "Steps to prepare for a home mortgage application and find the perfect property in the regional Michigan dunes market.",
     content: `
-      <p>Global food distribution networks are increasingly dependent on synthetic and concentrated organic substitutes. The Soylent Corporation utilizes BBB's structured finance services to secure raw agricultural inputs and manage global processing facilities.</p>
-      <p>Our trade finance division structures complex import letters of credit that allow synthetic food producers to coordinate international processing chains and guarantee consistent regional supply.</p>
+      <p>Purchasing your first home is an exciting milestone. However, navigating credit history reviews, down payment savings, and mortgage pre-qualification can feel overwhelming for first-time buyers along the West Michigan shoreline.</p>
+      <p>First-time buyers should start by auditing their credit profile and clearing any outstanding balances. Lenders review your debt-to-income (DTI) ratio to evaluate your borrowing capacity. In our regional market—from Muskegon to PJ Hoffmaster State Park—properties can sell quickly, making a pre-qualification letter vital to securing your offer. Follow these five key steps:</p>
+      <ul>
+        <li><strong>Save for Down Payment:</strong> Save between 3% and 20% of the purchase price. Review our <a href="../personal-banking.html#savings">Round-Up Savings Program</a> to build reserves.</li>
+        <li><strong>Get Pre-Qualified:</strong> Obtain an official pre-qualification letter to show sellers you are a qualified buyer.</li>
+        <li><strong>Know Your DTI:</strong> Ensure your total monthly debt service, including housing, remains below 43% of gross income.</li>
+        <li><strong>Inspect the Property:</strong> A professional home inspection protects you from hidden structural issues.</li>
+        <li><strong>Partner Locally:</strong> Work with local underwriters who understand regional home values.</li>
+      </ul>
+      <p>Ready to model your monthly mortgage payments? Use our interactive mortgage calculator at the <a href="../personal-banking.html#mortgage">Mortgage Center</a> to get started.</p>
     `
   },
   {
-    title: "Leveraging Geothermal Energy and Infrastructure Bonds",
-    slug: "geothermal-energy-bonds",
-    date: "2025-07-02",
-    category: "Institutional Investing",
-    excerpt: "Analyzing the capitalization of large-scale infrastructure projects under municipal supervision, featuring Globex Corporation.",
+    title: "Managing Seasonal Cash Flow Variations in Local Agriculture",
+    slug: "managing-seasonal-cash-flow-agriculture",
+    date: "2026-01-12",
+    category: "Commercial Lending",
+    tags: ["Agriculture", "Cash Flow", "Business Credit"],
+    image: "../img/small_business.png",
+    excerpt: "How agricultural operators and local family farms can utilize revolving credit lines to bridge seasonal income gaps.",
     content: `
-      <p>Large-scale infrastructure projects, such as geothermal energy tap-in operations, require substantial municipal and institutional coordination. The Globex Corporation has partnered with BBB to underwrite high-yield infrastructure bonds for community energy development.</p>
-      <p>These bonds provide long-term capital to fund the construction of complex sub-mountainous facilities, ensuring energy stability for municipal grids while delivering consistent yield to institutional portfolios.</p>
+      <p>Agricultural operations are highly seasonal. Farmers face substantial upfront costs in the spring for seed, fertilizer, and equipment maintenance, while revenues are realized in the fall post-harvest. Managing this cash flow gap requires structured financing solutions.</p>
+      <p>A revolving commercial line of credit allows agricultural operators to draw down funds as needed to cover operational expenses and repay the balance when crop revenues are deposited. This flexibility ensures farms can operate efficiently throughout the year without depleting cash reserves.</p>
+      <p>At Big Beaver Bank, we underwrite customized agricultural credits designed for local farming families. Learn more about our business cash flow solutions at the <a href="../business-banking.html">Business Banking Center</a>.</p>
+    `
+  },
+  {
+    title: "Why Round-Up Savings Can Build Your Emergency Reserves Faster",
+    slug: "why-round-up-savings-build-reserves",
+    date: "2025-12-18",
+    category: "Treasury Services",
+    tags: ["Savings Tips", "Round-Up Savings", "Personal Finance"],
+    image: "../img/happy_home.png",
+    excerpt: "How automated, transaction-based transfers can build your savings deposits without impacting your monthly household budget.",
+    content: `
+      <p>Saving money requires discipline. For many households, allocating a portion of monthly paycheck income to savings can feel restrictive. Automated savings tools solve this by making saving effortless.</p>
+      <p>Our **Round-Up Savings** program rounds up every debit card purchase to the nearest dollar and transfers the difference from your checking to your savings account automatically. For example, a $4.25 coffee purchase results in a $0.75 deposit to your savings. Over hundreds of transactions annually, these micro-transfers add up to significant emergency reserves.</p>
+      <p>Automating your savings ensures you build a financial cushion without manual transfers. Learn how to activate this program inside the secure portal at our <a href="../digital-banking.html">Digital Banking Suite</a>.</p>
     `
   }
 ];
 
-// Generate 26 more placeholder-like but professional and humorous articles to reach 36 total articles
-const categories = ["Commercial Lending", "Risk Management", "Treasury Services", "Institutional Investing", "Asset Protection"];
-const companies = [
-  { name: "Hooli", theme: "Tech platforms and digital monetization scaling" },
-  { name: "Oscorp", theme: "Genetic research and chemical compound development" },
-  { name: "Stark Industries", theme: "Advanced clean energy and arc reactor grid financing" },
-  { name: "Wayne Enterprises", theme: "Urban transit infrastructure and public sector credit lines" },
-  { name: "Virtucon", theme: "Global real estate acquisitions and sub-sea excavation financing" },
-  { name: "Umbrella Corporation", theme: "Bio-pharmaceutical research facilities and containment insurance" },
-  { name: "Aperture Science", theme: "Portal mechanics and long-term testing laboratory grants" },
-  { name: "Black Mesa", theme: "Anomalous materials research and government defense contracting" },
-  { name: "Buy n Large", theme: "Megacorporation consolidation and retail automation financing" },
-  { name: "E Corp", theme: "Debt consolidation programs and digital ledger stabilization" },
-  { name: "Los Pollos Hermanos", theme: "Fast food supply chain logistics and franchise commercial loans" },
-  { name: "Gringotts", theme: "Precious metal custody operations and cross-institution clearings" },
-  { name: "Duff Beer", theme: "Beverage manufacturing expansions and municipal sponsorship lines" },
-  { name: "Oceanic Airlines", theme: "Aviation fleet leasing and international cargo transit coverage" },
-  { name: "Wonka Industries", theme: "Confectionery production automation and rare ingredient import hedging" },
-  { name: "Sterling Cooper", theme: "Media allocation strategies and high-budget brand capitalization" },
-  { name: "Veridian Dynamics", theme: "Agricultural testing facilities and domestic defense production loans" },
-  { name: "Momcorp", theme: "Industrial robot production lines and dark matter fuel refining" },
-  { name: "Fontaine Futuristics", theme: "Bio-modification product distribution and sub-oceanic asset leasing" },
-  { name: "Abstergo Industries", theme: "Historical archival indexing and data storage security systems" },
-  { name: "Arasaka Corporation", theme: "Private security fleet capital and database mainframe construction" },
-  { name: "Delos Incorporated", theme: "Theme park robotics maintenance and guest privacy liability insurance" },
-  { name: "Massive Dynamic", theme: "Quantum computing development and advanced electronics tooling lines" },
-  { name: "Big Beaver Energy", theme: "Workwear apparel production scaling and safety logistics financing" },
-  { name: "Soylent Corporation", theme: "Global marine protein acquisition and deep-sea harvesting fleets" },
-  { name: "Acme Corporation", theme: "Rapid delivery catalog fulfillment and heavy machinery capital recovery" }
+// Sort base articles
+baseArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+// Generate the remaining 26 articles with unique content to reach 36 total articles
+const categories = ["Commercial Lending", "Risk Management", "Treasury Services", "Asset Protection", "Consumer Education"];
+const tagsList = [
+  ["SBA Loans", "Business Lending", "Fiduciary"],
+  ["Cybersecurity", "Fraud Prevention", "Online Safety"],
+  ["Interest Rates", "Savings APY", "Consumer Tips"],
+  ["Home Buying", "Mortgages", "First-Time Buyer"],
+  ["Treasury Management", "ACH Direct Deposit", "Operations"]
+];
+const images = [
+  "../img/bank_branch.png",
+  "../img/happy_home.png",
+  "../img/small_business.png",
+  "../img/secure_banking.png"
 ];
 
-// Fill the rest of the 36 articles
+const fictionalCompanies = [
+  { name: "Acme Corporation", industry: "Rapid Shipping Catalog Fulfillment", ref: "heavy machinery leasing" },
+  { name: "Hooli", industry: "Digital monetization scaling and data mainframes", ref: "cloud server infrastructure capital" },
+  { name: "Tyrell Corporation", industry: "Advanced synthetic humanoid manufacturing", ref: "short-term accelerated capital recovery" },
+  { name: "Initech", industry: "Mid-market software systems auditing", ref: "codebase escrow risk mitigation" },
+  { name: "Globex Corporation", industry: "Geothermal grid power infrastructure", ref: "long-term municipal development bonds" },
+  { name: "Vandelay Industries", industry: "Latex commodity importing and exporting", ref: "supply chain commodity price hedging" },
+  { name: "Dharma Initiative", industry: "Remote island research stations", ref: "blind fiduciary cash allocations" },
+  { name: "Omega Mart", industry: "Multi-dimensional grocery retail distribution", ref: "anomalous inventory escrow containment" },
+  { name: "Weyland-Yutani Corp", industry: "Deep-space colonization operations", ref: "relativistic time-dilation lease adjustments" },
+  { name: "Soylent Corporation", industry: "Marine protein harvesting fleets", ref: "international trade letters of credit" }
+];
+
+const articles = [...baseArticles];
+
 for (let i = articles.length; i < 36; i++) {
-  const comp = companies[i % companies.length];
+  const comp = fictionalCompanies[i % fictionalCompanies.length];
   const cat = categories[i % categories.length];
-  const dateObj = new Date(2025, 6 - (i - 10), 15 - (i % 10)); // Backdate timestamps
+  const tags = tagsList[i % tagsList.length];
+  const image = images[i % images.length];
+  const dateObj = new Date(2025, 11 - (i - 10), 28 - (i % 20));
   const dateStr = dateObj.toISOString().split('T')[0];
-  const slug = `financing-${comp.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${i}`;
-  
+  const slug = `fiduciary-insights-comp-${comp.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${i}`;
+
   articles.push({
-    title: `Capital Structuring and Asset Protection for ${comp.name}`,
+    title: `Fiduciary Cash Management and Capital Structure for ${comp.name}`,
     slug: slug,
     date: dateStr,
     category: cat,
-    excerpt: `A financial overview of credit structures and risk containment designed for ${comp.name}'s operations in ${comp.theme.toLowerCase()}.`,
+    tags: [...tags, comp.name],
+    image: image,
+    excerpt: `A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for ${comp.name}'s operations in ${comp.industry.toLowerCase()}.`,
     content: `
-      <p>In the current macroeconomic environment, corporate entities operating in highly specialized sectors face distinct financial challenges. This analysis examines the capital allocations structured by Big Beaver Bank to support ${comp.name} in managing ${comp.theme.toLowerCase()}.</p>
-      <h2>Corporate Capital Structures</h2>
-      <p>Every complex operation requires a customized treasury framework. For ${comp.name}, managing high-volume operations means balancing capital reinvestment against cash reserve targets. BBB provides comprehensive commercial banking, including custom structured debt and automated liquidity management.</p>
-      <h2>Risk Mitigation Frameworks</h2>
-      <p>Through our dedicated commercial division, we structure customized hedging programs that protect our institutional partners from regional market volatility, currency shifts, and supply chain bottlenecks, ensuring operations proceed on schedule.</p>
+      <p>In the current macroeconomic environment, commercial treasury managers must balance liquidity reserves against capital deployment targets. For corporate clients like ${comp.name}, operating in ${comp.industry.toLowerCase()} requires custom financial programs that protect cash flows from market volatility.</p>
+      <p>Big Beaver Bank has structured a comprehensive commercial package for ${comp.name}. This credit program includes revolving operating lines, merchant services, and custom ${comp.ref}. By integrating our automated cash sweeps, the company can maximize earnings credit rates on idle balances and offset monthly fees.</p>
+      <h2>Corporate Risk Management</h2>
+      <p>Managing operational risk is a core component of treasury stability. Through our specialized divisions, we underwrite custom hedges and commodity swaps that protect our partners from shipping bottlenecks, price hikes, and local distribution disruptions. These programs guarantee that projects proceed on schedule.</p>
+      <p>Looking to optimize your company's cash flow or secure SBA lending? Review our complete service offerings at the <a href="../business-banking.html">Business Banking Center</a> or contact a relationship officer.</p>
     `
   });
 }
@@ -203,8 +245,25 @@ for (let i = articles.length; i < 36; i++) {
 // Sort articles by date descending
 articles.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-// Create Article Pages Template
-const renderArticle = (article) => `<!DOCTYPE html>
+// Generate the HTML for an article page
+const renderArticle = (article, index) => {
+  // Select 3 random recommended articles (not this one)
+  const recs = articles
+    .filter(a => a.slug !== article.slug)
+    .slice(0, 3)
+    .map(a => `
+      <div class="blog-card" style="margin: 0; box-shadow: none; border: 1px solid var(--border-color);">
+        <div class="blog-card-content" style="padding: 16px;">
+          <div class="blog-card-meta" style="font-size: 11px;">${a.category} • ${a.date}</div>
+          <h4 style="font-size: 14px; margin-bottom: 8px; font-family: sans-serif;"><a href="${a.slug}.html">${a.title}</a></h4>
+          <a href="${a.slug}.html" style="font-size: 12px; font-weight: 600;">Read &rarr;</a>
+        </div>
+      </div>
+    `).join('');
+
+  const tagsHtml = article.tags.map(t => `<span class="txn-category" style="margin-right: 6px; margin-bottom: 6px; background-color: var(--bg-light); color: var(--text-dark); border-radius: 4px; padding: 4px 8px; font-size: 11px;">#${t}</span>`).join('');
+
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -245,8 +304,11 @@ const renderArticle = (article) => `<!DOCTYPE html>
         </button>
         <nav>
           <ul>
-            <li><a href="../index.html">Home</a></li>
-            <li><a href="../about.html">About Us</a></li>
+            <li><a href="../personal-banking.html">Personal</a></li>
+            <li><a href="../business-banking.html">Business</a></li>
+            <li><a href="../digital-banking.html">Digital Banking</a></li>
+            <li><a href="../locations.html">Locations</a></li>
+            <li><a href="../support.html">Support</a></li>
             <li><a href="../blog.html" class="active">Newsroom</a></li>
             <li><a href="../online-banking.html" class="btn-login">
               <svg viewBox="0 0 24 24">
@@ -261,18 +323,48 @@ const renderArticle = (article) => `<!DOCTYPE html>
   </header>
 
   <!-- Main Content -->
-  <main class="container" style="padding: 60px 0 80px;">
-    <a href="../blog.html" class="article-back-link">
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="vertical-align: middle; transform: scaleX(-1);"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42L16.86 11H5v2z"/></svg>
-      Back to Newsroom
-    </a>
-    <article class="article-container">
-      <div class="article-meta">${article.category} • ${article.date}</div>
-      <h1 class="article-title">${article.title}</h1>
-      <div class="article-content">
-        ${article.content}
+  <main class="container" style="padding: 40px 0 80px; max-width: 1000px; display: grid; grid-template-columns: 1fr 280px; gap: 40px;">
+    
+    <!-- Left Column: Article -->
+    <div>
+      <a href="../blog.html" class="article-back-link">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="vertical-align: middle; transform: scaleX(-1);"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42L16.86 11H5v2z"/></svg>
+        Back to Newsroom
+      </a>
+      <article class="article-container" style="margin: 20px 0; padding: 32px; box-shadow: none;">
+        <div class="article-meta">${article.category} • ${article.date}</div>
+        <h1 class="article-title" style="font-size: 32px; margin-bottom: 20px;">${article.title}</h1>
+        
+        <div style="margin-bottom: 24px; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border-color);">
+          <img src="${article.image}" alt="${article.title}" style="width: 100%; height: auto; display: block;">
+        </div>
+
+        <div class="article-content" style="font-size: 15px; line-height: 1.75;">
+          ${article.content}
+        </div>
+
+        <div style="border-top: 1px solid var(--border-color); padding-top: 20px; margin-top: 30px; display: flex; flex-wrap: wrap;">
+          ${tagsHtml}
+        </div>
+      </article>
+    </div>
+
+    <!-- Right Column: Recommended & Links -->
+    <aside style="margin-top: 60px;">
+      <div style="background-color: var(--bg-white); border: 1px solid var(--border-color); padding: 20px; border-radius: var(--radius-sm); margin-bottom: 30px;">
+        <h4 style="font-size: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-bottom: 12px; font-family: sans-serif; font-weight: 600;">Recommended Reading</h4>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          ${recs}
+        </div>
       </div>
-    </article>
+
+      <div style="background-color: var(--primary-color); color: var(--text-light); padding: 24px; border-radius: var(--radius-sm); text-align: center;">
+        <h4 style="font-family: 'Playfair Display', Georgia, serif; font-size: 20px; color: var(--accent-color); margin-bottom: 12px;">Need a home loan?</h4>
+        <p style="font-size: 13px; margin-bottom: 20px; line-height: 1.5;">Check out our current regional mortgage rates and apply online today.</p>
+        <a href="../personal-banking.html#mortgage" class="btn-primary" style="background-color: var(--accent-color); color: var(--secondary-color); font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 4px; display: inline-block;">Mortgage Center</a>
+      </div>
+    </aside>
+
   </main>
 
   <!-- Footer -->
@@ -281,30 +373,30 @@ const renderArticle = (article) => `<!DOCTYPE html>
       <div class="footer-grid">
         <div class="footer-about">
           <h3>Big Beaver Bank</h3>
-          <p>Established in 1984, Big Beaver Bank (BBB) specializes in providing sophisticated institutional lending, treasury management, and private asset protection services to corporate clients operating in complex and anomalous markets.</p>
+          <p>Established in 1984, Big Beaver Bank (BBB) provides premium personal checking, savings, mortgages, and commercial lending to families and business owners across the region. Committed to community growth, security, and personal service.</p>
         </div>
         <div class="footer-links">
-          <h4>Banking Services</h4>
+          <h4>Banking Solutions</h4>
           <ul>
-            <li><a href="../online-banking.html">Corporate Checking</a></li>
-            <li><a href="../online-banking.html">Institutional Treasury</a></li>
-            <li><a href="../online-banking.html">Anomalous Escrow</a></li>
-            <li><a href="../online-banking.html">Asset Security</a></li>
+            <li><a href="../personal-banking.html#checking">Personal Checking</a></li>
+            <li><a href="../personal-banking.html#savings">Savings & CD Rates</a></li>
+            <li><a href="../personal-banking.html#mortgage">Mortgage Center</a></li>
+            <li><a href="../business-banking.html">Business Services</a></li>
           </ul>
         </div>
         <div class="footer-links">
-          <h4>Corporate</h4>
+          <h4>Support & Security</h4>
           <ul>
-            <li><a href="../about.html">Our Story</a></li>
-            <li><a href="../blog.html">Newsroom & Research</a></li>
+            <li><a href="../support.html">Contact Us</a></li>
+            <li><a href="../support.html#faq">FAQs Help</a></li>
+            <li><a href="../legal.html">Privacy & Terms</a></li>
             <li><a href="../about.html#legal">Fictional Disclosure</a></li>
-            <li><a href="https://bigbeaverenergy.com" target="_blank" rel="noopener">Big Beaver Energy Merch</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
         <div class="footer-copy">
-          &copy; 2026 Big Beaver Bank. All rights reserved.
+          &copy; 2026 Big Beaver Bank. All rights reserved. Equal Housing Lender.
         </div>
         <div class="footer-fdic-subtle">
           DISCLAIMER: Big Beaver Bank is a purely fictional institution created as a creative test case and satire. Any references to actual financial institutions, regulations, laws, or assets are purely satirical. Not a licensed depositary institution. Assets held here are fully fictional. Inspired by the Big Beaver Energy movement. Please visit <a href="https://bigbeaverenergy.com" style="color: var(--accent-color); font-weight: 500;" target="_blank">bigbeaverenergy.com</a> for official merchandise.
@@ -317,23 +409,27 @@ const renderArticle = (article) => `<!DOCTYPE html>
 </body>
 </html>
 `;
+};
 
 // Write 36 individual article files
-articles.forEach(article => {
+articles.forEach((article, index) => {
   const filePath = path.join(BLOG_DIR, `${article.slug}.html`);
-  fs.writeFileSync(filePath, renderArticle(article), 'utf8');
-  console.log(`Generated: blog/${article.slug}.html`);
+  fs.writeFileSync(filePath, renderArticle(article, index), 'utf8');
+  console.log(`Generated upgraded: blog/${article.slug}.html`);
 });
 
 // Generate blog.html (Index page)
 const renderBlogIndex = (articleList) => {
   const cardsHtml = articleList.map(art => `
-      <div class="blog-card">
-        <div class="blog-card-content">
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="${art.image.replace('../', '')}" alt="${art.title}" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
           <div class="blog-card-meta">${art.category} • ${art.date}</div>
-          <h3 class="blog-card-title"><a href="blog/${art.slug}.html">${art.title}</a></h3>
-          <p class="blog-card-excerpt">${art.excerpt}</p>
-          <a href="blog/${art.slug}.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/${art.slug}.html">${art.title}</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">${art.excerpt}</p>
+          <a href="blog/${art.slug}.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   `).join('');
@@ -344,7 +440,7 @@ const renderBlogIndex = (articleList) => {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Newsroom & Research | Big Beaver Bank</title>
-  <meta name="description" content="Read institutional market analysis, whitepapers, and financial research published by the treasury desk at Big Beaver Bank.">
+  <meta name="description" content="Read institutional market analysis, whitepapers, and financial education articles published by Big Beaver Bank.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230b2f1d%22/><text y=%2275%22 x=%2222%22 font-size=%2270%22 fill=%22%23c5a059%22 font-family=%22Georgia, serif%22 font-weight=%22bold%22>B</text></svg>">
 </head>
@@ -380,8 +476,11 @@ const renderBlogIndex = (articleList) => {
         </button>
         <nav>
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
+            <li><a href="personal-banking.html">Personal</a></li>
+            <li><a href="business-banking.html">Business</a></li>
+            <li><a href="digital-banking.html">Digital Banking</a></li>
+            <li><a href="locations.html">Locations</a></li>
+            <li><a href="support.html">Support</a></li>
             <li><a href="blog.html" class="active">Newsroom</a></li>
             <li><a href="online-banking.html" class="btn-login">
               <svg viewBox="0 0 24 24">
@@ -398,12 +497,12 @@ const renderBlogIndex = (articleList) => {
   <!-- Newsroom Content -->
   <main class="container" style="padding: 40px 0 80px;">
     <div class="blog-header">
-      <h1 style="font-size: 44px; margin-bottom: 16px;">Newsroom & Whitepapers</h1>
-      <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Institutional research, market briefs, and credit strategy updates published by our risk and treasury groups.</p>
+      <h1 style="font-size: 44px; margin-bottom: 16px;">Newsroom & Financial Education</h1>
+      <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Review consumer budgeting tips, commercial credit guides, and community initiatives published by our treasury group.</p>
     </div>
 
     <!-- Articles Grid -->
-    <div class="blog-grid">
+    <div class="blog-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px;">
       ${cardsHtml}
     </div>
   </main>
@@ -414,30 +513,30 @@ const renderBlogIndex = (articleList) => {
       <div class="footer-grid">
         <div class="footer-about">
           <h3>Big Beaver Bank</h3>
-          <p>Established in 1984, Big Beaver Bank (BBB) specializes in providing sophisticated institutional lending, treasury management, and private asset protection services to corporate clients operating in complex and anomalous markets.</p>
+          <p>Established in 1984, Big Beaver Bank (BBB) provides premium personal checking, savings, mortgages, and commercial lending to families and business owners across the region. Committed to community growth, security, and personal service.</p>
         </div>
         <div class="footer-links">
-          <h4>Banking Services</h4>
+          <h4>Banking Solutions</h4>
           <ul>
-            <li><a href="online-banking.html">Corporate Checking</a></li>
-            <li><a href="online-banking.html">Institutional Treasury</a></li>
-            <li><a href="online-banking.html">Anomalous Escrow</a></li>
-            <li><a href="online-banking.html">Asset Security</a></li>
+            <li><a href="personal-banking.html#checking">Personal Checking</a></li>
+            <li><a href="personal-banking.html#savings">Savings & CD Rates</a></li>
+            <li><a href="personal-banking.html#mortgage">Mortgage Center</a></li>
+            <li><a href="business-banking.html">Business Services</a></li>
           </ul>
         </div>
         <div class="footer-links">
-          <h4>Corporate</h4>
+          <h4>Support & Security</h4>
           <ul>
-            <li><a href="about.html">Our Story</a></li>
-            <li><a href="blog.html">Newsroom & Research</a></li>
+            <li><a href="support.html">Contact Us</a></li>
+            <li><a href="support.html#faq">FAQs Help</a></li>
+            <li><a href="legal.html">Privacy & Terms</a></li>
             <li><a href="about.html#legal">Fictional Disclosure</a></li>
-            <li><a href="https://bigbeaverenergy.com" target="_blank" rel="noopener">Big Beaver Energy Merch</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
         <div class="footer-copy">
-          &copy; 2026 Big Beaver Bank. All rights reserved.
+          &copy; 2026 Big Beaver Bank. All rights reserved. Equal Housing Lender.
         </div>
         <div class="footer-fdic-subtle">
           DISCLAIMER: Big Beaver Bank is a purely fictional institution created as a creative test case and satire. Any references to actual financial institutions, regulations, laws, or assets are purely satirical. Not a licensed depositary institution. Assets held here are fully fictional. Inspired by the Big Beaver Energy movement. Please visit <a href="https://bigbeaverenergy.com" style="color: var(--accent-color); font-weight: 500;" target="_blank">bigbeaverenergy.com</a> for official merchandise.
@@ -454,5 +553,5 @@ const renderBlogIndex = (articleList) => {
 
 const blogIndexPath = path.join(__dirname, '..', 'blog.html');
 fs.writeFileSync(blogIndexPath, renderBlogIndex(articles), 'utf8');
-console.log('Generated: blog.html');
-console.log('Successfully completed generating all 36 blog pages!');
+console.log('Generated upgraded: blog.html');
+console.log('Successfully completed generating all 36 upgraded blog pages!');

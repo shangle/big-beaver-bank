@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Banking | Big Beaver Bank</title>
+  <meta name="description" content="Access your accounts 24/7 with online banking and the BBB Mobile App. Learn how to deposit checks, transfer funds, and pay bills securely.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230b2f1d%22/><text y=%2275%22 x=%2222%22 font-size=%2270%22 fill=%22%23c5a059%22 font-family=%22Georgia, serif%22 font-weight=%22bold%22>B</text></svg>">
+</head>
+<body>
+
+  <!-- Top Header Disclaimer Banner -->
+  <div class="disclaimer-banner">
+    <div class="container">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span class="disclaimer-badge">NOT FDIC</span>
+        <span>A Fictional Corporate Entity</span>
+      </div>
+      <div class="disclaimer-text">
+        NOT FDIC-INSURED • BACKED BY NO FEDERAL GOVERNMENT • FOR SATIRICAL USE ONLY • MEMBER BEAVER ENTERPRISES
+      </div>
+    </div>
+  </div>
+
+  <!-- Header Main -->
+  <header>
+    <div class="header-main">
+      <div class="container">
+        <a href="index.html" class="logo">
+          <svg viewBox="0 0 24 24" width="32" height="32">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+          </svg>
+          Big Beaver Bank
+        </a>
+        <button class="menu-toggle" aria-label="Toggle navigation menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <nav>
+          <ul>
+            <li><a href="personal-banking.html">Personal</a></li>
+            <li><a href="business-banking.html">Business</a></li>
+            <li><a href="digital-banking.html" class="active">Digital Banking</a></li>
+            <li><a href="locations.html">Locations</a></li>
+            <li><a href="support.html">Support</a></li>
+            <li><a href="blog.html">Newsroom</a></li>
+            <li><a href="online-banking.html" class="btn-login">
+              <svg viewBox="0 0 24 24">
+                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+              </svg>
+              Secure Login
+            </a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Hero -->
+  <section class="hero" style="padding: 50px 0; background-color: var(--primary-color);">
+    <div class="container">
+      <h1 style="font-size: 38px;">Digital Banking Suite</h1>
+      <p style="margin-bottom: 0;">Fiduciary control at your fingertips, 24/7/365.</p>
+    </div>
+  </section>
+
+  <!-- Digital Services Intro -->
+  <section class="container" style="padding: 60px 0 20px;">
+    <div class="feature-layout">
+      <div class="feature-text">
+        <h2 style="font-size: 28px; margin-bottom: 16px;">Bank Anywhere, Anytime</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Big Beaver Bank brings secure modern tools directly to your personal device. Manage balances, dispatch external wires, schedule automatic bill payments, and monitor credit health easily from the office or home.</p>
+        
+        <div style="display: flex; gap: 12px; margin-bottom: 30px;">
+          <!-- Mock app store badge styling -->
+          <a href="#" onclick="alert('Simulated App Store: Download file payload for BBB Mobile app is undergoing regional store audit. Available soon!')" style="display: inline-block; background-color: #000; color: #fff; padding: 8px 16px; border-radius: 6px; font-family: sans-serif; font-size: 11px; text-decoration: none; border: 1px solid #333;">
+            <div style="font-size: 8px; text-transform: uppercase;">Download on the</div>
+            <div style="font-size: 14px; font-weight: 700;">App Store</div>
+          </a>
+          <a href="#" onclick="alert('Simulated Google Play: App payload packaging is in final verification checks.')" style="display: inline-block; background-color: #000; color: #fff; padding: 8px 16px; border-radius: 6px; font-family: sans-serif; font-size: 11px; text-decoration: none; border: 1px solid #333;">
+            <div style="font-size: 8px; text-transform: uppercase;">Get it on</div>
+            <div style="font-size: 14px; font-weight: 700;">Google Play</div>
+          </a>
+        </div>
+      </div>
+      <div class="feature-image" style="max-width: 450px;">
+        <img src="img/secure_banking.png" alt="Secure digital banking dashboard mockup" style="border-radius: var(--radius-sm);">
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Tutorial Demo -->
+  <section style="background-color: var(--bg-white); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 80px 0;">
+    <div class="container">
+      <div style="text-align: center; max-width: 700px; margin: 0 auto 40px;">
+        <h2 style="font-size: 36px; margin-bottom: 16px;">Interactive Digital Banking Tour</h2>
+        <p style="color: var(--text-muted);">Select a tutorial topic below to walk through a simulated demonstration of our primary online features.</p>
+      </div>
+
+      <!-- Demo Player Layout -->
+      <div class="demo-player-container">
+        <!-- Sidebar Controls -->
+        <div class="demo-sidebar">
+          <button class="demo-ctrl-btn active" data-demo="transfer">
+            <span class="num">01</span>
+            <span class="txt">Simulating Transfers</span>
+          </button>
+          <button class="demo-ctrl-btn" data-demo="deposit">
+            <span class="num">02</span>
+            <span class="txt">Depositing a Check</span>
+          </button>
+          <button class="demo-ctrl-btn" data-demo="common-pass">
+            <span class="num">03</span>
+            <span class="txt">Security Credentials</span>
+          </button>
+          <button class="demo-ctrl-btn" data-demo="nacha">
+            <span class="num">04</span>
+            <span class="txt">NACHA Payroll (Business)</span>
+          </button>
+        </div>
+
+        <!-- Visual Monitor Screen -->
+        <div class="demo-screen">
+          <div class="demo-screen-content" id="demo-display">
+            <!-- Initialized dynamically in main.js -->
+            <h4>Interactive Tutorial Simulator</h4>
+            <p>Select a topic on the left to start the walkthrough.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Enrollment Guide -->
+  <section class="container" style="padding: 60px 0 80px; max-width: 800px;">
+    <h2 style="font-size: 28px; margin-bottom: 24px; text-align: center;">Enrollment Guide</h2>
+    <div class="calc-inputs" style="gap: 20px;">
+      <div style="border-left: 3px solid var(--accent-color); padding-left: 20px;">
+        <h4 style="font-family: sans-serif; font-size: 16px; margin-bottom: 4px; font-weight: 600; color: var(--primary-color);">Step 1: Check Enrollment Eligibility</h4>
+        <p style="font-size: 14px; color: var(--text-muted);">You must hold an active personal checking, commercial account, or loan program with BBB. Have your account number and primary tax identifier ready.</p>
+      </div>
+      <div style="border-left: 3px solid var(--accent-color); padding-left: 20px;">
+        <h4 style="font-family: sans-serif; font-size: 16px; margin-bottom: 4px; font-weight: 600; color: var(--primary-color);">Step 2: Access the Registration Page</h4>
+        <p style="font-size: 14px; color: var(--text-muted);">Navigate to our Secure Login portal and enter a unique username. If the credential is unregistered, you will be prompted to establish a new password.</p>
+      </div>
+      <div style="border-left: 3px solid var(--accent-color); padding-left: 20px;">
+        <h4 style="font-family: sans-serif; font-size: 16px; margin-bottom: 4px; font-weight: 600; color: var(--primary-color);">Step 3: Establish Password Credentials</h4>
+        <p style="font-size: 14px; color: var(--text-muted);">Select a unique password. Our security validator rejects common/compromised inputs. Write down your credentials; our portal lock is tied to your username.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <h3>Big Beaver Bank</h3>
+          <p>Established in 1984, Big Beaver Bank (BBB) provides premium personal checking, savings, mortgages, and commercial lending to families and business owners across the region. Committed to community growth, security, and personal service.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Banking Solutions</h4>
+          <ul>
+            <li><a href="personal-banking.html#checking">Personal Checking</a></li>
+            <li><a href="personal-banking.html#savings">Savings & CD Rates</a></li>
+            <li><a href="personal-banking.html#mortgage">Mortgage Center</a></li>
+            <li><a href="business-banking.html">Business Services</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Support & Security</h4>
+          <ul>
+            <li><a href="support.html">Contact Us</a></li>
+            <li><a href="support.html#faq">FAQs Help</a></li>
+            <li><a href="legal.html">Privacy & Terms</a></li>
+            <li><a href="about.html#legal">Fictional Disclosure</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">
+          &copy; 2026 Big Beaver Bank. All rights reserved. Equal Housing Lender.
+        </div>
+        <div class="footer-fdic-subtle">
+          DISCLAIMER: Big Beaver Bank is a purely fictional institution created as a creative test case and satire. Any references to actual financial institutions, regulations, laws, or assets are purely satirical. Not a licensed depositary institution. Assets held here are fully fictional. Inspired by the Big Beaver Energy movement. Please visit <a href="https://bigbeaverenergy.com" style="color: var(--accent-color); font-weight: 500;" target="_blank">bigbeaverenergy.com</a> for official merchandise.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

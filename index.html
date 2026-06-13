@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Big Beaver Bank | Institutional Wealth & Corporate Treasury</title>
-  <meta name="description" content="Big Beaver Bank provides premium commercial lending, private wealth management, and secure treasury solutions for the world's most complex corporate enterprises.">
+  <title>Big Beaver Bank | Your Trusted Community Partner</title>
+  <meta name="description" content="Big Beaver Bank provides personal checking, savings, mortgages, small business loans, and secure digital banking services. Member FDIC. Equal Housing Lender.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230b2f1d%22/><text y=%2275%22 x=%2222%22 font-size=%2270%22 fill=%22%23c5a059%22 font-family=%22Georgia, serif%22 font-weight=%22bold%22>B</text></svg>">
 </head>
@@ -23,14 +23,27 @@
     </div>
   </div>
 
+  <!-- Operational Alerts (Holiday Closures & Fraud Notice) -->
+  <div class="alert-bar-container">
+    <div class="container alert-bar">
+      <div class="alert-item">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        <strong>Holiday Notice:</strong> Branches will be closed on Friday, June 19th in observance of Juneteenth. Digital banking remains available 24/7.
+      </div>
+      <div class="alert-item">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+        <strong>Security Alert:</strong> BBB will never ask for your PIN, password, or MFA code over text or phone. Report suspicious requests immediately.
+      </div>
+    </div>
+  </div>
+
   <!-- Header Main -->
   <header>
     <div class="header-main">
       <div class="container">
         <a href="index.html" class="logo">
           <svg viewBox="0 0 24 24" width="32" height="32">
-            <!-- Professional Shield logo with beaver-like curves -->
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
           </svg>
           Big Beaver Bank
         </a>
@@ -41,8 +54,11 @@
         </button>
         <nav>
           <ul>
-            <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
+            <li><a href="personal-banking.html">Personal</a></li>
+            <li><a href="business-banking.html">Business</a></li>
+            <li><a href="digital-banking.html">Digital Banking</a></li>
+            <li><a href="locations.html">Locations</a></li>
+            <li><a href="support.html">Support</a></li>
             <li><a href="blog.html">Newsroom</a></li>
             <li><a href="online-banking.html" class="btn-login">
               <svg viewBox="0 0 24 24">
@@ -56,150 +72,132 @@
     </div>
   </header>
 
+  <!-- Quick Links Bar (Routing Number, Contact, Search) -->
+  <div class="quick-links-bar">
+    <div class="container quick-links-grid">
+      <div class="quick-link-item">
+        <span class="label">Routing Number:</span>
+        <span class="value" id="copy-routing" style="cursor: pointer;" title="Click to copy">071000288</span>
+      </div>
+      <div class="quick-link-item">
+        <span class="label">Customer Service:</span>
+        <span class="value">1-800-555-2274</span>
+      </div>
+      <div class="quick-link-item">
+        <span class="label">Lost/Stolen Card:</span>
+        <a href="support.html#lost-card" class="value link">Report Immediately</a>
+      </div>
+      <div class="quick-link-search">
+        <form action="support.html" method="GET">
+          <input type="text" name="q" placeholder="Search our site (e.g., check order)...">
+          <button type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- Hero Section -->
   <section class="hero">
     <div class="container">
-      <h1>Capital Solutions for Complex Enterprises</h1>
-      <p>Providing institutional liquidity, commercial credit, and asset protection strategies for market-leading operations across the multiverse.</p>
-      <a href="online-banking.html" class="btn-primary">Access Commercial Portal</a>
+      <h1>Protecting What Matters Most to Our Communities</h1>
+      <p>Providing local mortgage lending, agricultural credit, and personal wealth management tailored to your community's unique character since 1984.</p>
+      <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+        <a href="personal-banking.html#checking" class="btn-primary" style="background-color: var(--accent-color); color: var(--secondary-color);">Explore Checking</a>
+        <a href="personal-banking.html#mortgage" class="btn-primary" style="background-color: transparent; border: 2px solid #ffffff; color: #ffffff;">Home Loan Rates</a>
+      </div>
     </div>
   </section>
 
-  <!-- Services Grid -->
+  <!-- Promotional Panel: Mortgage Center -->
+  <section class="feature-panel">
+    <div class="container feature-layout">
+      <div class="feature-text">
+        <span style="color: var(--accent-color); font-weight: 600; text-transform: uppercase; font-size: 13px; letter-spacing: 0.1em; display: block; margin-bottom: 8px;">Regional Mortgages</span>
+        <h2>Your Dream Home is Closer Than You Think</h2>
+        <p>Whether you're purchasing your first home, expanding your ranch, or looking to refinance your current property, our local loan officers are here to help you navigate every step of the mortgage process with competitive rates and zero hidden fees.</p>
+        <div style="display: flex; gap: 24px; margin-bottom: 24px;">
+          <div>
+            <div style="font-size: 32px; font-weight: 700; color: var(--primary-color); font-family: 'Playfair Display', Georgia, serif;">5.875%</div>
+            <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">30-Yr Fixed Rate</div>
+          </div>
+          <div style="border-left: 1px solid var(--border-color);"></div>
+          <div>
+            <div style="font-size: 32px; font-weight: 700; color: var(--primary-color); font-family: 'Playfair Display', Georgia, serif;">5.992%</div>
+            <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Estimated APR</div>
+          </div>
+        </div>
+        <a href="personal-banking.html#mortgage" class="btn-primary" style="background-color: var(--primary-color); color: #ffffff; padding: 10px 22px; font-size: 14px;">Apply Online Now</a>
+      </div>
+      <div class="feature-image">
+        <img src="img/happy_home.png" alt="Cozy Family Home supported by BBB Mortgages" style="border-radius: var(--radius-sm);">
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Offerings Grid -->
   <section class="container" style="padding: 80px 0 20px;">
     <div style="text-align: center; max-width: 700px; margin: 0 auto 40px;">
-      <h2 style="font-size: 36px; margin-bottom: 16px;">Corporate & Private Wealth Services</h2>
-      <p style="color: var(--text-muted);">We specialize in structuring high-value financial programs that standard commercial banks are structurally unequipped to manage.</p>
+      <h2 style="font-size: 36px; margin-bottom: 16px;">Complete Financial Services</h2>
+      <p style="color: var(--text-muted);">Serving families, farmers, and local independent businesses with secure tools and personal service.</p>
     </div>
     <div class="grid-3" style="margin-top: 0;">
       <!-- Service 1 -->
       <div class="card">
         <div class="card-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
         </div>
-        <h3>Anomalous Asset Escrow</h3>
-        <p>Providing specialized containment liquidity and transactional settlement pipelines for goods operating outside standard physical dimensions.</p>
+        <h3>Personal Checking & Savings</h3>
+        <p>No-fee checking options, round-up savings plans, and local interest-bearing certificates of deposit to help your family grow.</p>
+        <a href="personal-banking.html" style="font-weight: 600; font-size: 13px; margin-top: 16px; display: inline-block;">Learn More &rarr;</a>
       </div>
       <!-- Service 2 -->
       <div class="card">
         <div class="card-icon">
-          <svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 14H4v-4h11v4zm0-5H4V9h11v4zm5 5h-4V9h4v9z"/></svg>
         </div>
-        <h3>Deep-Space Capitalization</h3>
-        <p>Syndicated credit facilities, planetary mining bonds, and equipment leasing structured to amortize across relativistic voyage timelines.</p>
+        <h3>Agricultural & Commercial Credits</h3>
+        <p>Flexible operating lines, equipment leasing, and local small business association (SBA) lending programs to fund regional growth.</p>
+        <a href="business-banking.html" style="font-weight: 600; font-size: 13px; margin-top: 16px; display: inline-block;">Explore Business Services &rarr;</a>
       </div>
       <!-- Service 3 -->
       <div class="card">
         <div class="card-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
         </div>
-        <h3>Fiduciary Discretion</h3>
-        <p>Asset shelter structures, blind trusts, and paper-based liquidity reserves designed to withstand strict auditing or regional regulatory shifts.</p>
+        <h3>Secure Digital Banking</h3>
+        <p>Manage deposits, pay bills, monitor credit scores, and review statement records securely 24/7 on your mobile device or desktop.</p>
+        <a href="digital-banking.html" style="font-weight: 600; font-size: 13px; margin-top: 16px; display: inline-block;">View Features &rarr;</a>
       </div>
     </div>
   </section>
 
-  <!-- Interactive Calculator Section -->
-  <section class="calc-section" style="background-color: var(--bg-light); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
-    <div class="container">
-      <div style="text-align: center; max-width: 700px; margin: 0 auto;">
-        <h2 style="font-size: 36px; margin-bottom: 16px;">Commercial Amortization Calculator</h2>
-        <p style="color: var(--text-muted);">Model your corporate expansion plans. Calculate commercial debt structures instantly based on competitive market rates.</p>
-      </div>
-      <div class="calc-container">
-        <div class="calc-grid">
-          <div class="calc-inputs">
-            <div class="input-group">
-              <label for="calc-amount">Loan Amount (USD)</label>
-              <input type="number" id="calc-amount" value="5000000" min="10000" step="50000">
-            </div>
-            <div class="input-group">
-              <label for="calc-rate">Annual Interest Rate (%)</label>
-              <input type="number" id="calc-rate" value="5.85" min="0.1" step="0.05">
-            </div>
-            <div class="input-group">
-              <label for="calc-term">Amortization Term</label>
-              <select id="calc-term">
-                <option value="5">5 Years (Short-Term Credit)</option>
-                <option value="10">10 Years (Equipment Leasing)</option>
-                <option value="15" selected>15 Years (Commercial Mortgage)</option>
-                <option value="30">30 Years (Capital Infrastructure)</option>
-              </select>
-            </div>
-          </div>
-          <div class="calc-results">
-            <div class="result-label">Estimated Monthly Debt Service</div>
-            <div class="result-value" id="result-monthly">$0.00</div>
-            <div class="result-breakdown">
-              <div class="breakdown-item">
-                <span class="breakdown-label">Principal</span>
-                <span class="breakdown-value" id="result-principal">$0.00</span>
-              </div>
-              <div class="breakdown-item">
-                <span class="breakdown-label">Interest Paid</span>
-                <span class="breakdown-value" id="result-interest">$0.00</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonials Section -->
+  <!-- Community Testimonials Section -->
   <section class="testimonials-section">
     <div class="container">
-      <div style="text-align: center; max-width: 700px; margin: 0 auto;">
-        <h2 style="font-size: 36px; margin-bottom: 16px;">Trusted by Global Industries</h2>
-        <p style="color: var(--text-muted);">Hear how our institutional custody and lending portfolios support the operations of leading organizations.</p>
+      <div style="text-align: center; max-width: 700px; margin: 0 auto 30px;">
+        <h2 style="font-size: 36px; margin-bottom: 16px;">Deeply Rooted in Fictional Industries</h2>
+        <p style="color: var(--text-muted);">See how our community credit facilities and local commercial support help keep major enterprises growing.</p>
       </div>
       <div class="testimonials-grid">
-        <!-- Testimonial 1 -->
         <div class="testimonial-card">
-          <p class="testimonial-text">"Managing supply-chain liquidity for our tradespeople and retail accessories requires rapid, flexible capital. BBB structured a treasury operations package that handles our national expansion with absolute security."</p>
+          <p class="testimonial-text">"SBA lending programs at BBB let us upgrade our safety vest distribution pipeline and fund regional print advertising campaigns. Their commercial team treated our operations with absolute professionalism."</p>
           <div>
-            <div class="testimonial-author">Treasury Division</div>
+            <div class="testimonial-author">Logistics Division</div>
             <div class="testimonial-company">Big Beaver Energy</div>
           </div>
         </div>
-        <!-- Testimonial 2 -->
         <div class="testimonial-card">
-          <p class="testimonial-text">"When you are dealing with products that defy standard laws of thermodynamics, traditional escrow services fail. BBB provides anomalous asset containment financing that keeps our inventory stable."</p>
+          <p class="testimonial-text">"Our retail inventory is highly complex. The cash management team at BBB tailored checking sweeps and night drop boxes that secure our daily cash flow, regardless of supply chain spikes."</p>
           <div>
-            <div class="testimonial-author">Customer Service Operations</div>
+            <div class="testimonial-author">Regional Management Desk</div>
             <div class="testimonial-company">Omega Mart</div>
           </div>
         </div>
-        <!-- Testimonial 3 -->
         <div class="testimonial-card">
-          <p class="testimonial-text">"Our deep-space colonization operations operate across relativistic time dilation curves. BBB is the only institution capable of structuring commercial bonds that mature correctly under time dilation."</p>
+          <p class="testimonial-text">"BBB's commercial lending desk provided equipment financing that let us purchase new steam boilers and heavy-duty paper mill machinery. They understand regional industry inside and out."</p>
           <div>
-            <div class="testimonial-author">Off-World Treasury Board</div>
-            <div class="testimonial-company">Weyland-Yutani Corporation</div>
-          </div>
-        </div>
-        <!-- Testimonial 4 -->
-        <div class="testimonial-card">
-          <p class="testimonial-text">"Our regional distribution required a highly confidential capital line to acquire local competitors. BBB's paper-backed cash reserves gave us the leverage we needed without alerting the market."</p>
-          <div>
-            <div class="testimonial-author">Regional Management Office</div>
+            <div class="testimonial-author">Treasury Department</div>
             <div class="testimonial-company">Dunder Mifflin Paper Co.</div>
-          </div>
-        </div>
-        <!-- Testimonial 5 -->
-        <div class="testimonial-card">
-          <p class="testimonial-text">"The Dharma Initiative depends on continuous funding to maintain our remote sub-oceanic research enclosures. BBB secures our capital disbursements via specialized blind trusts regardless of geographic isolation."</p>
-          <div>
-            <div class="testimonial-author">Fiduciary Operations</div>
-            <div class="testimonial-company">The Dharma Initiative</div>
-          </div>
-        </div>
-        <!-- Testimonial 6 -->
-        <div class="testimonial-card">
-          <p class="testimonial-text">"We selected BBB to handle our municipal equipment procurement. Their ability to underwrite complex acquisitions—such as high-yield dynamite reserves and rocket-propelled skates—is unparalleled."</p>
-          <div>
-            <div class="testimonial-author">Acquisitions Desk</div>
-            <div class="testimonial-company">Acme Corporation</div>
           </div>
         </div>
       </div>
@@ -212,30 +210,30 @@
       <div class="footer-grid">
         <div class="footer-about">
           <h3>Big Beaver Bank</h3>
-          <p>Established in 1984, Big Beaver Bank (BBB) specializes in providing sophisticated institutional lending, treasury management, and private asset protection services to corporate clients operating in complex and anomalous markets.</p>
+          <p>Established in 1984, Big Beaver Bank (BBB) provides premium personal checking, savings, mortgages, and commercial lending to families and business owners across the region. Committed to community growth, security, and personal service.</p>
         </div>
         <div class="footer-links">
-          <h4>Banking Services</h4>
+          <h4>Banking Solutions</h4>
           <ul>
-            <li><a href="online-banking.html">Corporate Checking</a></li>
-            <li><a href="online-banking.html">Institutional Treasury</a></li>
-            <li><a href="online-banking.html">Anomalous Escrow</a></li>
-            <li><a href="online-banking.html">Asset Security</a></li>
+            <li><a href="personal-banking.html#checking">Personal Checking</a></li>
+            <li><a href="personal-banking.html#savings">Savings & CD Rates</a></li>
+            <li><a href="personal-banking.html#mortgage">Mortgage Center</a></li>
+            <li><a href="business-banking.html">Business Services</a></li>
           </ul>
         </div>
         <div class="footer-links">
-          <h4>Corporate</h4>
+          <h4>Support & Security</h4>
           <ul>
-            <li><a href="about.html">Our Story</a></li>
-            <li><a href="blog.html">Newsroom & Research</a></li>
+            <li><a href="support.html">Contact Us</a></li>
+            <li><a href="support.html#faq">FAQs Help</a></li>
+            <li><a href="legal.html">Privacy & Terms</a></li>
             <li><a href="about.html#legal">Fictional Disclosure</a></li>
-            <li><a href="https://bigbeaverenergy.com" target="_blank" rel="noopener">Big Beaver Energy Merch</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
         <div class="footer-copy">
-          &copy; 2026 Big Beaver Bank. All rights reserved.
+          &copy; 2026 Big Beaver Bank. All rights reserved. Equal Housing Lender.
         </div>
         <div class="footer-fdic-subtle">
           DISCLAIMER: Big Beaver Bank is a purely fictional institution created as a creative test case and satire. Any references to actual financial institutions, regulations, laws, or assets are purely satirical. Not a licensed depositary institution. Assets held here are fully fictional. Inspired by the Big Beaver Energy movement. Please visit <a href="https://bigbeaverenergy.com" style="color: var(--accent-color); font-weight: 500;" target="_blank">bigbeaverenergy.com</a> for official merchandise.

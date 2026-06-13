@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Banking | Big Beaver Bank</title>
+  <meta name="description" content="Explore personal checking, savings, rewards credit cards, and mortgage rates at Big Beaver Bank. Your financial security is our priority.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230b2f1d%22/><text y=%2275%22 x=%2222%22 font-size=%2270%22 fill=%22%23c5a059%22 font-family=%22Georgia, serif%22 font-weight=%22bold%22>B</text></svg>">
+</head>
+<body>
+
+  <!-- Top Header Disclaimer Banner -->
+  <div class="disclaimer-banner">
+    <div class="container">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span class="disclaimer-badge">NOT FDIC</span>
+        <span>A Fictional Corporate Entity</span>
+      </div>
+      <div class="disclaimer-text">
+        NOT FDIC-INSURED • BACKED BY NO FEDERAL GOVERNMENT • FOR SATIRICAL USE ONLY • MEMBER BEAVER ENTERPRISES
+      </div>
+    </div>
+  </div>
+
+  <!-- Header Main -->
+  <header>
+    <div class="header-main">
+      <div class="container">
+        <a href="index.html" class="logo">
+          <svg viewBox="0 0 24 24" width="32" height="32">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+          Big Beaver Bank
+        </a>
+        <button class="menu-toggle" aria-label="Toggle navigation menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <nav>
+          <ul>
+            <li><a href="personal-banking.html" class="active">Personal</a></li>
+            <li><a href="business-banking.html">Business</a></li>
+            <li><a href="digital-banking.html">Digital Banking</a></li>
+            <li><a href="locations.html">Locations</a></li>
+            <li><a href="support.html">Support</a></li>
+            <li><a href="blog.html">Newsroom</a></li>
+            <li><a href="online-banking.html" class="btn-login">
+              <svg viewBox="0 0 24 24">
+                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+              </svg>
+              Secure Login
+            </a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Hero -->
+  <section class="hero" style="padding: 50px 0; background-color: var(--primary-color);">
+    <div class="container">
+      <h1 style="font-size: 38px;">Personal Banking Solutions</h1>
+      <p style="margin-bottom: 0;">Designed to simplify your life and secure your family's future.</p>
+    </div>
+  </section>
+
+  <!-- Checking Section -->
+  <section id="checking" class="container" style="padding: 60px 0 30px;">
+    <h2 style="font-size: 28px; margin-bottom: 24px; text-align: center;">Personal Checking Accounts</h2>
+    <p style="color: var(--text-muted); text-align: center; max-width: 600px; margin: 0 auto 40px;">Choose the checking account that aligns with your financial habits. All checking accounts include a free debit card and online statements.</p>
+    
+    <table class="transaction-table" style="width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius-sm); overflow: hidden; background-color: var(--bg-white);">
+      <thead>
+        <tr style="background-color: var(--bg-light);">
+          <th style="padding: 16px;">Account Features</th>
+          <th style="padding: 16px;">Summit Choice Checking</th>
+          <th style="padding: 16px;">Community First Checking</th>
+          <th style="padding: 16px;">Prestige Interest Checking</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight: 600; padding: 16px;">Monthly Service Fee</td>
+          <td style="padding: 16px;">$0.00</td>
+          <td style="padding: 16px;">$5.00 (waived with direct deposit)</td>
+          <td style="padding: 16px;">$12.00 (waived with $5,000 balance)</td>
+        </tr>
+        <tr>
+          <td style="font-weight: 600; padding: 16px;">Minimum Opening Deposit</td>
+          <td style="padding: 16px;">$25.00</td>
+          <td style="padding: 16px;">$50.00</td>
+          <td style="padding: 16px;">$100.00</td>
+        </tr>
+        <tr>
+          <td style="font-weight: 600; padding: 16px;">ATM Fees (Non-BBB)</td>
+          <td style="padding: 16px;">$2.50 per transaction</td>
+          <td style="padding: 16px;">First 2 waived monthly</td>
+          <td style="padding: 16px;">Unlimited fee rebates</td>
+        </tr>
+        <tr>
+          <td style="font-weight: 600; padding: 16px;">Interest Earning</td>
+          <td style="padding: 16px;">No</td>
+          <td style="padding: 16px;">No</td>
+          <td style="padding: 16px;">Yes (0.15% APY)</td>
+        </tr>
+        <tr>
+          <td style="padding: 16px;"></td>
+          <td style="padding: 16px;"><button class="btn-login" style="padding: 6px 14px; font-size: 13px;" onclick="alert('Enrollment Form Triggered: Thank you for choosing Summit Choice Checking. Openings can be completed at our branches.')">Open Account</button></td>
+          <td style="padding: 16px;"><button class="btn-login" style="padding: 6px 14px; font-size: 13px;" onclick="alert('Enrollment Form Triggered: Openings can be completed at our branches.')">Open Account</button></td>
+          <td style="padding: 16px;"><button class="btn-login" style="padding: 6px 14px; font-size: 13px;" onclick="alert('Enrollment Form Triggered: Openings can be completed at our branches.')">Open Account</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Savings Section -->
+  <section id="savings" style="background-color: var(--bg-light); padding: 60px 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+    <div class="container">
+      <h2 style="font-size: 28px; margin-bottom: 24px; text-align: center;">Savings & Investment Programs</h2>
+      
+      <div class="grid-3" style="margin: 40px 0 0;">
+        <div class="card">
+          <h3>Preferred Savings</h3>
+          <p style="margin-bottom: 16px; font-size: 13px; font-weight: 600; color: var(--accent-color);">0.85% APY</p>
+          <p>Standard liquid savings built to store emergency funds. Minimum opening deposit of $50. No monthly fees if balance remains above $250.</p>
+        </div>
+        <div class="card">
+          <h3>Round-Up Savings</h3>
+          <p style="margin-bottom: 16px; font-size: 13px; font-weight: 600; color: var(--accent-color);">Auto-Transfer</p>
+          <p>Activate Round-Up Savings inside your portal. Every debit card purchase rounds to the nearest dollar, transferring the difference automatically to savings.</p>
+        </div>
+        <div class="card">
+          <h3>Fiduciary Certificates (CD)</h3>
+          <p style="margin-bottom: 16px; font-size: 13px; font-weight: 600; color: var(--accent-color);">4.25% APY (12-Month)</p>
+          <p>Secure high-yield returns with fixed-term CD options ranging from 6 to 60 months. Guaranteed interest returns on deposits starting at $1,000.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mortgage Center & Calculator -->
+  <section id="mortgage" class="calc-section">
+    <div class="container">
+      <div style="text-align: center; max-width: 700px; margin: 0 auto 40px;">
+        <h2 style="font-size: 36px; margin-bottom: 16px;">Mortgage Financing Center</h2>
+        <p style="color: var(--text-muted);">Model your mortgage payment using our interactive interest calculator below, then submit a secure pre-qualification application.</p>
+      </div>
+
+      <div class="calc-container" style="margin-top: 0; margin-bottom: 40px;">
+        <h3 style="font-size: 20px; margin-bottom: 24px; text-align: center; font-family: sans-serif; font-weight: 600;">Mortgage Payment Calculator</h3>
+        <div class="calc-grid">
+          <div class="calc-inputs">
+            <div class="input-group">
+              <label for="calc-amount">Purchase Price ($)</label>
+              <input type="number" id="calc-amount" value="350000" min="50000" step="5000">
+            </div>
+            <div class="input-group">
+              <label for="calc-rate">Annual Rate (%)</label>
+              <input type="number" id="calc-rate" value="6.125" min="0.1" step="0.125">
+            </div>
+            <div class="input-group">
+              <label for="calc-term">Mortgage Term</label>
+              <select id="calc-term">
+                <option value="15">15 Years Fixed</option>
+                <option value="30" selected>30 Years Fixed</option>
+              </select>
+            </div>
+          </div>
+          <div class="calc-results">
+            <div class="result-label">Principal & Interest Payment</div>
+            <div class="result-value" id="result-monthly">$0.00</div>
+            <div class="result-breakdown">
+              <div class="breakdown-item">
+                <span class="breakdown-label">Principal</span>
+                <span class="breakdown-value" id="result-principal">$0.00</span>
+              </div>
+              <div class="breakdown-item">
+                <span class="breakdown-label">Interest Cost</span>
+                <span class="breakdown-value" id="result-interest">$0.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pre-qualification form -->
+      <div style="max-width: 700px; margin: 0 auto; background-color: var(--bg-white); border: 1px solid var(--border-color); padding: 40px; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);">
+        <h3 style="font-size: 22px; margin-bottom: 12px; text-align: center;">Secure Pre-Qualification Form</h3>
+        <p style="font-size: 13px; color: var(--text-muted); text-align: center; margin-bottom: 24px;">Submit your details for a mortgage pre-qualification review. No impact to credit score.</p>
+        
+        <form onsubmit="event.preventDefault(); document.getElementById('mortgage-conf').style.display='block'; this.reset();">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+            <div class="input-group">
+              <label>First Name</label>
+              <input type="text" required>
+            </div>
+            <div class="input-group">
+              <label>Last Name</label>
+              <input type="text" required>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+            <div class="input-group">
+              <label>Annual Household Income ($)</label>
+              <input type="number" min="10000" step="5000" required>
+            </div>
+            <div class="input-group">
+              <label>Estimated Down Payment ($)</label>
+              <input type="number" min="1000" step="1000" required>
+            </div>
+          </div>
+          <div class="input-group" style="margin-bottom: 24px;">
+            <label>Property Target ZIP Code</label>
+            <input type="text" pattern="[0-9]{5}" placeholder="e.g., 49441" required>
+          </div>
+          <button type="submit" class="btn-form-submit">Submit Pre-Qualification Application</button>
+        </form>
+
+        <div id="mortgage-conf" class="about-disclaimer-box" style="display: none; background-color: #ecfdf5; border-color: #34d399; color: #065f46; margin-top: 24px; padding: 18px;">
+          <h4 style="color: #065f46; margin-bottom: 6px;">Application Received Successfully</h4>
+          <p style="font-size: 13px; line-height: 1.5;">Thank you for submitting your pre-qualification application. Your application has been logged. Case Reference: <strong>MORT-2026-88402</strong>. A local home loan officer will contact you within 24 business hours.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <h3>Big Beaver Bank</h3>
+          <p>Established in 1984, Big Beaver Bank (BBB) provides premium personal checking, savings, mortgages, and commercial lending to families and business owners across the region. Committed to community growth, security, and personal service.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Banking Solutions</h4>
+          <ul>
+            <li><a href="personal-banking.html#checking">Personal Checking</a></li>
+            <li><a href="personal-banking.html#savings">Savings & CD Rates</a></li>
+            <li><a href="personal-banking.html#mortgage">Mortgage Center</a></li>
+            <li><a href="business-banking.html">Business Services</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Support & Security</h4>
+          <ul>
+            <li><a href="support.html">Contact Us</a></li>
+            <li><a href="support.html#faq">FAQs Help</a></li>
+            <li><a href="legal.html">Privacy & Terms</a></li>
+            <li><a href="about.html#legal">Fictional Disclosure</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">
+          &copy; 2026 Big Beaver Bank. All rights reserved. Equal Housing Lender.
+        </div>
+        <div class="footer-fdic-subtle">
+          DISCLAIMER: Big Beaver Bank is a purely fictional institution created as a creative test case and satire. Any references to actual financial institutions, regulations, laws, or assets are purely satirical. Not a licensed depositary institution. Assets held here are fully fictional. Inspired by the Big Beaver Energy movement. Please visit <a href="https://bigbeaverenergy.com" style="color: var(--accent-color); font-weight: 500;" target="_blank">bigbeaverenergy.com</a> for official merchandise.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

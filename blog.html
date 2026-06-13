@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Newsroom & Research | Big Beaver Bank</title>
-  <meta name="description" content="Read institutional market analysis, whitepapers, and financial research published by the treasury desk at Big Beaver Bank.">
+  <meta name="description" content="Read institutional market analysis, whitepapers, and financial education articles published by Big Beaver Bank.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230b2f1d%22/><text y=%2275%22 x=%2222%22 font-size=%2270%22 fill=%22%23c5a059%22 font-family=%22Georgia, serif%22 font-weight=%22bold%22>B</text></svg>">
 </head>
@@ -40,8 +40,11 @@
         </button>
         <nav>
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
+            <li><a href="personal-banking.html">Personal</a></li>
+            <li><a href="business-banking.html">Business</a></li>
+            <li><a href="digital-banking.html">Digital Banking</a></li>
+            <li><a href="locations.html">Locations</a></li>
+            <li><a href="support.html">Support</a></li>
             <li><a href="blog.html" class="active">Newsroom</a></li>
             <li><a href="online-banking.html" class="btn-login">
               <svg viewBox="0 0 24 24">
@@ -58,334 +61,442 @@
   <!-- Newsroom Content -->
   <main class="container" style="padding: 40px 0 80px;">
     <div class="blog-header">
-      <h1 style="font-size: 44px; margin-bottom: 16px;">Newsroom & Whitepapers</h1>
-      <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Institutional research, market briefs, and credit strategy updates published by our risk and treasury groups.</p>
+      <h1 style="font-size: 44px; margin-bottom: 16px;">Newsroom & Financial Education</h1>
+      <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Review consumer budgeting tips, commercial credit guides, and community initiatives published by our treasury group.</p>
     </div>
 
     <!-- Articles Grid -->
-    <div class="blog-grid">
+    <div class="blog-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px;">
       
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Risk Management • 2026-05-12</div>
-          <h3 class="blog-card-title"><a href="blog/anomalous-asset-risk-management.html">Anomalous Asset Risk Management in Retail Supply Chains</a></h3>
-          <p class="blog-card-excerpt">Exploring liquidity escrow and containment protocols for retail inventory subject to dimensional instability, with case studies from Omega Mart.</p>
-          <a href="blog/anomalous-asset-risk-management.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/small_business.png" alt="Understanding SBA 7(a) Loans for Small Retail Distributors" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Commercial Lending • 2026-06-02</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/understanding-sba-7a-loans-retail.html">Understanding SBA 7(a) Loans for Small Retail Distributors</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A comprehensive guide on utilizing SBA guaranteed loans to finance inventory scaling, warehouse expansions, and working capital.</p>
+          <a href="blog/understanding-sba-7a-loans-retail.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Commercial Lending • 2026-04-18</div>
-          <h3 class="blog-card-title"><a href="blog/amortizing-space-vessels.html">Amortizing Deep-Space Exploration Vessels under Title 12</a></h3>
-          <p class="blog-card-excerpt">Structuring equipment leasing and syndicated loans for relativistic timelines, featuring logistics models from Weyland-Yutani.</p>
-          <a href="blog/amortizing-space-vessels.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/bank_branch.png" alt="Navigating Fixed vs. Variable Rates on Commercial Warehouses" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Commercial Lending • 2026-05-24</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/navigating-fixed-variable-rates-commercial.html">Navigating Fixed vs. Variable Rates on Commercial Warehouses</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">Comparing interest rate structures for business property acquisitions and selecting the best debt service model for long-term stability.</p>
+          <a href="blog/navigating-fixed-variable-rates-commercial.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Treasury Services • 2026-03-29</div>
-          <h3 class="blog-card-title"><a href="blog/latex-futures-hedging.html">Latex Futures and Domestic Supply Chain Hedging</a></h3>
-          <p class="blog-card-excerpt">Analyzing the volatility of imported raw latex and the structure of custom hedges, in coordination with Vandelay Industries.</p>
-          <a href="blog/latex-futures-hedging.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/secure_banking.png" alt="Long-Term Amortization Schedules for Relativistic Capital Assets" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Treasury Services • 2026-05-15</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/long-term-amortization-relativistic-assets.html">Long-Term Amortization Schedules for Relativistic Capital Assets</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">Exploring capital recovery models for heavy machinery operating under relativistic time dilation, featuring models from Weyland-Yutani.</p>
+          <a href="blog/long-term-amortization-relativistic-assets.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Institutional Investing • 2026-02-14</div>
-          <h3 class="blog-card-title"><a href="blog/capital-allocations-research-infrastructure.html">Capital Allocations in Remote Research Infrastructure</a></h3>
-          <p class="blog-card-excerpt">Fiduciary strategies for capital deployment in isolated facilities with restricted access, referencing the Dharma Initiative's island network.</p>
-          <a href="blog/capital-allocations-research-infrastructure.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/bank_branch.png" alt="The Role of Fiduciary Trust Funds in Remote Research Allocations" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Asset Protection • 2026-04-28</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/role-fiduciary-trust-funds-remote-research.html">The Role of Fiduciary Trust Funds in Remote Research Allocations</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">Fiduciary strategies for maintaining cash disbursements to isolated facilities, with a study of the Dharma Initiative's island station networks.</p>
+          <a href="blog/role-fiduciary-trust-funds-remote-research.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Risk Management • 2026-01-05</div>
-          <h3 class="blog-card-title"><a href="blog/industrial-espionage-insurance.html">Industrial Espionage Insurance and Fiduciary Safeguards</a></h3>
-          <p class="blog-card-excerpt">Fiduciary methods for protecting proprietary software and managing auditing overhead, with case studies from Initech.</p>
-          <a href="blog/industrial-espionage-insurance.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/secure_banking.png" alt="Preventing Debit Card Fraud and Phishing in Digital Portals" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Risk Management • 2026-04-10</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/preventing-card-fraud-phishing-digital.html">Preventing Debit Card Fraud and Phishing in Digital Portals</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">Essential tips to protect your personal online banking credentials and recognize sophisticated social engineering attacks.</p>
+          <a href="blog/preventing-card-fraud-phishing-digital.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Commercial Lending • 2025-11-22</div>
-          <h3 class="blog-card-title"><a href="blog/valuing-humanoid-assets.html">Valuing Humanoid Assets and Replicant Manufacturing Margins</a></h3>
-          <p class="blog-card-excerpt">Assessing the capital amortization curves for organic humanoid products, featuring risk models from the Tyrell Corporation.</p>
-          <a href="blog/valuing-humanoid-assets.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/happy_home.png" alt="Understanding APY vs. APR on Savings and Loan Products" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Treasury Services • 2026-03-18</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/understanding-apy-apr-savings-loans.html">Understanding APY vs. APR on Savings and Loan Products</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">Demystifying banking interest rate terms to help you make informed decisions when saving or applying for credit.</p>
+          <a href="blog/understanding-apy-apr-savings-loans.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Treasury Services • 2025-10-14</div>
-          <h3 class="blog-card-title"><a href="blog/paper-backed-cash-reserves.html">The Economics of Paper-Backed Cash Reserves</a></h3>
-          <p class="blog-card-excerpt">Analyzing liquidity buffers and cash operations for high-volume paper distributors, featuring Dunder Mifflin.</p>
-          <a href="blog/paper-backed-cash-reserves.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/secure_banking.png" alt="Automating Corporate Payroll: The Power of ACH Direct Deposits" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Treasury Services • 2026-02-28</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/automating-corporate-payroll-ach-direct.html">Automating Corporate Payroll: The Power of ACH Direct Deposits</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">How small businesses can save time, reduce overhead costs, and secure staff payroll using ACH NACHA formatting.</p>
+          <a href="blog/automating-corporate-payroll-ach-direct.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Institutional Investing • 2025-09-08</div>
-          <h3 class="blog-card-title"><a href="blog/cybernetic-capitalization.html">Funding Automated Defense Systems and Cybernetic Capitalization</a></h3>
-          <p class="blog-card-excerpt">Evaluating long-term capitalization strategies for autonomous defense developers like Cyberdyne Systems.</p>
-          <a href="blog/cybernetic-capitalization.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/happy_home.png" alt="5 Tips for First-Time Homebuyers in the Michigan Shoreline Area" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Commercial Lending • 2026-02-05</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/5-tips-first-time-homebuyers-michigan.html">5 Tips for First-Time Homebuyers in the Michigan Shoreline Area</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">Steps to prepare for a home mortgage application and find the perfect property in the regional Michigan dunes market.</p>
+          <a href="blog/5-tips-first-time-homebuyers-michigan.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Commercial Lending • 2025-08-11</div>
-          <h3 class="blog-card-title"><a href="blog/organic-food-substitutes.html">Financing Organic Food Substitutes and Global Nutrition Logistics</a></h3>
-          <p class="blog-card-excerpt">Fiduciary analysis of global supply chains and capitalization for synthetic food processors, featuring the Soylent Corporation.</p>
-          <a href="blog/organic-food-substitutes.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/small_business.png" alt="Managing Seasonal Cash Flow Variations in Local Agriculture" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Commercial Lending • 2026-01-12</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/managing-seasonal-cash-flow-agriculture.html">Managing Seasonal Cash Flow Variations in Local Agriculture</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">How agricultural operators and local family farms can utilize revolving credit lines to bridge seasonal income gaps.</p>
+          <a href="blog/managing-seasonal-cash-flow-agriculture.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Commercial Lending • 2025-07-15</div>
-          <h3 class="blog-card-title"><a href="blog/financing-los-pollos-hermanos-10.html">Capital Structuring and Asset Protection for Los Pollos Hermanos</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Los Pollos Hermanos's operations in fast food supply chain logistics and franchise commercial loans.</p>
-          <a href="blog/financing-los-pollos-hermanos-10.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/happy_home.png" alt="Why Round-Up Savings Can Build Your Emergency Reserves Faster" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Treasury Services • 2025-12-18</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/why-round-up-savings-build-reserves.html">Why Round-Up Savings Can Build Your Emergency Reserves Faster</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">How automated, transaction-based transfers can build your savings deposits without impacting your monthly household budget.</p>
+          <a href="blog/why-round-up-savings-build-reserves.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Institutional Investing • 2025-07-02</div>
-          <h3 class="blog-card-title"><a href="blog/geothermal-energy-bonds.html">Leveraging Geothermal Energy and Infrastructure Bonds</a></h3>
-          <p class="blog-card-excerpt">Analyzing the capitalization of large-scale infrastructure projects under municipal supervision, featuring Globex Corporation.</p>
-          <a href="blog/geothermal-energy-bonds.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/small_business.png" alt="Fiduciary Cash Management and Capital Structure for Acme Corporation" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Commercial Lending • 2025-12-18</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-acme-corporation-10.html">Fiduciary Cash Management and Capital Structure for Acme Corporation</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Acme Corporation's operations in rapid shipping catalog fulfillment.</p>
+          <a href="blog/fiduciary-insights-comp-acme-corporation-10.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Risk Management • 2025-06-14</div>
-          <h3 class="blog-card-title"><a href="blog/financing-gringotts-11.html">Capital Structuring and Asset Protection for Gringotts</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Gringotts's operations in precious metal custody operations and cross-institution clearings.</p>
-          <a href="blog/financing-gringotts-11.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/secure_banking.png" alt="Fiduciary Cash Management and Capital Structure for Hooli" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Risk Management • 2025-11-17</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-hooli-11.html">Fiduciary Cash Management and Capital Structure for Hooli</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Hooli's operations in digital monetization scaling and data mainframes.</p>
+          <a href="blog/fiduciary-insights-comp-hooli-11.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Treasury Services • 2025-05-13</div>
-          <h3 class="blog-card-title"><a href="blog/financing-duff-beer-12.html">Capital Structuring and Asset Protection for Duff Beer</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Duff Beer's operations in beverage manufacturing expansions and municipal sponsorship lines.</p>
-          <a href="blog/financing-duff-beer-12.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/bank_branch.png" alt="Fiduciary Cash Management and Capital Structure for Tyrell Corporation" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Treasury Services • 2025-10-16</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-tyrell-corporation-12.html">Fiduciary Cash Management and Capital Structure for Tyrell Corporation</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Tyrell Corporation's operations in advanced synthetic humanoid manufacturing.</p>
+          <a href="blog/fiduciary-insights-comp-tyrell-corporation-12.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Institutional Investing • 2025-04-12</div>
-          <h3 class="blog-card-title"><a href="blog/financing-oceanic-airlines-13.html">Capital Structuring and Asset Protection for Oceanic Airlines</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Oceanic Airlines's operations in aviation fleet leasing and international cargo transit coverage.</p>
-          <a href="blog/financing-oceanic-airlines-13.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/happy_home.png" alt="Fiduciary Cash Management and Capital Structure for Initech" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Asset Protection • 2025-09-15</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-initech-13.html">Fiduciary Cash Management and Capital Structure for Initech</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Initech's operations in mid-market software systems auditing.</p>
+          <a href="blog/fiduciary-insights-comp-initech-13.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Asset Protection • 2025-03-11</div>
-          <h3 class="blog-card-title"><a href="blog/financing-wonka-industries-14.html">Capital Structuring and Asset Protection for Wonka Industries</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Wonka Industries's operations in confectionery production automation and rare ingredient import hedging.</p>
-          <a href="blog/financing-wonka-industries-14.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/small_business.png" alt="Fiduciary Cash Management and Capital Structure for Globex Corporation" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Consumer Education • 2025-08-14</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-globex-corporation-14.html">Fiduciary Cash Management and Capital Structure for Globex Corporation</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Globex Corporation's operations in geothermal grid power infrastructure.</p>
+          <a href="blog/fiduciary-insights-comp-globex-corporation-14.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Commercial Lending • 2025-02-10</div>
-          <h3 class="blog-card-title"><a href="blog/financing-sterling-cooper-15.html">Capital Structuring and Asset Protection for Sterling Cooper</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Sterling Cooper's operations in media allocation strategies and high-budget brand capitalization.</p>
-          <a href="blog/financing-sterling-cooper-15.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/secure_banking.png" alt="Fiduciary Cash Management and Capital Structure for Vandelay Industries" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Commercial Lending • 2025-07-13</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-vandelay-industries-15.html">Fiduciary Cash Management and Capital Structure for Vandelay Industries</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Vandelay Industries's operations in latex commodity importing and exporting.</p>
+          <a href="blog/fiduciary-insights-comp-vandelay-industries-15.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Risk Management • 2025-01-09</div>
-          <h3 class="blog-card-title"><a href="blog/financing-veridian-dynamics-16.html">Capital Structuring and Asset Protection for Veridian Dynamics</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Veridian Dynamics's operations in agricultural testing facilities and domestic defense production loans.</p>
-          <a href="blog/financing-veridian-dynamics-16.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/bank_branch.png" alt="Fiduciary Cash Management and Capital Structure for Dharma Initiative" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Risk Management • 2025-06-12</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-dharma-initiative-16.html">Fiduciary Cash Management and Capital Structure for Dharma Initiative</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Dharma Initiative's operations in remote island research stations.</p>
+          <a href="blog/fiduciary-insights-comp-dharma-initiative-16.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Treasury Services • 2024-12-08</div>
-          <h3 class="blog-card-title"><a href="blog/financing-momcorp-17.html">Capital Structuring and Asset Protection for Momcorp</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Momcorp's operations in industrial robot production lines and dark matter fuel refining.</p>
-          <a href="blog/financing-momcorp-17.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/happy_home.png" alt="Fiduciary Cash Management and Capital Structure for Omega Mart" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Treasury Services • 2025-05-11</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-omega-mart-17.html">Fiduciary Cash Management and Capital Structure for Omega Mart</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Omega Mart's operations in multi-dimensional grocery retail distribution.</p>
+          <a href="blog/fiduciary-insights-comp-omega-mart-17.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Institutional Investing • 2024-11-07</div>
-          <h3 class="blog-card-title"><a href="blog/financing-fontaine-futuristics-18.html">Capital Structuring and Asset Protection for Fontaine Futuristics</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Fontaine Futuristics's operations in bio-modification product distribution and sub-oceanic asset leasing.</p>
-          <a href="blog/financing-fontaine-futuristics-18.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/small_business.png" alt="Fiduciary Cash Management and Capital Structure for Weyland-Yutani Corp" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Asset Protection • 2025-04-10</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-weyland-yutani-corp-18.html">Fiduciary Cash Management and Capital Structure for Weyland-Yutani Corp</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Weyland-Yutani Corp's operations in deep-space colonization operations.</p>
+          <a href="blog/fiduciary-insights-comp-weyland-yutani-corp-18.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Asset Protection • 2024-10-06</div>
-          <h3 class="blog-card-title"><a href="blog/financing-abstergo-industries-19.html">Capital Structuring and Asset Protection for Abstergo Industries</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Abstergo Industries's operations in historical archival indexing and data storage security systems.</p>
-          <a href="blog/financing-abstergo-industries-19.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/secure_banking.png" alt="Fiduciary Cash Management and Capital Structure for Soylent Corporation" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Consumer Education • 2025-03-09</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-soylent-corporation-19.html">Fiduciary Cash Management and Capital Structure for Soylent Corporation</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Soylent Corporation's operations in marine protein harvesting fleets.</p>
+          <a href="blog/fiduciary-insights-comp-soylent-corporation-19.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Commercial Lending • 2024-09-15</div>
-          <h3 class="blog-card-title"><a href="blog/financing-arasaka-corporation-20.html">Capital Structuring and Asset Protection for Arasaka Corporation</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Arasaka Corporation's operations in private security fleet capital and database mainframe construction.</p>
-          <a href="blog/financing-arasaka-corporation-20.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/bank_branch.png" alt="Fiduciary Cash Management and Capital Structure for Acme Corporation" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Commercial Lending • 2025-02-28</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-acme-corporation-20.html">Fiduciary Cash Management and Capital Structure for Acme Corporation</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Acme Corporation's operations in rapid shipping catalog fulfillment.</p>
+          <a href="blog/fiduciary-insights-comp-acme-corporation-20.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Risk Management • 2024-08-14</div>
-          <h3 class="blog-card-title"><a href="blog/financing-delos-incorporated-21.html">Capital Structuring and Asset Protection for Delos Incorporated</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Delos Incorporated's operations in theme park robotics maintenance and guest privacy liability insurance.</p>
-          <a href="blog/financing-delos-incorporated-21.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/happy_home.png" alt="Fiduciary Cash Management and Capital Structure for Hooli" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Risk Management • 2025-01-27</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-hooli-21.html">Fiduciary Cash Management and Capital Structure for Hooli</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Hooli's operations in digital monetization scaling and data mainframes.</p>
+          <a href="blog/fiduciary-insights-comp-hooli-21.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Treasury Services • 2024-07-13</div>
-          <h3 class="blog-card-title"><a href="blog/financing-massive-dynamic-22.html">Capital Structuring and Asset Protection for Massive Dynamic</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Massive Dynamic's operations in quantum computing development and advanced electronics tooling lines.</p>
-          <a href="blog/financing-massive-dynamic-22.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/small_business.png" alt="Fiduciary Cash Management and Capital Structure for Tyrell Corporation" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Treasury Services • 2024-12-26</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-tyrell-corporation-22.html">Fiduciary Cash Management and Capital Structure for Tyrell Corporation</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Tyrell Corporation's operations in advanced synthetic humanoid manufacturing.</p>
+          <a href="blog/fiduciary-insights-comp-tyrell-corporation-22.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Institutional Investing • 2024-06-12</div>
-          <h3 class="blog-card-title"><a href="blog/financing-big-beaver-energy-23.html">Capital Structuring and Asset Protection for Big Beaver Energy</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Big Beaver Energy's operations in workwear apparel production scaling and safety logistics financing.</p>
-          <a href="blog/financing-big-beaver-energy-23.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/secure_banking.png" alt="Fiduciary Cash Management and Capital Structure for Initech" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Asset Protection • 2024-11-25</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-initech-23.html">Fiduciary Cash Management and Capital Structure for Initech</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Initech's operations in mid-market software systems auditing.</p>
+          <a href="blog/fiduciary-insights-comp-initech-23.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Asset Protection • 2024-05-11</div>
-          <h3 class="blog-card-title"><a href="blog/financing-soylent-corporation-24.html">Capital Structuring and Asset Protection for Soylent Corporation</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Soylent Corporation's operations in global marine protein acquisition and deep-sea harvesting fleets.</p>
-          <a href="blog/financing-soylent-corporation-24.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/bank_branch.png" alt="Fiduciary Cash Management and Capital Structure for Globex Corporation" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Consumer Education • 2024-10-24</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-globex-corporation-24.html">Fiduciary Cash Management and Capital Structure for Globex Corporation</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Globex Corporation's operations in geothermal grid power infrastructure.</p>
+          <a href="blog/fiduciary-insights-comp-globex-corporation-24.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Commercial Lending • 2024-04-10</div>
-          <h3 class="blog-card-title"><a href="blog/financing-acme-corporation-25.html">Capital Structuring and Asset Protection for Acme Corporation</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Acme Corporation's operations in rapid delivery catalog fulfillment and heavy machinery capital recovery.</p>
-          <a href="blog/financing-acme-corporation-25.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/happy_home.png" alt="Fiduciary Cash Management and Capital Structure for Vandelay Industries" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Commercial Lending • 2024-09-23</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-vandelay-industries-25.html">Fiduciary Cash Management and Capital Structure for Vandelay Industries</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Vandelay Industries's operations in latex commodity importing and exporting.</p>
+          <a href="blog/fiduciary-insights-comp-vandelay-industries-25.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Risk Management • 2024-03-09</div>
-          <h3 class="blog-card-title"><a href="blog/financing-hooli-26.html">Capital Structuring and Asset Protection for Hooli</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Hooli's operations in tech platforms and digital monetization scaling.</p>
-          <a href="blog/financing-hooli-26.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/small_business.png" alt="Fiduciary Cash Management and Capital Structure for Dharma Initiative" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Risk Management • 2024-08-22</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-dharma-initiative-26.html">Fiduciary Cash Management and Capital Structure for Dharma Initiative</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Dharma Initiative's operations in remote island research stations.</p>
+          <a href="blog/fiduciary-insights-comp-dharma-initiative-26.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Treasury Services • 2024-02-08</div>
-          <h3 class="blog-card-title"><a href="blog/financing-oscorp-27.html">Capital Structuring and Asset Protection for Oscorp</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Oscorp's operations in genetic research and chemical compound development.</p>
-          <a href="blog/financing-oscorp-27.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/secure_banking.png" alt="Fiduciary Cash Management and Capital Structure for Omega Mart" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Treasury Services • 2024-07-21</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-omega-mart-27.html">Fiduciary Cash Management and Capital Structure for Omega Mart</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Omega Mart's operations in multi-dimensional grocery retail distribution.</p>
+          <a href="blog/fiduciary-insights-comp-omega-mart-27.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Institutional Investing • 2024-01-07</div>
-          <h3 class="blog-card-title"><a href="blog/financing-stark-industries-28.html">Capital Structuring and Asset Protection for Stark Industries</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Stark Industries's operations in advanced clean energy and arc reactor grid financing.</p>
-          <a href="blog/financing-stark-industries-28.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/bank_branch.png" alt="Fiduciary Cash Management and Capital Structure for Weyland-Yutani Corp" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Asset Protection • 2024-06-20</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-weyland-yutani-corp-28.html">Fiduciary Cash Management and Capital Structure for Weyland-Yutani Corp</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Weyland-Yutani Corp's operations in deep-space colonization operations.</p>
+          <a href="blog/fiduciary-insights-comp-weyland-yutani-corp-28.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Asset Protection • 2023-12-06</div>
-          <h3 class="blog-card-title"><a href="blog/financing-wayne-enterprises-29.html">Capital Structuring and Asset Protection for Wayne Enterprises</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Wayne Enterprises's operations in urban transit infrastructure and public sector credit lines.</p>
-          <a href="blog/financing-wayne-enterprises-29.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/happy_home.png" alt="Fiduciary Cash Management and Capital Structure for Soylent Corporation" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Consumer Education • 2024-05-19</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-soylent-corporation-29.html">Fiduciary Cash Management and Capital Structure for Soylent Corporation</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Soylent Corporation's operations in marine protein harvesting fleets.</p>
+          <a href="blog/fiduciary-insights-comp-soylent-corporation-29.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Commercial Lending • 2023-11-15</div>
-          <h3 class="blog-card-title"><a href="blog/financing-virtucon-30.html">Capital Structuring and Asset Protection for Virtucon</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Virtucon's operations in global real estate acquisitions and sub-sea excavation financing.</p>
-          <a href="blog/financing-virtucon-30.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/small_business.png" alt="Fiduciary Cash Management and Capital Structure for Acme Corporation" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Commercial Lending • 2024-04-18</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-acme-corporation-30.html">Fiduciary Cash Management and Capital Structure for Acme Corporation</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Acme Corporation's operations in rapid shipping catalog fulfillment.</p>
+          <a href="blog/fiduciary-insights-comp-acme-corporation-30.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Risk Management • 2023-10-14</div>
-          <h3 class="blog-card-title"><a href="blog/financing-umbrella-corporation-31.html">Capital Structuring and Asset Protection for Umbrella Corporation</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Umbrella Corporation's operations in bio-pharmaceutical research facilities and containment insurance.</p>
-          <a href="blog/financing-umbrella-corporation-31.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/secure_banking.png" alt="Fiduciary Cash Management and Capital Structure for Hooli" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Risk Management • 2024-03-17</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-hooli-31.html">Fiduciary Cash Management and Capital Structure for Hooli</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Hooli's operations in digital monetization scaling and data mainframes.</p>
+          <a href="blog/fiduciary-insights-comp-hooli-31.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Treasury Services • 2023-09-13</div>
-          <h3 class="blog-card-title"><a href="blog/financing-aperture-science-32.html">Capital Structuring and Asset Protection for Aperture Science</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Aperture Science's operations in portal mechanics and long-term testing laboratory grants.</p>
-          <a href="blog/financing-aperture-science-32.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/bank_branch.png" alt="Fiduciary Cash Management and Capital Structure for Tyrell Corporation" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Treasury Services • 2024-02-16</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-tyrell-corporation-32.html">Fiduciary Cash Management and Capital Structure for Tyrell Corporation</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Tyrell Corporation's operations in advanced synthetic humanoid manufacturing.</p>
+          <a href="blog/fiduciary-insights-comp-tyrell-corporation-32.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Institutional Investing • 2023-08-12</div>
-          <h3 class="blog-card-title"><a href="blog/financing-black-mesa-33.html">Capital Structuring and Asset Protection for Black Mesa</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Black Mesa's operations in anomalous materials research and government defense contracting.</p>
-          <a href="blog/financing-black-mesa-33.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/happy_home.png" alt="Fiduciary Cash Management and Capital Structure for Initech" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Asset Protection • 2024-01-15</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-initech-33.html">Fiduciary Cash Management and Capital Structure for Initech</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Initech's operations in mid-market software systems auditing.</p>
+          <a href="blog/fiduciary-insights-comp-initech-33.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Asset Protection • 2023-07-11</div>
-          <h3 class="blog-card-title"><a href="blog/financing-buy-n-large-34.html">Capital Structuring and Asset Protection for Buy n Large</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for Buy n Large's operations in megacorporation consolidation and retail automation financing.</p>
-          <a href="blog/financing-buy-n-large-34.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/small_business.png" alt="Fiduciary Cash Management and Capital Structure for Globex Corporation" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Consumer Education • 2023-12-14</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-globex-corporation-34.html">Fiduciary Cash Management and Capital Structure for Globex Corporation</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Globex Corporation's operations in geothermal grid power infrastructure.</p>
+          <a href="blog/fiduciary-insights-comp-globex-corporation-34.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
-      <div class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-card-meta">Commercial Lending • 2023-06-10</div>
-          <h3 class="blog-card-title"><a href="blog/financing-e-corp-35.html">Capital Structuring and Asset Protection for E Corp</a></h3>
-          <p class="blog-card-excerpt">A financial overview of credit structures and risk containment designed for E Corp's operations in debt consolidation programs and digital ledger stabilization.</p>
-          <a href="blog/financing-e-corp-35.html" class="blog-card-link">Read Whitepaper &rarr;</a>
+      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
+          <img src="img/secure_banking.png" alt="Fiduciary Cash Management and Capital Structure for Vandelay Industries" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+          <div class="blog-card-meta">Commercial Lending • 2023-11-13</div>
+          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/fiduciary-insights-comp-vandelay-industries-35.html">Fiduciary Cash Management and Capital Structure for Vandelay Industries</a></h3>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for Vandelay Industries's operations in latex commodity importing and exporting.</p>
+          <a href="blog/fiduciary-insights-comp-vandelay-industries-35.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
   
@@ -398,30 +509,30 @@
       <div class="footer-grid">
         <div class="footer-about">
           <h3>Big Beaver Bank</h3>
-          <p>Established in 1984, Big Beaver Bank (BBB) specializes in providing sophisticated institutional lending, treasury management, and private asset protection services to corporate clients operating in complex and anomalous markets.</p>
+          <p>Established in 1984, Big Beaver Bank (BBB) provides premium personal checking, savings, mortgages, and commercial lending to families and business owners across the region. Committed to community growth, security, and personal service.</p>
         </div>
         <div class="footer-links">
-          <h4>Banking Services</h4>
+          <h4>Banking Solutions</h4>
           <ul>
-            <li><a href="online-banking.html">Corporate Checking</a></li>
-            <li><a href="online-banking.html">Institutional Treasury</a></li>
-            <li><a href="online-banking.html">Anomalous Escrow</a></li>
-            <li><a href="online-banking.html">Asset Security</a></li>
+            <li><a href="personal-banking.html#checking">Personal Checking</a></li>
+            <li><a href="personal-banking.html#savings">Savings & CD Rates</a></li>
+            <li><a href="personal-banking.html#mortgage">Mortgage Center</a></li>
+            <li><a href="business-banking.html">Business Services</a></li>
           </ul>
         </div>
         <div class="footer-links">
-          <h4>Corporate</h4>
+          <h4>Support & Security</h4>
           <ul>
-            <li><a href="about.html">Our Story</a></li>
-            <li><a href="blog.html">Newsroom & Research</a></li>
+            <li><a href="support.html">Contact Us</a></li>
+            <li><a href="support.html#faq">FAQs Help</a></li>
+            <li><a href="legal.html">Privacy & Terms</a></li>
             <li><a href="about.html#legal">Fictional Disclosure</a></li>
-            <li><a href="https://bigbeaverenergy.com" target="_blank" rel="noopener">Big Beaver Energy Merch</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
         <div class="footer-copy">
-          &copy; 2026 Big Beaver Bank. All rights reserved.
+          &copy; 2026 Big Beaver Bank. All rights reserved. Equal Housing Lender.
         </div>
         <div class="footer-fdic-subtle">
           DISCLAIMER: Big Beaver Bank is a purely fictional institution created as a creative test case and satire. Any references to actual financial institutions, regulations, laws, or assets are purely satirical. Not a licensed depositary institution. Assets held here are fully fictional. Inspired by the Big Beaver Energy movement. Please visit <a href="https://bigbeaverenergy.com" style="color: var(--accent-color); font-weight: 500;" target="_blank">bigbeaverenergy.com</a> for official merchandise.

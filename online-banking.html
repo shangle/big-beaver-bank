@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Corporate Online Banking | Big Beaver Bank</title>
-  <meta name="description" content="Access the secure commercial banking portal of Big Beaver Bank. Manage corporate cash reserves and structured transactions.">
+  <title>Corporate & Personal Digital Banking | Big Beaver Bank</title>
+  <meta name="description" content="Access the secure online banking portal of Big Beaver Bank. Manage cash reserves, pay bills, make transfers, and run corporate payroll with NACHA utilities.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230b2f1d%22/><text y=%2275%22 x=%2222%22 font-size=%2270%22 fill=%22%23c5a059%22 font-family=%22Georgia, serif%22 font-weight=%22bold%22>B</text></svg>">
 </head>
@@ -28,11 +28,11 @@
     <div class="login-card">
       <div style="display: flex; justify-content: center; margin-bottom: 20px;">
         <svg viewBox="0 0 24 24" width="48" height="48" style="fill: var(--primary-color);">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
         </svg>
       </div>
       <h2>Secure Portal Access</h2>
-      <p>Enter your institutional credentials to access corporate treasury operations.</p>
+      <p>Enter your credentials to access your online banking dashboard.</p>
       
       <div id="login-error" class="alert-error"></div>
 
@@ -42,10 +42,34 @@
           <input type="text" id="username" placeholder="e.g., vandelay_exec" required>
         </div>
         <div class="input-group" style="margin-bottom: 24px;">
-          <label for="password">Security Password</label>
+          <label for="password">Password</label>
           <input type="password" id="password" placeholder="••••••••" required>
         </div>
         <button type="submit" class="btn-form-submit">Establish Secure Session</button>
+      </form>
+      
+      <div style="text-align: center; margin-top: 20px; font-size: 13px;">
+        <a href="#" id="reset-credentials-link" style="color: var(--accent-color); font-weight: 600; text-decoration: underline;">Reset Password / Unlock Account</a>
+      </div>
+    </div>
+
+    <!-- Password Reset Modal (Hidden by Default) -->
+    <div id="reset-modal" class="login-card" style="display: none; margin-top: -50px; position: relative; z-index: 200;">
+      <h3>Credential Recovery Assistant</h3>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Provide your username and establish a new, strong password.</p>
+      <form id="reset-form">
+        <div class="input-group" style="margin-bottom: 16px;">
+          <label for="reset-username">Username</label>
+          <input type="text" id="reset-username" required>
+        </div>
+        <div class="input-group" style="margin-bottom: 24px;">
+          <label for="reset-password">New Security Password</label>
+          <input type="password" id="reset-password" placeholder="Min. 8 chars, strong" required>
+        </div>
+        <div style="display: flex; gap: 12px;">
+          <button type="submit" class="btn-form-submit" style="flex: 2;">Reset & Save</button>
+          <button type="button" id="reset-cancel-btn" class="page-btn" style="flex: 1; margin: 0; padding: 12px;">Cancel</button>
+        </div>
       </form>
     </div>
   </div>
@@ -55,15 +79,16 @@
     <!-- Dashboard Header -->
     <header>
       <div class="header-main" style="padding: 12px 0;">
-        <div class="container" style="max-width: 1400px;">
-          <a href="index.html" class="logo">
-            <svg viewBox="0 0 24 24" width="28" height="28">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+        <div class="container" style="max-width: 1400px; display: flex; justify-content: space-between; align-items: center;">
+          <a href="index.html" class="logo" style="font-size: 20px;">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
             </svg>
             Big Beaver Bank
           </a>
-          <div style="font-size: 13px; color: var(--text-muted); font-weight: 500;">
-            TREASURY SERVICES PORTAL
+          <div style="font-size: 11px; background-color: #ecfdf5; color: #047857; padding: 4px 10px; border-radius: 12px; font-weight: 700; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px;">
+            <span style="width: 8px; height: 8px; background-color: #10b981; border-radius: 50%; display: inline-block;"></span>
+            SECURE PORTAL ONLINE
           </div>
         </div>
       </div>
@@ -76,31 +101,49 @@
         <div>
           <div class="user-profile">
             <div class="user-name" id="display-username">User Session</div>
-            <div class="user-role" id="display-role">Corporate Administrator</div>
+            <div class="user-role" id="display-role">Account Administrator</div>
           </div>
           <ul class="banking-menu">
             <li class="banking-menu-item">
               <button class="active" data-tab="tab-dashboard">
                 <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
-                Balances & Ledger
+                Overview & Ledger
               </button>
             </li>
             <li class="banking-menu-item">
               <button data-tab="tab-transfer">
                 <svg viewBox="0 0 24 24"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>
-                Transfer Funds
+                Transfers & ACH
+              </button>
+            </li>
+            <li class="banking-menu-item">
+              <button data-tab="tab-billpay">
+                <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+                Bill Pay Center
               </button>
             </li>
             <li class="banking-menu-item">
               <button data-tab="tab-deposit">
-                <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
-                Mobile Check Deposit
+                <svg viewBox="0 0 24 24"><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                Check Deposits
               </button>
             </li>
             <li class="banking-menu-item">
-              <button data-tab="tab-loan">
-                <svg viewBox="0 0 24 24"><path d="M5 21h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zm2-14h10v2H7V7zm0 4h10v2H7v-2zm0 4h7v2H7v-2z"/></svg>
-                Apply for Commercial Credit
+              <button data-tab="tab-payroll">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                Direct Deposit (ACH)
+              </button>
+            </li>
+            <li class="banking-menu-item">
+              <button data-tab="tab-estatements">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                eStatements
+              </button>
+            </li>
+            <li class="banking-menu-item">
+              <button data-tab="tab-support">
+                <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+                Support Messages
               </button>
             </li>
           </ul>
@@ -117,37 +160,96 @@
       <main class="banking-content">
         <!-- 1. Balances & Ledger Tab -->
         <div id="tab-dashboard" class="banking-tab-pane">
-          <h2 class="dashboard-title">Liquidity Overview</h2>
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px;">
+            <h2 class="dashboard-title" style="margin-bottom: 0;">Fiduciary Account Dashboard</h2>
+            <button class="page-btn" id="customize-dashboard-btn" style="margin: 0; padding: 8px 14px; font-size: 13px;">Manage Nicknames</button>
+          </div>
+
+          <!-- Nickname Config Panel (Hidden by Default) -->
+          <div id="nickname-panel" style="display: none; background-color: var(--bg-white); border: 1px solid var(--border-color); padding: 20px; border-radius: var(--radius-sm); margin-bottom: 24px; box-shadow: var(--shadow-sm);">
+            <h4 style="margin-bottom: 12px; font-family: sans-serif; font-weight: 600;">Edit Account Labels</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+              <div class="input-group">
+                <label>Checking Account</label>
+                <input type="text" id="nickname-checking-input" value="Commercial Checking">
+              </div>
+              <div class="input-group">
+                <label>Savings Account</label>
+                <input type="text" id="nickname-savings-input" value="Corporate Yield Savings">
+              </div>
+              <div class="input-group">
+                <label>Escrow Account</label>
+                <input type="text" id="nickname-escrow-input" value="Fiduciary Escrow">
+              </div>
+            </div>
+            <div style="display: flex; gap: 12px;">
+              <button id="nickname-save-btn" class="btn-login" style="padding: 6px 14px; font-size: 13px;">Save Nicknames</button>
+              <button id="nickname-cancel-btn" class="page-btn" style="padding: 6px 14px; font-size: 13px; margin: 0;">Cancel</button>
+            </div>
+          </div>
           
           <!-- Accounts Summary Grid -->
           <div class="accounts-summary">
             <div class="account-card checking">
-              <div class="account-type">Commercial Checking</div>
+              <div class="account-type" id="label-checking">Commercial Checking</div>
               <div class="account-number">Acct No: ••••-7291</div>
-              <div class="account-balance" id="balance-checking">$4,582,912.44</div>
+              <div class="account-balance" id="balance-checking">$0.00</div>
             </div>
             <div class="account-card savings">
-              <div class="account-type">Corporate Yield Savings</div>
+              <div class="account-type" id="label-savings">Corporate Yield Savings</div>
               <div class="account-number">Acct No: ••••-3304</div>
-              <div class="account-balance" id="balance-savings">$12,940,230.12</div>
+              <div class="account-balance" id="balance-savings">$0.00</div>
             </div>
             <div class="account-card escrow">
-              <div class="account-type">Fiduciary Escrow</div>
+              <div class="account-type" id="label-escrow">Fiduciary Escrow</div>
               <div class="account-number">Acct No: ••••-0081</div>
-              <div class="account-balance" id="balance-escrow">$75,000,000.00</div>
+              <div class="account-balance" id="balance-escrow">$0.00</div>
+            </div>
+          </div>
+
+          <!-- Double Column Widget Panel (Credit Score Gauge & Budgeting Canvas) -->
+          <div style="display: grid; grid-template-columns: 300px 1fr; gap: 24px; margin-bottom: 40px;">
+            <!-- Credit Score Widget -->
+            <div class="ledger-card" style="padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+              <h4 style="font-family: sans-serif; font-size: 13px; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin-bottom: 12px;">Credit Score Monitor</h4>
+              
+              <!-- Simulated Gauge -->
+              <div style="position: relative; width: 140px; height: 75px; overflow: hidden; margin-bottom: 12px;">
+                <div style="width: 140px; height: 140px; border: 15px solid #e2e8f0; border-radius: 50%; border-bottom-color: #10b981; border-right-color: #10b981; transform: rotate(-45deg);"></div>
+                <div style="position: absolute; bottom: 0; left: 0; right: 0; font-size: 28px; font-weight: 700; color: var(--primary-color);">780</div>
+              </div>
+
+              <div style="font-size: 12px; font-weight: 700; color: #047857; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Excellent Credit Standing</div>
+              <div style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">Your profile has 0 payment anomalies and excellent credit utilization.</div>
+            </div>
+
+            <!-- Budgeting Canvas Chart -->
+            <div class="ledger-card" style="padding: 20px; display: grid; grid-template-columns: 1fr 240px; gap: 20px; align-items: center;">
+              <div>
+                <h4 style="font-family: sans-serif; font-size: 13px; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin-bottom: 12px;">Cash Flow Analysis (Budget Chart)</h4>
+                <div style="height: 180px; width: 100%; display: flex; align-items: center; justify-content: center;">
+                  <canvas id="budgetCanvas" width="220" height="180"></canvas>
+                </div>
+              </div>
+              <div style="border-left: 1px solid var(--border-color); padding-left: 20px;">
+                <h5 style="font-family: sans-serif; font-weight: 600; font-size: 12px; text-transform: uppercase; margin-bottom: 10px;">Ledger Spending Breakdown</h5>
+                <div id="chart-legend" style="display: flex; flex-direction: column; gap: 8px; font-size: 11px;">
+                  <!-- Dynamically populated legend -->
+                </div>
+              </div>
             </div>
           </div>
 
           <!-- Transaction Ledger -->
           <div class="ledger-card">
             <div class="ledger-header">
-              <h3 style="font-size: 20px;">Institutional Transaction Ledger</h3>
+              <h3 style="font-size: 20px;">Fiduciary Transaction Ledger</h3>
               <div class="ledger-filters">
                 <input type="text" id="ledger-search" class="search-input" placeholder="Filter descriptions...">
                 <select id="ledger-filter-type" class="filter-select">
-                  <option value="all">All Categories</option>
-                  <option value="deposit">Deposits</option>
-                  <option value="withdrawal">Withdrawals</option>
+                  <option value="all">All Entries</option>
+                  <option value="deposit">Credits (Deposits)</option>
+                  <option value="withdrawal">Debits (Withdrawals)</option>
                 </select>
               </div>
             </div>
@@ -171,50 +273,142 @@
 
         <!-- 2. Transfer Funds Tab -->
         <div id="tab-transfer" class="banking-tab-pane banking-tab-content">
-          <h3>Commercial Funds Transfer</h3>
-          <p class="tab-desc">Initiate immediate liquidity transfers between internal checking/savings accounts or dispatch wire transfers to registered external entities.</p>
+          <h3>Transfers & External ACH</h3>
+          <p class="tab-desc">Initiate immediate internal account balance adjustments or dispatch external ACH wire transfers to other banking institutions.</p>
           
+          <!-- ACH Switch tabs locally -->
+          <div style="display: flex; gap: 12px; margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
+            <button type="button" class="page-btn active" id="btn-subtab-internal" style="margin: 0; padding: 6px 14px; font-size: 13px;">Internal Transfers</button>
+            <button type="button" class="page-btn" id="btn-subtab-ach" style="margin: 0; padding: 6px 14px; font-size: 13px;">External ACH/Wire</button>
+          </div>
+
+          <!-- Internal Form -->
           <form id="transfer-form">
-            <div class="input-group" style="margin-bottom: 20px;">
+            <div class="input-group" style="margin-bottom: 16px;">
               <label for="transfer-from">Source Account</label>
               <select id="transfer-from" required>
-                <option value="checking">Commercial Checking (Acct ••••-7291)</option>
-                <option value="savings">Corporate Yield Savings (Acct ••••-3304)</option>
+                <option value="checking">Checking</option>
+                <option value="savings">Savings</option>
               </select>
             </div>
-            <div class="input-group" style="margin-bottom: 20px;">
-              <label for="transfer-to">Destination Entity / Account</label>
+            <div class="input-group" style="margin-bottom: 16px;">
+              <label for="transfer-to">Destination Account</label>
               <select id="transfer-to" required>
-                <option value="checking-internal">Commercial Checking (Internal)</option>
-                <option value="savings-internal">Corporate Yield Savings (Internal)</option>
-                <option value="ext-bbe">Big Beaver Energy Corp (Corporate Merch Operations)</option>
-                <option value="ext-omega">Omega Mart (Citrus Settlement Account)</option>
-                <option value="ext-weyland">Weyland-Yutani Corp (Planetary Infrastructure)</option>
-                <option value="ext-vandelay">Vandelay Industries (Latex Futures Settlement)</option>
-                <option value="ext-dharma">Dharma Initiative (Island Support Fund)</option>
-                <option value="ext-initech">Initech Corp (Quality Assurance Audits)</option>
-                <option value="ext-globex">Globex Corporation (Sub-Mountain Grid Funding)</option>
+                <option value="checking-internal">Checking (Internal)</option>
+                <option value="savings-internal">Savings (Internal)</option>
               </select>
             </div>
             <div class="input-group" style="margin-bottom: 24px;">
               <label for="transfer-amount">Amount (USD)</label>
               <input type="number" id="transfer-amount" min="1" max="1000000" step="100" placeholder="$0.00" required>
             </div>
-            <button type="submit" class="btn-form-submit">Authorize Funds Transfer</button>
+            <button type="submit" class="btn-form-submit">Execute Balance Adjustment</button>
+          </form>
+
+          <!-- External ACH Form (Hidden by Default) -->
+          <form id="ach-form" style="display: none;">
+            <div class="input-group" style="margin-bottom: 16px;">
+              <label for="ach-from">Source Account</label>
+              <select id="ach-from" required>
+                <option value="checking">Checking</option>
+                <option value="savings">Savings</option>
+              </select>
+            </div>
+            <div class="input-group" style="margin-bottom: 16px;">
+              <label for="ach-routing">Recipient Routing Transit Number</label>
+              <input type="text" id="ach-routing" pattern="[0-9]{9}" placeholder="9 Digits (e.g., 071000288)" required>
+            </div>
+            <div class="input-group" style="margin-bottom: 16px;">
+              <label for="ach-account">Recipient Account Number</label>
+              <input type="text" id="ach-account" pattern="[0-9]{5,17}" placeholder="Enter Account Number" required>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+              <div class="input-group">
+                <label for="ach-name">Recipient Account Holder Name</label>
+                <input type="text" id="ach-name" required>
+              </div>
+              <div class="input-group">
+                <label for="ach-amount">Transfer Amount ($)</label>
+                <input type="number" id="ach-amount" min="10" max="1000000" step="100" required>
+              </div>
+            </div>
+            <button type="submit" class="btn-form-submit">Authorize ACH Wire Dispatch</button>
           </form>
         </div>
 
-        <!-- 3. Deposit Checks Tab -->
+        <!-- 3. Bill Pay Tab -->
+        <div id="tab-billpay" class="banking-tab-pane banking-tab-content">
+          <h3>Bill Pay Control Center</h3>
+          <p class="tab-desc">Authorize standard disbursements and pay utilities, vendors, or suppliers dynamically from your checking balances.</p>
+          
+          <form id="billpay-form">
+            <div class="input-group" style="margin-bottom: 16px;">
+              <label for="billpay-from">Select Funding Account</label>
+              <select id="billpay-from" required>
+                <option value="checking">Checking</option>
+                <option value="savings">Savings</option>
+              </select>
+            </div>
+            <div class="input-group" style="margin-bottom: 16px;">
+              <label for="billpay-payee">Select Registered Payee</label>
+              <select id="billpay-payee" required>
+                <option value="ext-bbe">Big Beaver Energy Corp (Corporate Gear & Workwear)</option>
+                <option value="ext-omega">Omega Mart Operations (Supply Chain Invoicing)</option>
+                <option value="ext-weyland">Weyland-Yutani Utilities (Relativistic Fuel & Energy)</option>
+                <option value="ext-vandelay">Vandelay Industries (Latex Raw Material Shipments)</option>
+                <option value="ext-dharma">Dharma Initiative (Island Electromagnetic Maintenance)</option>
+                <option value="ext-initech">Initech (Consulting & System Upgrades)</option>
+                <option value="ext-globex">Globex Grid Operations (Geothermal Heat Tap Line)</option>
+              </select>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
+              <div class="input-group">
+                <label for="billpay-date">Delivery Date</label>
+                <input type="date" id="billpay-date" required>
+              </div>
+              <div class="input-group">
+                <label for="billpay-amount">Disbursement Value ($)</label>
+                <input type="number" id="billpay-amount" min="1" max="100000" step="50" required>
+              </div>
+            </div>
+            <button type="submit" class="btn-form-submit">Authorize Bill Payment</button>
+          </form>
+
+          <!-- Stop Check Payment Form (Traditional Bank Feature) -->
+          <div style="border-top: 1px solid var(--border-color); margin-top: 40px; padding-top: 30px;">
+            <h4>Request Stop Payment on Check</h4>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 20px;">Submit a stop order on written physical drafts. A standard $25 fee applies.</p>
+            <form id="stoppayment-form">
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+                <div class="input-group">
+                  <label for="stop-check-num">Check Number</label>
+                  <input type="text" id="stop-check-num" required>
+                </div>
+                <div class="input-group">
+                  <label for="stop-check-amount">Check Amount ($)</label>
+                  <input type="number" id="stop-check-amount" required>
+                </div>
+                <div class="input-group">
+                  <label for="stop-check-payee">Payee Name</label>
+                  <input type="text" id="stop-check-payee" required>
+                </div>
+              </div>
+              <button type="submit" class="page-btn" style="width: 100%; margin: 0; padding: 12px; background-color: var(--secondary-color); color: #fff;">File Stop Payment Request</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- 4. Deposit Checks Tab -->
         <div id="tab-deposit" class="banking-tab-pane banking-tab-content">
           <h3>Mobile Check Deposit</h3>
-          <p class="tab-desc">Deposit institutional drafts and commercial checks directly into your checking account using your camera or file upload.</p>
+          <p class="tab-desc">Deposit checks instantly using your device camera or uploading an endorsed check draft image file.</p>
           
           <form id="deposit-form">
             <div class="input-group" style="margin-bottom: 20px;">
-              <label for="deposit-to">Deposit Destination</label>
+              <label for="deposit-to">Deposit Account</label>
               <select id="deposit-to" required>
-                <option value="checking">Commercial Checking (Acct ••••-7291)</option>
-                <option value="savings">Corporate Yield Savings (Acct ••••-3304)</option>
+                <option value="checking">Checking</option>
+                <option value="savings">Savings</option>
               </select>
             </div>
             
@@ -223,52 +417,168 @@
                 <svg viewBox="0 0 24 24"><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
               </div>
               <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">Click to Capture Check Image</div>
-              <div style="font-size: 12px; color: var(--text-muted);">Ensure the check is flat, well-lit, and fully endorsed.</div>
+              <div style="font-size: 12px; color: var(--text-muted);">Must be endorsed on back: "For mobile deposit only at Big Beaver Bank".</div>
               <input type="file" id="check-file-input" style="display: none;" accept="image/*">
             </div>
 
             <div class="input-group" style="margin-bottom: 24px;">
-              <label for="deposit-amount">Check Value (USD)</label>
+              <label for="deposit-amount">Check Amount ($)</label>
               <input type="number" id="deposit-amount" min="1" max="500000" step="100" placeholder="$0.00" required>
             </div>
-            <button type="submit" class="btn-form-submit">Submit Check for Verification</button>
+            <button type="submit" class="btn-form-submit">Verify & Submit Draft</button>
           </form>
         </div>
 
-        <!-- 4. Apply for Credit Line Tab -->
-        <div id="tab-loan" class="banking-tab-pane banking-tab-content">
-          <h3>Apply for Commercial Credit</h3>
-          <p class="tab-desc">Secure additional revolving credit facilities or infrastructure development financing backed by corporate assets.</p>
+        <!-- 5. Business Direct Deposit (ACH/NACHA File Generator) -->
+        <div id="tab-payroll" class="banking-tab-pane" style="display: none; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 40px; box-shadow: var(--shadow-sm);">
+          <h3>Direct Deposit NACHA File Generator</h3>
+          <p class="tab-desc">Fulfill employee payroll cycles by generating standard, compliant 94-character fixed-width NACHA (ACH) formatted data logs.</p>
           
-          <form id="loan-form">
-            <div class="input-group" style="margin-bottom: 20px;">
-              <label for="loan-purpose">Credit Facility Purpose</label>
-              <select id="loan-purpose" required>
-                <option value="anomalous">Anomalous Supply Chain Stabilization</option>
-                <option value="space">Deep-Space Mining Rig Infrastructure</option>
-                <option value="latex">Latex Import Contracts and Inventory Hedging</option>
-                <option value="research">Electromagnetic Research Facilities</option>
-                <option value="corporate">Paper Distribution Expansion & Mergers</option>
-              </select>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 30px;">
+            <!-- Company Settings -->
+            <div style="border-right: 1px solid var(--border-color); padding-right: 20px;">
+              <h4 style="margin-bottom: 12px; font-family: sans-serif; font-weight: 600;">ACH Company Registry Settings</h4>
+              <div class="input-group" style="margin-bottom: 12px;">
+                <label for="nacha-co-name">ACH Company Name</label>
+                <input type="text" id="nacha-co-name" value="VANDELAY IND" maxlength="16">
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                <div class="input-group">
+                  <label for="nacha-co-id">Company Identification</label>
+                  <input type="text" id="nacha-co-id" value="123456789" maxlength="10">
+                </div>
+                <div class="input-group">
+                  <label for="nacha-sec">SEC Code</label>
+                  <select id="nacha-sec">
+                    <option value="PPD" selected>PPD (Payroll / Consumer)</option>
+                    <option value="CCD">CCD (Corporate Transactions)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="input-group">
+                <label for="nacha-dfi">Originating DFI ID</label>
+                <input type="text" id="nacha-dfi" value="07100028" maxlength="8">
+              </div>
             </div>
-            <div class="input-group" style="margin-bottom: 20px;">
-              <label for="loan-collateral">Primary Collateral Class</label>
-              <select id="loan-collateral" required>
-                <option value="timber">Timber Reserves / Forest Claims</option>
-                <option value="citrus">Omega Mart Dimensional Lemon Stocks</option>
-                <option value="metals">Heavy Elements / Space Ore Claims</option>
-                <option value="paper">High-Volume Bond Paper Inventory</option>
-                <option value="scientific">Remote Island Real Estate Holds</option>
-              </select>
+
+            <!-- Employee Roster -->
+            <div>
+              <h4 style="margin-bottom: 12px; font-family: sans-serif; font-weight: 600;">Active Employee Payroll Roster</h4>
+              <div style="max-height: 180px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 10px; margin-bottom: 12px;">
+                <table style="width: 100%; font-size: 12px; text-align: left; border-collapse: collapse;">
+                  <thead>
+                    <tr style="border-bottom: 1px solid var(--border-color); font-weight: 600;">
+                      <th>Name</th>
+                      <th>Account</th>
+                      <th style="text-align: right;">Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody id="payroll-roster-body">
+                    <!-- Loaded dynamically -->
+                  </tbody>
+                </table>
+              </div>
+              
+              <!-- Add Employee Form -->
+              <div style="display: flex; gap: 8px;">
+                <input type="text" id="payroll-name" placeholder="Employee Name" style="flex: 2; padding: 6px;" class="search-input">
+                <input type="text" id="payroll-acc" placeholder="Account #" style="flex: 2; padding: 6px;" class="search-input">
+                <input type="number" id="payroll-amt" placeholder="Salary" style="flex: 1; padding: 6px;" class="search-input">
+                <button type="button" id="add-employee-btn" class="btn-login" style="padding: 6px 10px; margin: 0; font-size: 12px;">Add</button>
+              </div>
             </div>
-            <div class="input-group" style="margin-bottom: 24px;">
-              <label for="loan-request-amount">Credit Limit Requested (USD)</label>
-              <input type="number" id="loan-request-amount" min="100000" max="100000000" step="100000" placeholder="$0.00" required>
+          </div>
+
+          <!-- Generate Action -->
+          <div style="text-align: center; border-top: 1px solid var(--border-color); padding-top: 24px; margin-top: 24px;">
+            <button type="button" id="btn-generate-nacha" class="btn-form-submit" style="width: auto; padding: 12px 32px;">Compile NACHA File</button>
+          </div>
+
+          <!-- NACHA Output Text Box -->
+          <div id="nacha-output-section" style="display: none; margin-top: 30px;">
+            <h4 style="margin-bottom: 10px; font-family: sans-serif; font-weight: 600;">Compiled NACHA Data File (.ach)</h4>
+            <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 10px;">This is a valid, structured fixed-width 94-character NACHA payroll record formatted for Federal Reserve ACH uploads.</p>
+            <textarea id="nacha-content" style="width: 100%; height: 200px; font-family: monospace; font-size: 11px; padding: 12px; border: 1px solid var(--border-color); background-color: var(--bg-light); border-radius: var(--radius-sm); white-space: pre; overflow-x: auto; margin-bottom: 16px;" readonly></textarea>
+            <div style="display: flex; gap: 12px;">
+              <button type="button" id="btn-download-nacha" class="btn-login" style="padding: 10px 20px;">Download ACH File</button>
+              <button type="button" id="btn-submit-ach-bank" class="page-btn" style="margin: 0; padding: 10px 20px; background-color: var(--primary-color); color: #fff;">Simulate Batch Transmission</button>
             </div>
-            <button type="submit" class="btn-form-submit">Submit Underwriting Application</button>
-          </form>
+          </div>
+        </div>
+
+        <!-- 6. eStatements Tab -->
+        <div id="tab-estatements" class="banking-tab-pane banking-tab-content">
+          <h3>eStatements Portal</h3>
+          <p class="tab-desc">Access official monthly ledger statements of deposits, withdrawals, and interest clearings.</p>
+          
+          <div style="background-color: var(--bg-light); border: 1px solid var(--border-color); padding: 24px; border-radius: var(--radius-sm);">
+            <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 16px; align-items: flex-end; margin-bottom: 20px;">
+              <div class="input-group">
+                <label for="estatement-acc">Select Statement Account</label>
+                <select id="estatement-acc">
+                  <option value="checking">Checking (Acct ••••-7291)</option>
+                  <option value="savings">Savings (Acct ••••-3304)</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <label for="estatement-month">Statement Period</label>
+                <select id="estatement-month">
+                  <option value="may-2026">May 2026</option>
+                  <option value="apr-2026">April 2026</option>
+                  <option value="mar-2026">March 2026</option>
+                  <option value="feb-2026">February 2026</option>
+                </select>
+              </div>
+            </div>
+            <button type="button" id="btn-generate-statement" class="btn-form-submit">Generate PDF eStatement</button>
+          </div>
+        </div>
+
+        <!-- 7. Support Secure Messaging Tab -->
+        <div id="tab-support" class="banking-tab-pane" style="display: none; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 40px; box-shadow: var(--shadow-sm); max-width: 800px;">
+          <h3>Fiduciary Secure Messaging</h3>
+          <p class="tab-desc">Submit tickets directly to our commercial relationship or fraud desks. All messages are encrypted.</p>
+          
+          <div style="display: grid; grid-template-columns: 200px 1fr; gap: 24px; min-height: 350px;">
+            <!-- Ticket List -->
+            <div style="border-right: 1px solid var(--border-color); padding-right: 20px;">
+              <h4 style="font-family: sans-serif; font-size: 13px; text-transform: uppercase; font-weight: 600; color: var(--text-muted); margin-bottom: 12px;">Active Tickets</h4>
+              <div style="display: flex; flex-direction: column; gap: 8px;" id="ticket-threads">
+                <!-- Loaded dynamically -->
+              </div>
+            </div>
+
+            <!-- Active Thread Conversation -->
+            <div style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div style="max-height: 220px; overflow-y: auto; padding: 10px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); margin-bottom: 16px; display: flex; flex-direction: column; gap: 12px; background-color: var(--bg-light);" id="chat-messages-box">
+                <!-- Dynamically populated -->
+              </div>
+              <form id="chat-input-form" style="display: flex; gap: 8px;">
+                <input type="text" id="chat-user-message" placeholder="Type your message to support..." style="flex-grow: 1; padding: 10px;" class="search-input" required>
+                <button type="submit" class="btn-login" style="margin: 0; padding: 10px 18px;">Send</button>
+              </form>
+            </div>
+          </div>
         </div>
       </main>
+    </div>
+  </div>
+
+  <!-- Statement Modal View (Dynamic HTML eStatement Popup) -->
+  <div id="statement-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; padding: 20px;">
+    <div style="background-color: #fff; width: 100%; max-width: 800px; height: 90%; max-height: 700px; border-radius: var(--radius-sm); overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow-lg);">
+      <!-- Modal Header -->
+      <div style="background-color: var(--primary-color); color: #fff; padding: 18px 24px; display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="color: #fff; font-size: 18px; margin: 0;">Official eStatement Document</h3>
+        <div style="display: flex; gap: 12px;">
+          <button onclick="window.print()" class="btn-login" style="background-color: var(--accent-color); color: var(--secondary-color); border-color: var(--accent-color); margin: 0; padding: 4px 12px; font-size: 12px;">Print Statement</button>
+          <button id="close-statement-btn" style="background: none; border: none; color: #fff; font-size: 20px; cursor: pointer;">&times;</button>
+        </div>
+      </div>
+      <!-- Modal Content Area -->
+      <div style="overflow-y: auto; padding: 40px; font-family: monospace; font-size: 12px; flex-grow: 1;" id="statement-print-area">
+        <!-- Rendered dynamically in banking.js -->
+      </div>
     </div>
   </div>
 
