@@ -587,6 +587,10 @@ nav a:hover, nav a.active {
   margin-bottom: 6px;
 }
 
+.article-content a {
+  text-decoration: underline;
+}
+
 .article-back-link {
   font-size: 14px;
   font-weight: 500;

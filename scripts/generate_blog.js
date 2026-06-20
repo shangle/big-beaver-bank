@@ -255,7 +255,7 @@ const renderArticle = (article, index) => {
       <div class="blog-card" style="margin: 0; box-shadow: none; border: 1px solid var(--border-color);">
         <div class="blog-card-content" style="padding: 16px;">
           <div class="blog-card-meta" style="font-size: 11px;">${a.category} • ${a.date}</div>
-          <h4 style="font-size: 14px; margin-bottom: 8px; font-family: sans-serif;"><a href="${a.slug}.html">${a.title}</a></h4>
+          <h3 style="font-size: 14px; margin-bottom: 8px; font-family: sans-serif;"><a href="${a.slug}.html">${a.title}</a></h3>
           <a href="${a.slug}.html" style="font-size: 12px; font-weight: 600;">Read &rarr;</a>
         </div>
       </div>
@@ -269,6 +269,7 @@ const renderArticle = (article, index) => {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${article.title} | Big Beaver Bank Newsroom</title>
+  <meta name="description" content="${article.excerpt.replace(/"/g, '&quot;')}">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230b2f1d%22/><text y=%2275%22 x=%2222%22 font-size=%2270%22 fill=%22%23c5a059%22 font-family=%22Georgia, serif%22 font-weight=%22bold%22>B</text></svg>">
 </head>
@@ -352,14 +353,14 @@ const renderArticle = (article, index) => {
     <!-- Right Column: Recommended & Links -->
     <aside style="margin-top: 60px;">
       <div style="background-color: var(--bg-white); border: 1px solid var(--border-color); padding: 20px; border-radius: var(--radius-sm); margin-bottom: 30px;">
-        <h4 style="font-size: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-bottom: 12px; font-family: sans-serif; font-weight: 600;">Recommended Reading</h4>
+        <h2 style="font-size: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-bottom: 12px; font-family: sans-serif; font-weight: 600;">Recommended Reading</h2>
         <div style="display: flex; flex-direction: column; gap: 16px;">
           ${recs}
         </div>
       </div>
 
       <div style="background-color: var(--primary-color); color: var(--text-light); padding: 24px; border-radius: var(--radius-sm); text-align: center;">
-        <h4 style="font-family: 'Playfair Display', Georgia, serif; font-size: 20px; color: var(--accent-color); margin-bottom: 12px;">Need a home loan?</h4>
+        <h2 style="font-family: 'Playfair Display', Georgia, serif; font-size: 20px; color: var(--accent-color); margin-bottom: 12px;">Need a home loan?</h2>
         <p style="font-size: 13px; margin-bottom: 20px; line-height: 1.5;">Check out our current regional mortgage rates and apply online today.</p>
         <a href="../personal-banking.html#mortgage" class="btn-primary" style="background-color: var(--accent-color); color: var(--secondary-color); font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 4px; display: inline-block;">Mortgage Center</a>
       </div>
