@@ -316,6 +316,14 @@ document.addEventListener('DOMContentLoaded', () => {
       setupNicknamesPanel(username);
       setupPayrollRoster(username);
       setupSecureMessaging(username);
+      setupApprovalsCenter(username);
+      setupPositivePay(username);
+      setupReceivables(username);
+      setupCorporateCards(username);
+      setupLiquidity(username);
+      setupComplianceAndLocalization(username);
+      setupSupportAndScheduler(username);
+      setupStatementDownloads(username);
     }
   }
 
@@ -764,6 +772,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- MOBILE CHECK DEPOSIT OVERHAUL (PHASE 90) ---
   let activeCheckSource = null; // 'file', 'webcam', 'sample'
   let activeCheckAmount = 0;
+  let activeCheckNum = '22045';
   let videoStream = null;
 
   const btnMethodFile = document.getElementById('btn-method-file');
@@ -1097,45 +1106,48 @@ document.addEventListener('DOMContentLoaded', () => {
       ocrLoadingOverlay.style.display = 'none';
       
       let amount = 0;
-      let routing = "";
-      let account = "";
-      let payeeName = currentUser.toUpperCase();
-      let company = "";
-
+      let checkNum = '22045';
       if (mode === 'initech') {
         company = "INITECH CORP";
         amount = 2450.00;
         routing = "987654321";
         account = "000109923";
+        checkNum = '109923';
       } else if (mode === 'omegamart') {
         company = "OMEGA MART INC";
         amount = 18500.00;
         routing = "987654321";
         account = "000109923";
+        checkNum = '109924';
       } else if (mode === 'weyland') {
         company = "WEYLAND-YUTANI CORP";
         amount = 125000.00;
         routing = "987654321";
         account = "000109923";
+        checkNum = '109925';
       } else if (mode === 'dharma') {
         company = "THE DHARMA INITIATIVE";
         amount = 482000.00;
         routing = "987654321";
         account = "000109923";
+        checkNum = '109926';
       } else if (mode === 'webcam') {
         company = "CAMERA_CAPTURE_DRAFT";
         amount = 1250.00;
         routing = "987654321";
         account = "88392019";
+        checkNum = '22045';
       } else {
         // file upload
         company = extraInfo.toUpperCase().substring(0, 20) || "UPLOADED_IMAGE";
         amount = 1500.00;
         routing = "987654321";
         account = "99042941";
+        checkNum = '33012';
       }
 
       activeCheckAmount = amount;
+      activeCheckNum = checkNum;
       depositAmountInput.value = amount;
 
       // Print OCR logs (invalid routing checksum is explicitly called out)
@@ -1144,7 +1156,7 @@ document.addEventListener('DOMContentLoaded', () => {
 DOCUMENT FRAME STATUS   : BOUNDARIES VALIDATED (100% CONFIDENCE)
 DOCUMENT EXPOSURE VALUE : OPTIMAL (AGC CALIBRATED)
 READING codeline...
-MICR STRIP DETECTED     : ⑆${routing}⑆ ⑈${account}⑈ 22045
+MICR STRIP DETECTED     : ⑆${routing}⑆ ⑈${account}⑈ ${checkNum}
 ROUTE TRANSIT ANALYSIS  : CODE [${routing}] EXTRACTED
 ACCOUNT CODE ANALYSIS   : CODE [${account}] EXTRACTED
 TRANSACTION AMOUNT      : $${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
@@ -1177,6 +1189,54 @@ STATUS: SUCCESS. Amount field auto-filled. Verify draft and click submit.`;
       if (activeCheckSource === 'sample' && Math.abs(amount - activeCheckAmount) > 0.01) {
         showBannerNotification("Scan Warning: Submitted amount does not match OCR scanned amount of $" + activeCheckAmount.toLocaleString(), "error");
         return;
+      }
+
+      // Positive Pay intercept logic
+      const isReverse = document.getElementById('toggle-pospay-reverse') ? document.getElementById('toggle-pospay-reverse').checked : false;
+      const isPospayActive = document.getElementById('toggle-pospay-active') ? document.getElementById('toggle-pospay-active').checked : false;
+      
+      if (isPospayActive) {
+        let registry = JSON.parse(localStorage.getItem('bbb_pospay_registry') || '[]');
+        const match = registry.find(r => r.checkNum === activeCheckNum);
+        
+        let shouldExcept = false;
+        let details = '';
+        
+        if (isReverse) {
+          shouldExcept = true;
+          details = `Reverse Positive Pay: Checked by default for manual review`;
+        } else if (!match) {
+          shouldExcept = true;
+          details = `No matching check issue record found for Check #${activeCheckNum}`;
+        } else if (Math.abs(match.amount - amount) > 0.01) {
+          shouldExcept = true;
+          details = `Amount discrepancy (Scanned: $${amount.toFixed(2)} vs Registered: $${match.amount.toFixed(2)})`;
+        }
+        
+        if (shouldExcept) {
+          let exceptions = JSON.parse(localStorage.getItem('bbb_exceptions') || '[]');
+          if (!exceptions.some(e => e.checkNum === activeCheckNum && e.status === 'Pending Decision')) {
+            exceptions.push({
+              checkNum: activeCheckNum,
+              payee: currentUser.toUpperCase(),
+              details: details,
+              amount: amount,
+              status: 'Pending Decision'
+            });
+            localStorage.setItem('bbb_exceptions', JSON.stringify(exceptions));
+          }
+          
+          if (typeof renderApprovalsUI === 'function') renderApprovalsUI();
+          
+          showBannerNotification(`Positive Pay Exception: Check #${activeCheckNum} routed to Approvals Exception queue.`, "error");
+          
+          depositForm.reset();
+          stopWebcam();
+          checkDisplayContainer.style.display = 'none';
+          ocrConsole.style.display = 'none';
+          activeCheckSource = null;
+          return;
+        }
       }
 
       const balances = JSON.parse(localStorage.getItem(`bbb_balances_${currentUser}`));
@@ -1275,27 +1335,25 @@ STATUS: SUCCESS. Amount field auto-filled. Verify draft and click submit.`;
           return;
         }
 
-        balances.checking -= total;
-        localStorage.setItem(`bbb_balances_${username}`, JSON.stringify(balances));
-        updateBalanceUI(balances);
+        // Queue in approvals
+        let approvals = JSON.parse(localStorage.getItem('bbb_approvals') || '[]');
+        const appVal = {
+          id: `APP-${Date.now().toString().slice(-5)}`,
+          type: 'ACH Direct Deposit',
+          initiator: localStorage.getItem('bbb_user_role') || 'Maker (Staff Analyst)',
+          details: `Direct Deposit Payroll Batch: ${roster.length} Accounts for ${coName.trim()}`,
+          amount: total,
+          status: 'Pending Approval'
+        };
+        approvals.push(appVal);
+        localStorage.setItem('bbb_approvals', JSON.stringify(approvals));
 
-        const txns = JSON.parse(localStorage.getItem(`bbb_txns_${username}`));
-        const now = new Date();
-        txns.unshift({
-          id: `TXN-${Date.now().toString().slice(-7)}`,
-          date: now.toISOString().slice(0, 19).replace('T', ' '),
-          displayDate: now.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
-          desc: `Direct Deposit Payroll Batch: ${roster.length} Accounts`,
-          entity: `${coName.trim()} ACH Treasury`,
-          category: "Operations",
-          type: "withdrawal",
-          amount: total
-        });
-        localStorage.setItem(`bbb_txns_${username}`, JSON.stringify(txns));
-        renderLedger(txns);
+        if (typeof renderApprovalsUI === 'function') {
+          renderApprovalsUI();
+        }
 
         nachaOutputSection.style.display = 'none';
-        showBannerNotification(`ACH Direct Deposit Transmitted: $${total.toLocaleString()} batch cleared.`, "success");
+        showBannerNotification(`ACH Batch Queued: $${total.toLocaleString()} pending Checker approval (ID: ${appVal.id}).`, "success");
       };
     };
   }
@@ -1566,4 +1624,1290 @@ STATUS: SUCCESS. Amount field auto-filled. Verify draft and click submit.`;
       notificationBanner.classList.remove('show');
     }, 5000);
   }
+
+  // --- MFA SOFT-TOKEN COUNTDOWN ENGINE ---
+  let activeOTPCode = '';
+  function setupMfaSoftToken() {
+    const sidebarOtpValue = document.getElementById('sidebar-otp-value');
+    const mfaTimerRing = document.getElementById('mfa-timer-ring');
+    const mfaTimerSec = document.getElementById('mfa-timer-sec');
+    if (!sidebarOtpValue) return;
+
+    function generateOTP() {
+      const code = Math.floor(100000 + Math.random() * 900000).toString();
+      activeOTPCode = code.slice(0, 3) + ' ' + code.slice(3);
+      sidebarOtpValue.textContent = activeOTPCode;
+    }
+
+    generateOTP();
+    let secondsLeft = 30;
+    setInterval(() => {
+      secondsLeft--;
+      if (secondsLeft < 0) {
+        secondsLeft = 30;
+        generateOTP();
+      }
+      if (mfaTimerSec) mfaTimerSec.textContent = `Expires in ${secondsLeft}s`;
+      if (mfaTimerRing) {
+        // SVG progress ring calculations
+        const offset = (secondsLeft / 30) * 50.24;
+        mfaTimerRing.style.strokeDashoffset = 50.24 - offset;
+      }
+    }, 1000);
+  }
+
+  // Global handle for Approvals re-rendering
+  window.renderApprovalsUI = null;
+
+  // --- MAKER-CHECKER APPROVALS CENTER ---
+  function setupApprovalsCenter(username) {
+    const toggleRoleBtn = document.getElementById('btn-toggle-role');
+    const roleText = document.getElementById('approvals-role-text');
+    const approvalBadge = document.getElementById('approval-badge-count');
+    
+    if (!toggleRoleBtn) return;
+    
+    let activeRole = localStorage.getItem('bbb_user_role') || 'Maker (Staff Analyst)';
+    roleText.textContent = activeRole;
+    
+    const dispRole = document.getElementById('display-role');
+    if (dispRole) dispRole.textContent = activeRole;
+
+    toggleRoleBtn.onclick = () => {
+      activeRole = activeRole.includes('Maker') ? 'Checker (Treasury Director)' : 'Maker (Staff Analyst)';
+      localStorage.setItem('bbb_user_role', activeRole);
+      roleText.textContent = activeRole;
+      const dispRole = document.getElementById('display-role');
+      if (dispRole) dispRole.textContent = activeRole;
+      
+      renderApprovalsUI();
+    };
+
+    function renderApprovalsUI() {
+      const approvals = JSON.parse(localStorage.getItem('bbb_approvals') || '[]');
+      const exceptions = JSON.parse(localStorage.getItem('bbb_exceptions') || '[]');
+      
+      const pendingApprovalsCount = approvals.filter(a => a.status === 'Pending Approval').length;
+      const pendingExceptionsCount = exceptions.filter(e => e.status === 'Pending Decision').length;
+      const totalPending = pendingApprovalsCount + pendingExceptionsCount;
+      
+      if (approvalBadge) {
+        if (totalPending > 0) {
+          approvalBadge.textContent = totalPending;
+          approvalBadge.style.display = 'inline-flex';
+        } else {
+          approvalBadge.style.display = 'none';
+        }
+      }
+
+      const txnBody = document.getElementById('approvals-txn-body');
+      if (txnBody) {
+        txnBody.innerHTML = '';
+        if (approvals.length === 0) {
+          txnBody.innerHTML = `<tr><td colspan="6" style="padding:20px; text-align:center; color:var(--text-muted);">No pending transactions in approval queue.</td></tr>`;
+        } else {
+          approvals.forEach((app) => {
+            const tr = document.createElement('tr');
+            tr.style.borderBottom = '1px solid var(--border-color)';
+            
+            let actionHtml = '';
+            if (app.status === 'Pending Approval') {
+              actionHtml = `
+                <div style="display:flex; gap:6px; justify-content:center;">
+                  <button class="page-btn btn-approve" data-id="${app.id}" style="margin:0; padding:2px 8px; font-size:11px; background-color:#10b981; color:#fff; border-color:#10b981;">Approve</button>
+                  <button class="page-btn btn-reject" data-id="${app.id}" style="margin:0; padding:2px 8px; font-size:11px; background-color:#ef4444; color:#fff; border-color:#ef4444;">Reject</button>
+                </div>
+              `;
+            } else {
+              actionHtml = `<span style="font-weight:600; color:${app.status === 'Approved' ? '#10b981' : '#ef4444'}">${app.status}</span>`;
+            }
+
+            tr.innerHTML = `
+              <td style="padding:10px; font-family:monospace;">${app.id}</td>
+              <td style="padding:10px; font-weight:600;">${app.type}</td>
+              <td style="padding:10px; color:var(--text-muted);">${app.initiator}</td>
+              <td style="padding:10px;">${app.details}</td>
+              <td style="padding:10px; text-align:right; font-weight:bold;">$${app.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
+              <td style="padding:10px; text-align:center;">${actionHtml}</td>
+            `;
+            txnBody.appendChild(tr);
+          });
+        }
+      }
+
+      const excBody = document.getElementById('approvals-exceptions-body');
+      if (excBody) {
+        excBody.innerHTML = '';
+        if (exceptions.length === 0) {
+          excBody.innerHTML = `<tr><td colspan="5" style="padding:20px; text-align:center; color:var(--text-muted);">No presented Positive Pay check exceptions.</td></tr>`;
+        } else {
+          exceptions.forEach((exc) => {
+            const tr = document.createElement('tr');
+            tr.style.borderBottom = '1px solid var(--border-color)';
+            
+            let decisionHtml = '';
+            if (exc.status === 'Pending Decision') {
+              decisionHtml = `
+                <div style="display:flex; gap:6px; justify-content:center;">
+                  <button class="page-btn btn-pay-check" data-num="${exc.checkNum}" style="margin:0; padding:2px 8px; font-size:11px; background-color:#10b981; color:#fff; border-color:#10b981;">Pay (Clear)</button>
+                  <button class="page-btn btn-return-check" data-num="${exc.checkNum}" style="margin:0; padding:2px 8px; font-size:11px; background-color:#ef4444; color:#fff; border-color:#ef4444;">Return (Fraud)</button>
+                </div>
+              `;
+            } else {
+              decisionHtml = `<span style="font-weight:600; color:${exc.status.includes('Paid') ? '#10b981' : '#ef4444'}">${exc.status}</span>`;
+            }
+
+            tr.innerHTML = `
+              <td style="padding:10px; font-family:monospace;">${exc.checkNum}</td>
+              <td style="padding:10px; font-weight:600;">${exc.payee}</td>
+              <td style="padding:10px; color:var(--text-muted);">${exc.details || 'Routing code mismatch'}</td>
+              <td style="padding:10px; text-align:right; font-weight:bold;">$${exc.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
+              <td style="padding:10px; text-align:center;">${decisionHtml}</td>
+            `;
+            excBody.appendChild(tr);
+          });
+        }
+      }
+
+      document.querySelectorAll('.btn-approve').forEach(btn => {
+        btn.onclick = () => {
+          if (!activeRole.includes('Checker')) {
+            alert("Dual Control Policy violation: Maker cannot approve transactions. Toggle role to Checker to perform approvals.");
+            return;
+          }
+          const id = btn.getAttribute('data-id');
+          processApproval(id, 'Approved');
+        };
+      });
+
+      document.querySelectorAll('.btn-reject').forEach(btn => {
+        btn.onclick = () => {
+          if (!activeRole.includes('Checker')) {
+            alert("Dual Control Policy violation: Maker cannot reject transactions. Toggle role to Checker.");
+            return;
+          }
+          const id = btn.getAttribute('data-id');
+          processApproval(id, 'Rejected');
+        };
+      });
+
+      document.querySelectorAll('.btn-pay-check').forEach(btn => {
+        btn.onclick = () => {
+          if (!activeRole.includes('Checker')) {
+            alert("Dual Control Policy violation: Maker cannot decide exceptions. Toggle role to Checker.");
+            return;
+          }
+          const num = btn.getAttribute('data-num');
+          processExceptionDecision(num, 'Paid (Approved)');
+        };
+      });
+
+      document.querySelectorAll('.btn-return-check').forEach(btn => {
+        btn.onclick = () => {
+          if (!activeRole.includes('Checker')) {
+            alert("Dual Control Policy violation: Maker cannot decide exceptions. Toggle role to Checker.");
+            return;
+          }
+          const num = btn.getAttribute('data-num');
+          processExceptionDecision(num, 'Returned (Dishonored)');
+        };
+      });
+    }
+
+    function processApproval(id, newStatus) {
+      let approvals = JSON.parse(localStorage.getItem('bbb_approvals') || '[]');
+      const index = approvals.findIndex(a => a.id === id);
+      if (index === -1) return;
+      
+      approvals[index].status = newStatus;
+      localStorage.setItem('bbb_approvals', JSON.stringify(approvals));
+      
+      if (newStatus === 'Approved') {
+        const app = approvals[index];
+        const balances = JSON.parse(localStorage.getItem(`bbb_balances_${currentUser}`));
+        
+        if (balances.checking >= app.amount) {
+          balances.checking -= app.amount;
+          localStorage.setItem(`bbb_balances_${currentUser}`, JSON.stringify(balances));
+          updateBalanceUI(balances);
+          
+          const txns = JSON.parse(localStorage.getItem(`bbb_txns_${currentUser}`) || '[]');
+          const now = new Date();
+          txns.unshift({
+            id: `TXN-${Date.now().toString().slice(-7)}`,
+            date: now.toISOString().slice(0, 19).replace('T', ' '),
+            displayDate: now.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+            desc: `${app.type}: ${app.details}`,
+            entity: app.details.split(' to ')[1] || 'Corporate Recipient',
+            category: 'Operations',
+            type: 'withdrawal',
+            amount: app.amount
+          });
+          localStorage.setItem(`bbb_txns_${currentUser}`, JSON.stringify(txns));
+          renderLedger(txns);
+          showBannerNotification(`Approval Executed: Transaction ${id} approved & posted.`, 'success');
+        } else {
+          showBannerNotification(`Approval Failed: Insufficient funds for transaction ${id}`, 'error');
+          approvals[index].status = 'Failed (Overdraft)';
+          localStorage.setItem('bbb_approvals', JSON.stringify(approvals));
+        }
+      } else {
+        showBannerNotification(`Transaction ${id} rejected.`, 'error');
+      }
+      
+      renderApprovalsUI();
+    }
+
+    function processExceptionDecision(num, newStatus) {
+      let exceptions = JSON.parse(localStorage.getItem('bbb_exceptions') || '[]');
+      const index = exceptions.findIndex(e => e.checkNum === num);
+      if (index === -1) return;
+      
+      exceptions[index].status = newStatus;
+      localStorage.setItem('bbb_exceptions', JSON.stringify(exceptions));
+      
+      const exc = exceptions[index];
+      if (newStatus.includes('Paid')) {
+        const balances = JSON.parse(localStorage.getItem(`bbb_balances_${currentUser}`));
+        
+        if (balances.checking >= exc.amount) {
+          balances.checking -= exc.amount;
+          localStorage.setItem(`bbb_balances_${currentUser}`, JSON.stringify(balances));
+          updateBalanceUI(balances);
+          
+          const txns = JSON.parse(localStorage.getItem(`bbb_txns_${currentUser}`) || '[]');
+          const now = new Date();
+          txns.unshift({
+            id: `TXN-${Date.now().toString().slice(-7)}`,
+            date: now.toISOString().slice(0, 19).replace('T', ' '),
+            displayDate: now.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+            desc: `Positive Pay Cleared Check #${exc.checkNum}`,
+            entity: exc.payee,
+            category: 'Inventory',
+            type: 'withdrawal',
+            amount: exc.amount
+          });
+          localStorage.setItem(`bbb_txns_${currentUser}`, JSON.stringify(txns));
+          renderLedger(txns);
+          showBannerNotification(`Positive Pay Exception: Check #${exc.checkNum} cleared successfully.`, 'success');
+        } else {
+          showBannerNotification(`Positive Pay Exception: Check #${exc.checkNum} failed to clear (insufficient funds)`, 'error');
+          exceptions[index].status = 'Failed (NSF)';
+          localStorage.setItem('bbb_exceptions', JSON.stringify(exceptions));
+        }
+      } else {
+        showBannerNotification(`Check #${exc.checkNum} returned for fraud protection.`, 'error');
+      }
+      
+      renderApprovalsUI();
+    }
+
+    window.renderApprovalsUI = renderApprovalsUI;
+
+    let approvals = JSON.parse(localStorage.getItem('bbb_approvals'));
+    if (!approvals) {
+      approvals = [
+        { id: 'APP-90291', type: 'Wire Transfer Out', initiator: 'Maker (Staff Analyst)', details: 'Wire payout to Weyland-Yutani Xenomorph Division', amount: 125000.00, status: 'Pending Approval' },
+        { id: 'APP-90292', type: 'ACH Direct Deposit', initiator: 'Maker (Staff Analyst)', details: 'Vandelay Payroll Batch SEC:PPD', amount: 12500.00, status: 'Pending Approval' }
+      ];
+      localStorage.setItem('bbb_approvals', JSON.stringify(approvals));
+    }
+    
+    let exceptions = JSON.parse(localStorage.getItem('bbb_exceptions'));
+    if (!exceptions) {
+      exceptions = [
+        { checkNum: '109923', payee: 'Dwight Schrute', details: 'Check number matched registry but amount differs ($2,450.00 presented vs $2,400.00 registry)', amount: 2450.00, status: 'Pending Decision' },
+        { checkNum: '109927', payee: 'Acme Pyrotechnics', details: 'No issued check registry found for Check #109927', amount: 1540.00, status: 'Pending Decision' }
+      ];
+      localStorage.setItem('bbb_exceptions', JSON.stringify(exceptions));
+    }
+
+    renderApprovalsUI();
+  }
+
+  // --- TRANSFERS SUBTABS AND WIRE LOGIC EXTENSIONS ---
+  const originalSetupTransfersSubtabs = setupTransfersSubtabs;
+  setupTransfersSubtabs = function() {
+    originalSetupTransfersSubtabs();
+    
+    const btnSubtabInternal = document.getElementById('btn-subtab-internal');
+    const btnSubtabAch = document.getElementById('btn-subtab-ach');
+    const btnSubtabWire = document.getElementById('btn-subtab-wire');
+    const transferForm = document.getElementById('transfer-form');
+    const achForm = document.getElementById('ach-form');
+    const wireForm = document.getElementById('wire-dispatch-form');
+    
+    if (btnSubtabWire && wireForm) {
+      btnSubtabWire.addEventListener('click', () => {
+        btnSubtabWire.classList.add('active');
+        if (btnSubtabInternal) btnSubtabInternal.classList.remove('active');
+        if (btnSubtabAch) btnSubtabAch.classList.remove('active');
+        if (transferForm) transferForm.style.display = 'none';
+        if (achForm) achForm.style.display = 'none';
+        wireForm.style.display = 'block';
+      });
+
+      if (btnSubtabInternal) {
+        btnSubtabInternal.addEventListener('click', () => {
+          btnSubtabWire.classList.remove('active');
+          wireForm.style.display = 'none';
+        });
+      }
+      if (btnSubtabAch) {
+        btnSubtabAch.addEventListener('click', () => {
+          btnSubtabWire.classList.remove('active');
+          wireForm.style.display = 'none';
+        });
+      }
+
+      const btnValidateSwift = document.getElementById('btn-validate-swift');
+      const wireRoutingInput = document.getElementById('wire-routing');
+      if (btnValidateSwift) {
+        btnValidateSwift.addEventListener('click', () => {
+          const val = wireRoutingInput.value.trim().toUpperCase();
+          if (!val) {
+            alert("Enter routing number or Swift BIC first.");
+            return;
+          }
+          if (val === '987654321') {
+            alert("Validation Result:\nRouting transit code 987654321 verified.\nInstitution: Big Beaver Bank (Fictional Clearing Root).\nWarning: MOD 10 checksum is invalid.");
+          } else if (/^[A-Z0-9]{8,11}$/.test(val)) {
+            alert(`Validation Result:\nSwift BIC ${val} verified.\nInstitution: Fictional Treasury clearing division.`);
+          } else if (/^\d{9}$/.test(val)) {
+            alert(`Validation Result:\nRouting Transit ${val} verified.\nInstitution: Fictional Treasury clearing node.`);
+          } else {
+            alert(`Validation Error:\nRouting/Swift code format invalid. Must be 9-digit ABA Routing or 8-11 character Swift BIC.`);
+          }
+        });
+      }
+
+      const btnCalcFx = document.getElementById('btn-calc-fx');
+      const wireFxCurrency = document.getElementById('wire-fx-currency');
+      const wireFxResult = document.getElementById('wire-fx-result');
+      const wireAmountInput = document.getElementById('wire-amount');
+      
+      if (btnCalcFx) {
+        btnCalcFx.addEventListener('click', () => {
+          const amt = parseFloat(wireAmountInput.value) || 0;
+          const cur = wireFxCurrency.value;
+          let rate = 1.00;
+          let suffix = 'USD';
+          
+          if (cur === 'IMP') { rate = 0.85; suffix = 'IMP (Imperial)'; }
+          else if (cur === 'FED') { rate = 1.25; suffix = 'FED (Federation)'; }
+          else if (cur === 'QUA') { rate = 50.00; suffix = 'QUA (Quatloos)'; }
+          
+          const finalAmt = amt * rate;
+          wireFxResult.textContent = `Rate: 1 USD = ${rate} ${suffix}. Equivalent: ${finalAmt.toLocaleString()} ${suffix}`;
+        });
+      }
+
+      wireForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const route = document.getElementById('wire-routing').value;
+        const account = document.getElementById('wire-account').value;
+        const name = document.getElementById('wire-name').value;
+        const amount = parseFloat(document.getElementById('wire-amount').value);
+        const type = document.getElementById('wire-type').value;
+        const otp = document.getElementById('wire-otp').value.trim().replace(/\s+/g, '');
+        
+        if (!amount || amount <= 0) return;
+        
+        const actualOtp = activeOTPCode.trim().replace(/\s+/g, '');
+        if (otp !== actualOtp) {
+          showBannerNotification("Access Denied: Invalid Security Token OTP.", "error");
+          return;
+        }
+        
+        const balances = JSON.parse(localStorage.getItem(`bbb_balances_${currentUser}`));
+        if (balances.checking < amount) {
+          showBannerNotification("Wire Blocked: Insufficient funds in checking account.", "error");
+          return;
+        }
+        
+        let approvals = JSON.parse(localStorage.getItem('bbb_approvals') || '[]');
+        const appVal = {
+          id: `APP-${Date.now().toString().slice(-5)}`,
+          type: `Wire Out (${type.toUpperCase()})`,
+          initiator: localStorage.getItem('bbb_user_role') || 'Maker (Staff Analyst)',
+          details: `Wire to ${name} via ${route} acct ${account}`,
+          amount: amount,
+          status: 'Pending Approval'
+        };
+        approvals.push(appVal);
+        localStorage.setItem('bbb_approvals', JSON.stringify(approvals));
+        
+        if (typeof renderApprovalsUI === 'function') {
+          renderApprovalsUI();
+        }
+        
+        showBannerNotification(`Wire queued successfully. Pending Checker authorization (ID: ${appVal.id}).`, "success");
+        wireForm.reset();
+      });
+    }
+  };
+
+  // --- STOP PAYMENT RANGE AND TRADITIONAL FORM TOGGLES ---
+  function setupStopPaymentToggles() {
+    const btnStopSingle = document.getElementById('btn-stop-single');
+    const btnStopRange = document.getElementById('btn-stop-range');
+    const singleStopForm = document.getElementById('stoppayment-form');
+    const rangeStopForm = document.getElementById('stoppayment-range-form');
+    
+    if (btnStopSingle && btnStopRange) {
+      btnStopSingle.onclick = () => {
+        btnStopSingle.classList.add('active');
+        btnStopRange.classList.remove('active');
+        if (singleStopForm) singleStopForm.style.display = 'block';
+        if (rangeStopForm) rangeStopForm.style.display = 'none';
+      };
+      btnStopRange.onclick = () => {
+        btnStopRange.classList.add('active');
+        btnStopSingle.classList.remove('active');
+        if (singleStopForm) singleStopForm.style.display = 'none';
+        if (rangeStopForm) rangeStopForm.style.display = 'block';
+      };
+    }
+
+    if (rangeStopForm) {
+      rangeStopForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const start = document.getElementById('stop-range-start').value.trim();
+        const end = document.getElementById('stop-range-end').value.trim();
+        const reason = document.getElementById('stop-range-reason').value;
+        
+        const balances = JSON.parse(localStorage.getItem(`bbb_balances_${currentUser}`));
+        if (balances.checking < 25) {
+          showBannerNotification("Stop Payment Rejected: Insufficient funds for $25 fee.", "error");
+          return;
+        }
+        balances.checking -= 25;
+        localStorage.setItem(`bbb_balances_${currentUser}`, JSON.stringify(balances));
+        updateBalanceUI(balances);
+        
+        let stops = JSON.parse(localStorage.getItem('bbb_stop_checks') || '[]');
+        stops.push({ type: 'range', start: start, end: end, reason: reason });
+        localStorage.setItem('bbb_stop_checks', JSON.stringify(stops));
+        
+        const txns = JSON.parse(localStorage.getItem(`bbb_txns_${currentUser}`) || '[]');
+        const now = new Date();
+        txns.unshift({
+          id: `TXN-${Date.now().toString().slice(-7)}`,
+          date: now.toISOString().slice(0, 19).replace('T', ' '),
+          displayDate: now.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+          desc: `Stop Payment Fee: Range #${start}-${end}`,
+          entity: "Big Beaver Bank Operations",
+          category: 'Audit',
+          type: 'withdrawal',
+          amount: 25.00
+        });
+        localStorage.setItem(`bbb_txns_${currentUser}`, JSON.stringify(txns));
+        renderLedger(txns);
+        
+        showBannerNotification(`Stop Order Placed: Checks #${start} through #${end} stopped. $25 fee debited.`, "success");
+        rangeStopForm.reset();
+      });
+    }
+  }
+
+  // --- POSITIVE PAY CENTER ---
+  function setupPositivePay(username) {
+    const btnUpload = document.getElementById('btn-pospay-upload');
+    const btnManual = document.getElementById('btn-pospay-manual');
+    const uploadArea = document.getElementById('pospay-upload-area');
+    const manualForm = document.getElementById('pospay-manual-form');
+    const btnSubmitCsv = document.getElementById('btn-pospay-submit-csv');
+    const csvContent = document.getElementById('pospay-csv-content');
+    const registryBody = document.getElementById('pospay-ledger-body');
+    
+    if (!btnUpload) return;
+    
+    btnUpload.onclick = () => {
+      btnUpload.classList.add('active');
+      btnManual.classList.remove('active');
+      uploadArea.style.display = 'block';
+      manualForm.style.display = 'none';
+    };
+    btnManual.onclick = () => {
+      btnManual.classList.add('active');
+      btnUpload.classList.remove('active');
+      uploadArea.style.display = 'none';
+      manualForm.style.display = 'block';
+    };
+
+    function renderRegistry() {
+      const registry = JSON.parse(localStorage.getItem('bbb_pospay_registry') || '[]');
+      registryBody.innerHTML = '';
+      if (registry.length === 0) {
+        registryBody.innerHTML = `<tr><td colspan="4" style="padding:10px; text-align:center; color:var(--text-muted);">No check issue records registered.</td></tr>`;
+      } else {
+        registry.forEach(item => {
+          const tr = document.createElement('tr');
+          tr.style.borderBottom = '1px solid var(--border-color)';
+          tr.innerHTML = `
+            <td style="padding:8px; font-family:monospace;">${item.checkNum}</td>
+            <td style="padding:8px; font-weight:600;">${item.payee}</td>
+            <td style="padding:8px; text-align:right; font-weight:bold;">$${item.amount.toLocaleString('en-US', { minimumFractionDigits:2 })}</td>
+            <td style="padding:8px; text-align:center;"><span style="color:#10b981; font-weight:600;">Registered</span></td>
+          `;
+          registryBody.appendChild(tr);
+        });
+      }
+    }
+
+    btnSubmitCsv.onclick = () => {
+      const content = csvContent.value.trim();
+      if (!content) {
+        alert("Please paste check issue CSV lines first.");
+        return;
+      }
+      
+      const lines = content.split('\n');
+      let registry = JSON.parse(localStorage.getItem('bbb_pospay_registry') || '[]');
+      let count = 0;
+      
+      lines.forEach(line => {
+        const parts = line.split(',');
+        if (parts.length >= 3) {
+          const num = parts[0].trim();
+          const amt = parseFloat(parts[1].trim());
+          const payee = parts[2].trim();
+          if (num && !isNaN(amt) && payee) {
+            if (!registry.some(r => r.checkNum === num)) {
+              registry.push({ checkNum: num, amount: amt, payee: payee });
+              count++;
+            }
+          }
+        }
+      });
+      
+      localStorage.setItem('bbb_pospay_registry', JSON.stringify(registry));
+      csvContent.value = '';
+      renderRegistry();
+      showBannerNotification(`Success: ${count} check issues uploaded into Positive Pay registry.`, "success");
+    };
+
+    manualForm.onsubmit = (e) => {
+      e.preventDefault();
+      const num = document.getElementById('pospay-check-num').value.trim();
+      const amt = parseFloat(document.getElementById('pospay-check-amount').value);
+      const payee = document.getElementById('pospay-check-payee').value.trim();
+      
+      let registry = JSON.parse(localStorage.getItem('bbb_pospay_registry') || '[]');
+      if (registry.some(r => r.checkNum === num)) {
+        alert("Validation Error: This check number is already registered.");
+        return;
+      }
+      
+      registry.push({ checkNum: num, amount: amt, payee: payee });
+      localStorage.setItem('bbb_pospay_registry', JSON.stringify(registry));
+      
+      manualForm.reset();
+      renderRegistry();
+      showBannerNotification(`Success: Check #${num} manually registered in Positive Pay.`, "success");
+    };
+
+    let registry = JSON.parse(localStorage.getItem('bbb_pospay_registry'));
+    if (!registry) {
+      registry = [
+        { checkNum: '109923', amount: 2400.00, payee: 'Dwight Schrute' },
+        { checkNum: '109924', amount: 4200.00, payee: 'Jim Halpert' },
+        { checkNum: '109925', amount: 3800.00, payee: 'Pam Beesly' }
+      ];
+      localStorage.setItem('bbb_pospay_registry', JSON.stringify(registry));
+    }
+
+    renderRegistry();
+  }
+
+  // --- RECEIVABLES & LOCKBOX SCANNER ---
+  function setupReceivables(username) {
+    const btnGateway = document.getElementById('btn-receivables-gateway');
+    const btnLockbox = document.getElementById('btn-receivables-lockbox');
+    const gatewayForm = document.getElementById('receivables-gateway-form');
+    const lockboxArea = document.getElementById('receivables-lockbox-area');
+    
+    if (!btnGateway) return;
+    
+    btnGateway.onclick = () => {
+      btnGateway.classList.add('active');
+      btnLockbox.classList.remove('active');
+      gatewayForm.style.display = 'block';
+      lockboxArea.style.display = 'none';
+    };
+    
+    btnLockbox.onclick = () => {
+      btnLockbox.classList.add('active');
+      btnGateway.classList.remove('active');
+      gatewayForm.style.display = 'none';
+      lockboxArea.style.display = 'block';
+      drawLockboxCheck();
+    };
+
+    gatewayForm.onsubmit = (e) => {
+      e.preventDefault();
+      const card = document.getElementById('merchant-card-num').value.replace(/\s+/g, '');
+      const cvv = document.getElementById('merchant-card-cvv').value.trim();
+      const amt = parseFloat(document.getElementById('merchant-amount').value);
+      const client = document.getElementById('merchant-payee').value.trim();
+      
+      if (!amt || amt <= 0) return;
+      
+      if (card.length !== 16 || isNaN(card)) {
+        alert("Validation Error: Card number must be 16 digits.");
+        return;
+      }
+      if (cvv.length !== 3 || isNaN(cvv)) {
+        alert("Validation Error: CVV must be 3 digits.");
+        return;
+      }
+      
+      const balances = JSON.parse(localStorage.getItem(`bbb_balances_${currentUser}`));
+      balances.checking += amt;
+      localStorage.setItem(`bbb_balances_${currentUser}`, JSON.stringify(balances));
+      updateBalanceUI(balances);
+      
+      const txns = JSON.parse(localStorage.getItem(`bbb_txns_${currentUser}`) || '[]');
+      const now = new Date();
+      txns.unshift({
+        id: `TXN-${Date.now().toString().slice(-7)}`,
+        date: now.toISOString().slice(0, 19).replace('T', ' '),
+        displayDate: now.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+        desc: `Merchant POS Capture - Auth:${Math.floor(100000 + Math.random()*900000)}`,
+        entity: client,
+        category: 'Inventory',
+        type: 'deposit',
+        amount: amt
+      });
+      localStorage.setItem(`bbb_txns_${currentUser}`, JSON.stringify(txns));
+      renderLedger(txns);
+      
+      showBannerNotification(`Merchant Payout Captured: $${amt.toLocaleString()} credited to checking.`, "success");
+      gatewayForm.reset();
+    };
+
+    const lockboxCanvas = document.getElementById('lockbox-canvas');
+    const btnLockboxScan = document.getElementById('btn-lockbox-scan-next');
+    const lockboxConsole = document.getElementById('lockbox-console');
+    let currentLockboxIndex = 0;
+    
+    const lockboxChecks = [
+      { checkNum: '55102', amount: 15400.00, company: 'Stark Industries', memo: 'Clean energy component lease' },
+      { checkNum: '88291', amount: 9320.50, company: 'Wayne Enterprises', memo: 'Municipal security gear' },
+      { checkNum: '10294', amount: 62450.00, company: 'Globex Corporation', memo: 'Sub-mountainous power tap' }
+    ];
+
+    function drawLockboxCheck() {
+      if (!lockboxCanvas) return;
+      const ctx = lockboxCanvas.getContext('2d');
+      ctx.fillStyle = '#f1f5f9';
+      ctx.fillRect(0, 0, lockboxCanvas.width, lockboxCanvas.height);
+      
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(4, 4, lockboxCanvas.width - 8, lockboxCanvas.height - 8);
+      
+      const check = lockboxChecks[currentLockboxIndex];
+      
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 10px sans-serif';
+      ctx.fillText(check.company.toUpperCase(), 15, 25);
+      ctx.font = '8px sans-serif';
+      ctx.fillText('100 Industrial Parkway, Suite A', 15, 35);
+      
+      ctx.font = 'bold 10px monospace';
+      ctx.fillText(`Check #: ${check.checkNum}`, lockboxCanvas.width - 90, 25);
+      
+      ctx.font = '9px sans-serif';
+      ctx.fillText(`Date: ${new Date().toLocaleDateString()}`, lockboxCanvas.width - 110, 50);
+      
+      ctx.fillText(`Pay To The Order Of: Big Beaver Bank Fiduciary`, 15, 75);
+      
+      ctx.font = 'bold 11px sans-serif';
+      ctx.fillText(`$  ${check.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}`, lockboxCanvas.width - 100, 75);
+      ctx.strokeRect(lockboxCanvas.width - 115, 63, 100, 18);
+      
+      ctx.font = '9px sans-serif';
+      ctx.fillText(`Memo: ${check.memo}`, 15, 110);
+      
+      ctx.beginPath();
+      ctx.moveTo(lockboxCanvas.width - 150, 110);
+      ctx.lineTo(lockboxCanvas.width - 15, 110);
+      ctx.stroke();
+      
+      ctx.font = 'italic 9px Georgia';
+      ctx.fillText('Authorized Signature', lockboxCanvas.width - 120, 120);
+      
+      ctx.font = '10px monospace';
+      ctx.fillText(`⑆122000249⑆  ⑈004928109⑈  ${check.checkNum}`, 60, 155);
+    }
+
+    if (btnLockboxScan) {
+      btnLockboxScan.onclick = () => {
+        lockboxConsole.innerHTML = `[LOCKBOX SCANNERS STARTING...]
+Scanning batch tray drops...`;
+        
+        setTimeout(() => {
+          const check = lockboxChecks[currentLockboxIndex];
+          lockboxConsole.innerHTML = `[LOCKBOX ENGINE]
+-----------------------------
+FEEDER: Document detected.
+OCR TRANSIT   : 122000249
+OCR ACCOUNT   : 004928109
+OCR CHECK #   : ${check.checkNum}
+OCR AMOUNT    : $${check.amount.toLocaleString()}
+PAYEE MATCH   : TRUE (BBB)
+CLEARING CODE : SEC:CCD
+STATUS        : CLEARED`;
+          
+          const balances = JSON.parse(localStorage.getItem(`bbb_balances_${currentUser}`));
+          balances.checking += check.amount;
+          localStorage.setItem(`bbb_balances_${currentUser}`, JSON.stringify(balances));
+          updateBalanceUI(balances);
+          
+          const txns = JSON.parse(localStorage.getItem(`bbb_txns_${currentUser}`) || '[]');
+          const now = new Date();
+          txns.unshift({
+            id: `TXN-${Date.now().toString().slice(-7)}`,
+            date: now.toISOString().slice(0, 19).replace('T', ' '),
+            displayDate: now.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+            desc: `Lockbox Express Clearing: Check #${check.checkNum}`,
+            entity: check.company,
+            category: 'Inventory',
+            type: 'deposit',
+            amount: check.amount
+          });
+          localStorage.setItem(`bbb_txns_${currentUser}`, JSON.stringify(txns));
+          renderLedger(txns);
+          
+          showBannerNotification(`Lockbox Scanner: Check #${check.checkNum} ($${check.amount.toLocaleString()}) cleared.`, "success");
+          
+          currentLockboxIndex = (currentLockboxIndex + 1) % lockboxChecks.length;
+          drawLockboxCheck();
+        }, 1500);
+      };
+    }
+  }
+
+  // --- CORPORATE CARDS & VIRTUAL CARD GENERATOR ---
+  function setupCorporateCards(username) {
+    const ledgerBody = document.getElementById('cards-ledger-body');
+    const vcardForm = document.getElementById('cards-virtual-form');
+    const vcardOutput = document.getElementById('vcard-output');
+    
+    if (!ledgerBody) return;
+    
+    function renderCards() {
+      const cards = JSON.parse(localStorage.getItem('bbb_corporate_cards') || '[]');
+      ledgerBody.innerHTML = '';
+      
+      cards.forEach((card, idx) => {
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid var(--border-color)';
+        
+        const statusText = card.locked ? 'Locked (Frozen)' : 'Active';
+        const btnColor = card.locked ? '#10b981' : '#ef4444';
+        const btnText = card.locked ? 'Unlock' : 'Freeze';
+        
+        tr.innerHTML = `
+          <td style="padding:8px; font-weight:600;">${card.holder}</td>
+          <td style="padding:8px; font-family:monospace;">•••• •••• •••• ${card.last4}</td>
+          <td style="padding:8px;">$${card.limit.toLocaleString()}</td>
+          <td style="padding:8px;">$${card.balance.toLocaleString()}</td>
+          <td style="padding:8px; text-align:center;">
+            <button class="page-btn btn-toggle-card" data-idx="${idx}" style="margin:0; padding:2px 8px; font-size:11px; background-color:${btnColor}; color:#fff; border-color:${btnColor};">${btnText}</button>
+          </td>
+        `;
+        ledgerBody.appendChild(tr);
+      });
+      
+      document.querySelectorAll('.btn-toggle-card').forEach(btn => {
+        btn.onclick = () => {
+          const idx = parseInt(btn.getAttribute('data-idx'));
+          cards[idx].locked = !cards[idx].locked;
+          localStorage.setItem('bbb_corporate_cards', JSON.stringify(cards));
+          renderCards();
+          showBannerNotification(`Card status updated: ${cards[idx].holder}'s card is now ${cards[idx].locked ? 'frozen' : 'active'}.`, "success");
+        };
+      });
+    }
+
+    if (vcardForm) {
+      vcardForm.onsubmit = (e) => {
+        e.preventDefault();
+        const cap = parseFloat(document.getElementById('vcard-amount').value);
+        const vendor = document.getElementById('vcard-payee').value.trim();
+        
+        if (!cap || cap <= 0) return;
+        
+        const cardNum = `4829 ${Math.floor(1000+Math.random()*9000)} ${Math.floor(1000+Math.random()*9000)} ${Math.floor(1000+Math.random()*9000)}`;
+        const exp = `06/29`;
+        const cvv = Math.floor(100 + Math.random()*900).toString();
+        
+        document.getElementById('vcard-disp-payee').textContent = `${vendor.toUpperCase()} CAP: $${cap.toLocaleString()}`;
+        document.getElementById('vcard-disp-num').textContent = cardNum;
+        document.getElementById('vcard-disp-exp').textContent = `EXP: ${exp}`;
+        document.getElementById('vcard-disp-cvv').textContent = `CVV: ${cvv}`;
+        
+        vcardOutput.style.display = 'block';
+        
+        const balances = JSON.parse(localStorage.getItem(`bbb_balances_${currentUser}`));
+        if (balances.checking < cap) {
+          showBannerNotification("Virtual card failed: Insufficient checking funds.", "error");
+          vcardOutput.style.display = 'none';
+          return;
+        }
+        balances.checking -= cap;
+        localStorage.setItem(`bbb_balances_${currentUser}`, JSON.stringify(balances));
+        updateBalanceUI(balances);
+        
+        const txns = JSON.parse(localStorage.getItem(`bbb_txns_${currentUser}`) || '[]');
+        const now = new Date();
+        txns.unshift({
+          id: `TXN-${Date.now().toString().slice(-7)}`,
+          date: now.toISOString().slice(0, 19).replace('T', ' '),
+          displayDate: now.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+          desc: `Virtual Token Purchase: ${vendor}`,
+          entity: vendor,
+          category: 'Equipment',
+          type: 'withdrawal',
+          amount: cap
+        });
+        localStorage.setItem(`bbb_txns_${currentUser}`, JSON.stringify(txns));
+        renderLedger(txns);
+        
+        showBannerNotification(`Virtual Token Issued: Card created for ${vendor} with $${cap.toLocaleString()} cap.`, "success");
+        vcardForm.reset();
+      };
+    }
+
+    let cards = JSON.parse(localStorage.getItem('bbb_corporate_cards'));
+    if (!cards) {
+      cards = [
+        { holder: 'Dwight Schrute', last4: '7729', limit: 5000, balance: 1250, locked: false },
+        { holder: 'Jim Halpert', last4: '3819', limit: 10000, balance: 4120, locked: false },
+        { holder: 'Pam Beesly', last4: '9204', limit: 5000, balance: 80, locked: true }
+      ];
+      localStorage.setItem('bbb_corporate_cards', JSON.stringify(cards));
+    }
+
+    renderCards();
+  }
+
+  // --- LIQUIDITY SWEEPS & CREDIT PORTALS ---
+  function setupLiquidity(username) {
+    const btnSaveSweeps = document.getElementById('btn-save-sweeps');
+    const sweepThresholdInput = document.getElementById('sweep-threshold');
+    const sweepTargetSelect = document.getElementById('sweep-target');
+    const locCapDisplay = document.getElementById('loc-cap-display');
+    const locBalDisplay = document.getElementById('loc-bal-display');
+    
+    const btnDrawTab = document.getElementById('btn-loc-draw-tab');
+    const btnRepayTab = document.getElementById('btn-loc-repay-tab');
+    const drawForm = document.getElementById('loc-draw-form');
+    const repayForm = document.getElementById('loc-repay-form');
+    
+    if (!btnSaveSweeps) return;
+
+    let sweeps = JSON.parse(localStorage.getItem(`bbb_sweeps_${username}`)) || { threshold: 100000, target: 'savings' };
+    sweepThresholdInput.value = sweeps.threshold;
+    sweepTargetSelect.value = sweeps.target;
+
+    btnSaveSweeps.onclick = () => {
+      sweeps.threshold = parseFloat(sweepThresholdInput.value) || 0;
+      sweeps.target = sweepTargetSelect.value;
+      localStorage.setItem(`bbb_sweeps_${username}`, JSON.stringify(sweeps));
+      showBannerNotification("Sweep Covenants Saved: End-of-day balances sweeping to " + sweepTargetSelect.options[sweepTargetSelect.selectedIndex].text, "success");
+    };
+
+    let locBal = parseFloat(localStorage.getItem(`bbb_loc_bal_${username}`) || '0');
+    let locCap = 5000000.00;
+    
+    function renderLOC() {
+      if (locCapDisplay) locCapDisplay.textContent = `$${(locCap - locBal).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+      if (locBalDisplay) locBalDisplay.textContent = `$${locBal.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+    }
+
+    if (btnDrawTab && btnRepayTab) {
+      btnDrawTab.onclick = () => {
+        btnDrawTab.classList.add('active');
+        btnRepayTab.classList.remove('active');
+        drawForm.style.display = 'block';
+        repayForm.style.display = 'none';
+      };
+      
+      btnRepayTab.onclick = () => {
+        btnRepayTab.classList.add('active');
+        btnDrawTab.classList.remove('active');
+        drawForm.style.display = 'none';
+        repayForm.style.display = 'block';
+      };
+    }
+
+    if (drawForm) {
+      drawForm.onsubmit = (e) => {
+        e.preventDefault();
+        const drawAmt = parseFloat(document.getElementById('loc-draw-amount').value);
+        if (!drawAmt || drawAmt <= 0) return;
+        
+        if (locBal + drawAmt > locCap) {
+          showBannerNotification("Drawdown Blocked: Exceeds Line of Credit capacity.", "error");
+          return;
+        }
+        
+        locBal += drawAmt;
+        localStorage.setItem(`bbb_loc_bal_${username}`, locBal.toString());
+        
+        const balances = JSON.parse(localStorage.getItem(`bbb_balances_${username}`));
+        balances.checking += drawAmt;
+        localStorage.setItem(`bbb_balances_${username}`, JSON.stringify(balances));
+        updateBalanceUI(balances);
+        
+        const txns = JSON.parse(localStorage.getItem(`bbb_txns_${username}`) || '[]');
+        const now = new Date();
+        txns.unshift({
+          id: `TXN-${Date.now().toString().slice(-7)}`,
+          date: now.toISOString().slice(0, 19).replace('T', ' '),
+          displayDate: now.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+          desc: `Commercial Line of Credit Drawdown`,
+          entity: "BBB Credit Facility Program",
+          category: 'Operations',
+          type: 'deposit',
+          amount: drawAmt
+        });
+        localStorage.setItem(`bbb_txns_${username}`, JSON.stringify(txns));
+        renderLedger(txns);
+        
+        renderLOC();
+        drawForm.reset();
+        showBannerNotification(`LOC Drawdown Cleared: $${drawAmt.toLocaleString()} credited to Checking.`, "success");
+      };
+    }
+
+    if (repayForm) {
+      repayForm.onsubmit = (e) => {
+        e.preventDefault();
+        const repayAmt = parseFloat(document.getElementById('loc-repay-amount').value);
+        if (!repayAmt || repayAmt <= 0) return;
+        
+        if (repayAmt > locBal) {
+          showBannerNotification("Payment Error: Exceeds outstanding LOC balance.", "error");
+          return;
+        }
+        
+        const balances = JSON.parse(localStorage.getItem(`bbb_balances_${username}`));
+        if (balances.checking < repayAmt) {
+          showBannerNotification("Repayment Failed: Insufficient checking reserves.", "error");
+          return;
+        }
+        
+        balances.checking -= repayAmt;
+        locBal -= repayAmt;
+        localStorage.setItem(`bbb_balances_${username}`, JSON.stringify(balances));
+        localStorage.setItem(`bbb_loc_bal_${username}`, locBal.toString());
+        updateBalanceUI(balances);
+        
+        const txns = JSON.parse(localStorage.getItem(`bbb_txns_${username}`) || '[]');
+        const now = new Date();
+        txns.unshift({
+          id: `TXN-${Date.now().toString().slice(-7)}`,
+          date: now.toISOString().slice(0, 19).replace('T', ' '),
+          displayDate: now.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+          desc: `Commercial Line of Credit Repayment`,
+          entity: "BBB Credit Facility Program",
+          category: 'Debt Service',
+          type: 'withdrawal',
+          amount: repayAmt
+        });
+        localStorage.setItem(`bbb_txns_${username}`, JSON.stringify(txns));
+        renderLedger(txns);
+        
+        renderLOC();
+        repayForm.reset();
+        showBannerNotification(`LOC Payment Received: $${repayAmt.toLocaleString()} paid against credit line.`, "success");
+      };
+    }
+
+    renderLOC();
+  }
+
+  // --- COMPLIANCE AND LOCALIZATIONS ---
+  function setupComplianceAndLocalization(username) {
+    const btnSaveEntitlements = document.getElementById('btn-save-entitlements');
+    const langSelect = document.getElementById('compliance-lang-select');
+    const toggleAdaFont = document.getElementById('toggle-ada-font');
+    const btnW9 = document.getElementById('btn-compliance-w9');
+    const btn1099 = document.getElementById('btn-compliance-1099');
+    
+    if (!btnSaveEntitlements) return;
+
+    btnSaveEntitlements.onclick = () => {
+      const entitlements = {
+        makerWire: document.getElementById('privilege-maker-wire').checked,
+        checkerWire: document.getElementById('privilege-checker-wire').checked,
+        makerAch: document.getElementById('privilege-maker-ach').checked,
+        checkerAch: document.getElementById('privilege-checker-ach').checked,
+        pospay: document.getElementById('privilege-positive-pay').checked
+      };
+      localStorage.setItem(`bbb_entitlements_${username}`, JSON.stringify(entitlements));
+      showBannerNotification("Compliance Update: Entitlements permissions saved to profile.", "success");
+    };
+
+    let entitlements = JSON.parse(localStorage.getItem(`bbb_entitlements_${username}`));
+    if (entitlements) {
+      document.getElementById('privilege-maker-wire').checked = entitlements.makerWire;
+      document.getElementById('privilege-checker-wire').checked = entitlements.checkerWire;
+      document.getElementById('privilege-maker-ach').checked = entitlements.makerAch;
+      document.getElementById('privilege-checker-ach').checked = entitlements.checkerAch;
+      document.getElementById('privilege-positive-pay').checked = entitlements.pospay;
+    }
+
+    btnW9.onclick = () => {
+      alert("Form W-9 Filing:\nFederal Taxpayer Identification validation complete.\nEntity registered: " + username.toUpperCase() + "\nStatus: Certified W-9 in file.");
+    };
+    
+    btn1099.onclick = () => {
+      const year = new Date().getFullYear() - 1;
+      alert(`IRS Form 1099-INT Summary (${year}):\nInterest Income: $82,491.12\nOriginating Institution: Big Beaver Bank\nPayer TIN: 98-7654321\nRecipient Account: Commercial checking clearing pool.\n*Summary stored under tax records.*`);
+    };
+
+    toggleAdaFont.onchange = () => {
+      if (toggleAdaFont.checked) {
+        document.body.classList.add('ada-large-font');
+      } else {
+        document.body.classList.remove('ada-large-font');
+      }
+    };
+
+    const accessBtn = document.getElementById('header-accessibility-btn');
+    if (accessBtn) {
+      accessBtn.onclick = () => {
+        document.body.classList.toggle('high-contrast');
+        showBannerNotification("Contrast mode toggled.", "success");
+      };
+    }
+
+    const translationMap = {
+      en: {
+        title: "Fiduciary Account Dashboard",
+        desc: "Under commercial audit controls, all external ACH payrolls, wire dispatches, and Positive Pay exception updates require dual control verification.",
+        overview: "Overview & Ledger",
+        approvals: "Approvals Queue",
+        cards: "Corporate Cards"
+      },
+      sim: {
+        title: "Sul Sul Fiduciary Grid-O-Plaza",
+        desc: "Dag Dag, all payroll-a, wire dispatch-o, and positive pay checks must be double-cheecked by Checker llama. No fire-a!",
+        overview: "Plaza & Ledger-Snaff",
+        approvals: "Llama Approvals Box",
+        cards: "Sul-Sul SimPlaza Cards"
+      },
+      kli: {
+        title: "Duj Fiduciary balance ledger (Qapla'!)",
+        desc: "Auditors demand blood! All payroll transactions, wire battle coordinates, and Positive Pay security keys must have Maker and Checker dual Honor codes!",
+        overview: "Empire Ledger",
+        approvals: "Honor Council Queue",
+        cards: "Imperial Combat Cards"
+      },
+      bin: {
+        title: "01000110 01101001 01100100 01110101",
+        desc: "01000100 01110101 01100001 01101100 00100000 01100011 01101111 01101110 01110100 01110010 01101111",
+        overview: "01001100 01100101 01100100",
+        approvals: "01000001 01110000 01110000",
+        cards: "01000011 01100001 01110010"
+      }
+    };
+
+    langSelect.onchange = () => {
+      const lang = langSelect.value;
+      const map = translationMap[lang] || translationMap.en;
+      
+      const titleEl = document.querySelector('.dashboard-title');
+      if (titleEl) titleEl.textContent = map.title;
+      
+      const descEl = document.querySelector('.tab-desc');
+      if (descEl) descEl.textContent = map.desc;
+      
+      const overviewBtn = document.querySelector('button[data-tab="tab-dashboard"]');
+      if (overviewBtn) {
+        overviewBtn.innerHTML = `
+          <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+          ${map.overview}
+        `;
+      }
+      
+      const approvalsBtn = document.querySelector('button[data-tab="tab-approvals"]');
+      if (approvalsBtn) {
+        approvalsBtn.innerHTML = `
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          ${map.approvals}
+        `;
+      }
+      
+      showBannerNotification(`Localization language switched to: ${langSelect.options[langSelect.selectedIndex].text}`, "success");
+    };
+  }
+
+  // --- SUPPORT SECURE MESSAGING ATTACHMENTS & SCREENSHARE ---
+  function setupSupportAndScheduler(username) {
+    const bankerForm = document.getElementById('support-banker-form');
+    const screenshareBtn = document.getElementById('btn-support-screenshare');
+    const screenshareConsole = document.getElementById('screenshare-console');
+    const attachBtn = document.getElementById('btn-support-attach');
+    
+    if (!bankerForm) return;
+
+    bankerForm.onsubmit = (e) => {
+      e.preventDefault();
+      const banker = document.getElementById('scheduler-banker');
+      const bankerName = banker.options[banker.selectedIndex].text;
+      const date = document.getElementById('scheduler-date').value;
+      
+      alert(`Appointment Booked Successfully:\nConsultation reserved with ${bankerName}.\nDate: ${date}\nAn invite with remote secure conference links has been dispatched.`);
+      bankerForm.reset();
+    };
+
+    screenshareBtn.onclick = () => {
+      screenshareConsole.style.display = 'block';
+      screenshareConsole.innerHTML = `[CONNECTING TO RELATIONSHIP AGENT PORTAL...]`;
+      
+      setTimeout(() => {
+        screenshareConsole.innerHTML += `\nESTABLISHING SSL TUNNEL SECURE LINK...`;
+      }, 800);
+      
+      setTimeout(() => {
+        screenshareConsole.innerHTML += `\nCO-BROWSING SESSION ACTIVE. AGENT: JUSTIN BEAVER CONNECTED.`;
+        screenshareBtn.textContent = "Disconnect Co-Browsing";
+        screenshareBtn.style.backgroundColor = "#ef4444";
+        screenshareBtn.style.borderColor = "#ef4444";
+      }, 1800);
+    };
+
+    attachBtn.onclick = () => {
+      const progressBox = document.getElementById('support-upload-progress');
+      const progressVal = document.getElementById('support-progress-val');
+      const progressBar = document.getElementById('support-progress-bar');
+      
+      progressBox.style.display = 'block';
+      let progress = 0;
+      
+      const interval = setInterval(() => {
+        progress += 10;
+        progressVal.textContent = `${progress}%`;
+        progressBar.style.width = `${progress}%`;
+        
+        if (progress >= 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            progressBox.style.display = 'none';
+            const tickets = JSON.parse(localStorage.getItem(`bbb_tickets_${currentUser}`));
+            const activeIndex = 0;
+            
+            tickets[activeIndex].messages.push({
+              sender: "User",
+              text: "[Attachment uploaded successfully: audit_ledger_reconciliation_verif.pdf]"
+            });
+            localStorage.setItem(`bbb_tickets_${currentUser}`, JSON.stringify(tickets));
+            
+            const chatBox = document.getElementById('chat-messages-box');
+            if (chatBox) {
+              const div = document.createElement('div');
+              div.style.padding = '8px 12px';
+              div.style.borderRadius = '4px';
+              div.style.maxWidth = '85%';
+              div.style.fontSize = '12px';
+              div.style.lineHeight = '1.4';
+              div.style.alignSelf = 'flex-end';
+              div.style.backgroundColor = 'var(--primary-color)';
+              div.style.color = '#fff';
+              div.style.borderLeft = '3px solid var(--accent-color)';
+              div.textContent = `User: [Attachment uploaded successfully: audit_ledger_reconciliation_verif.pdf]`;
+              chatBox.appendChild(div);
+              chatBox.scrollTop = chatBox.scrollHeight;
+            }
+            
+            showBannerNotification("Audit File uploaded securely to Support Thread.", "success");
+          }, 500);
+        }
+      }, 150);
+    };
+  }
+
+  // --- BAI2 & MT940 STATEMENT DOWNLOADS ---
+  function setupStatementDownloads(username) {
+    const btnBai2 = document.getElementById('btn-download-bai2');
+    const btnMt940 = document.getElementById('btn-download-mt940');
+    
+    if (!btnBai2 || !btnMt940) return;
+
+    btnBai2.onclick = () => {
+      const txns = JSON.parse(localStorage.getItem(`bbb_txns_${username}`)) || [];
+      const now = new Date();
+      const today = now.toISOString().slice(2, 10).replace(/-/g, '');
+      const time = now.toTimeString().slice(0, 5).replace(/:/g, '');
+      
+      let file = `01,987654321,BIG BEAVER BANK,${today},${time},1,80,2,1\n`;
+      file += `02,122000249,987654321,1,${today},${time},USD,2\n`;
+      
+      let totalDebit = 0;
+      let totalCredit = 0;
+      
+      txns.forEach((t) => {
+        const code = t.type === 'deposit' ? '100' : '400';
+        const amt = Math.round(t.amount * 100);
+        if (t.type === 'deposit') totalCredit += t.amount;
+        else totalDebit += t.amount;
+        
+        file += `16,${code},${amt},V,${today},0,${t.id},${t.entity.slice(0, 16)}\n`;
+      });
+      
+      const creditCent = Math.round(totalCredit * 100);
+      const debitCent = Math.round(totalDebit * 100);
+      file += `49,${creditCent},${debitCent}\n`;
+      file += `98,${creditCent + debitCent},1,${txns.length + 4}\n`;
+      file += `99,${creditCent + debitCent},1,${txns.length + 5}\n`;
+      
+      downloadFile(file, `reconciliation_bai2_${today}.txt`, 'text/plain');
+      showBannerNotification("BAI2 File generated & downloaded.", "success");
+    };
+
+    btnMt940.onclick = () => {
+      const txns = JSON.parse(localStorage.getItem(`bbb_txns_${username}`)) || [];
+      const now = new Date();
+      const today = now.toISOString().slice(2, 10).replace(/-/g, '');
+      
+      let file = `:20:TRSF${Date.now().toString().slice(-7)}\n`;
+      file += `:21:BBBREG${today}\n`;
+      file += `:25:987654321/000109923\n`;
+      file += `:28C:00001\n`;
+      file += `:60F:C${today}USD4582912,44\n`;
+      
+      txns.forEach((t) => {
+        const code = t.type === 'deposit' ? 'CR' : 'DR';
+        const valDate = today;
+        const amtStr = t.amount.toFixed(2).replace('.', ',');
+        file += `:61:${valDate}${valDate}${code}${amtStr}NTRF${t.id}\n`;
+        file += `:86:${t.desc} // ${t.entity}\n`;
+      });
+      
+      file += `:62F:C${today}USD4582912,44\n`;
+      
+      downloadFile(file, `reconciliation_mt940_${today}.txt`, 'text/plain');
+      showBannerNotification("MT940 Statement generated & downloaded.", "success");
+    };
+
+    function downloadFile(content, filename, contentType) {
+      const blob = new Blob([content], { type: contentType });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  }
+
+  // Run global timers
+  setupMfaSoftToken();
+  setupStopPaymentToggles();
 });

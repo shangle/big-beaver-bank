@@ -1212,3 +1212,62 @@ footer {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+/* Accessibility & Large Font Spacing */
+body.ada-large-font {
+  font-size: 16px !important;
+  line-height: 1.8 !important;
+  letter-spacing: 0.05em !important;
+}
+body.ada-large-font .search-input,
+body.ada-large-font .filter-select,
+body.ada-large-font button,
+body.ada-large-font input,
+body.ada-large-font select,
+body.ada-large-font textarea {
+  font-size: 15px !important;
+  padding: 10px !important;
+}
+
+/* High Contrast Mode Override */
+body.high-contrast {
+  --primary-color: #000000 !important;
+  --primary-hover: #1e293b !important;
+  --secondary-color: #000000 !important;
+  --accent-color: #eab308 !important;
+  --bg-cream: #ffffff !important;
+  --bg-light: #f8fafc !important;
+  --bg-white: #ffffff !important;
+  --text-dark: #000000 !important;
+  --text-muted: #1e293b !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-color: #000000 !important;
+}
+body.high-contrast .account-card,
+body.high-contrast .ledger-card,
+body.high-contrast .banking-tab-content,
+body.high-contrast .banking-tab-pane {
+  border: 3px solid #000000 !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  box-shadow: none !important;
+}
+body.high-contrast th,
+body.high-contrast td {
+  border-bottom: 2px solid #000000 !important;
+  color: #000000 !important;
+}
+body.high-contrast button {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 2px solid #ffffff !important;
+}
+body.high-contrast button:hover {
+  background-color: #1e293b !important;
+}
+
+/* Circular MFA Key Timer Progress Ring */
+#mfa-timer-ring {
+  transition: stroke-dashoffset 1s linear;
+}

@@ -86,9 +86,15 @@
             </svg>
             Big Beaver Bank
           </a>
-          <div style="font-size: 11px; background-color: #ecfdf5; color: #047857; padding: 4px 10px; border-radius: 12px; font-weight: 700; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px;">
-            <span style="width: 8px; height: 8px; background-color: #10b981; border-radius: 50%; display: inline-block;"></span>
-            SECURE PORTAL ONLINE
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <div style="font-size: 11px; background-color: #ecfdf5; color: #047857; padding: 4px 10px; border-radius: 12px; font-weight: 700; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px;">
+              <span style="width: 8px; height: 8px; background-color: #10b981; border-radius: 50%; display: inline-block;"></span>
+              SECURE PORTAL ONLINE
+            </div>
+            <!-- High Contrast Toggle Button -->
+            <button id="header-accessibility-btn" style="background: none; border: 1px solid var(--border-color); border-radius: 4px; padding: 4px 8px; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 4px;">
+              🌓 Contrast
+            </button>
           </div>
         </div>
       </div>
@@ -99,10 +105,27 @@
       <!-- Sidebar Navigation -->
       <aside class="banking-sidebar">
         <div>
-          <div class="user-profile">
+          <!-- User Profile -->
+          <div class="user-profile" style="margin-bottom: 12px;">
             <div class="user-name" id="display-username">User Session</div>
             <div class="user-role" id="display-role">Account Administrator</div>
           </div>
+
+          <!-- MFA Soft-Token Display Widget -->
+          <div id="sidebar-mfa-token-box" style="background-color: var(--bg-cream); border: 1px solid var(--border-color); padding: 10px 14px; border-radius: var(--radius-sm); margin-bottom: 16px; text-align: center; position: relative;">
+            <div style="font-size: 9px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; margin-bottom: 4px;">Security Soft Token</div>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+              <span id="sidebar-otp-value" style="font-family: monospace; font-size: 18px; font-weight: bold; color: var(--primary-color); letter-spacing: 0.05em;">582 913</span>
+              <!-- Circle progress ring SVG -->
+              <svg width="18" height="18" viewBox="0 0 20 20" style="transform: rotate(-90deg);">
+                <circle cx="10" cy="10" r="8" stroke="#cbd5e1" stroke-width="2.5" fill="transparent"></circle>
+                <circle id="mfa-timer-ring" cx="10" cy="10" r="8" stroke="var(--primary-color)" stroke-width="2.5" fill="transparent" stroke-dasharray="50.24" stroke-dashoffset="0"></circle>
+              </svg>
+            </div>
+            <div id="mfa-timer-sec" style="font-size: 9px; color: var(--text-muted); margin-top: 2px;">Expires in 30s</div>
+          </div>
+
+          <!-- Menu List -->
           <ul class="banking-menu">
             <li class="banking-menu-item">
               <button class="active" data-tab="tab-dashboard">
@@ -111,15 +134,28 @@
               </button>
             </li>
             <li class="banking-menu-item">
+              <button data-tab="tab-approvals" id="menu-btn-approvals">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                Approvals Queue
+                <span id="approval-badge-count" style="display: none; background-color: #b91c1c; color: #fff; font-size: 9px; font-weight: bold; border-radius: 50%; width: 15px; height: 15px; display: inline-flex; align-items: center; justify-content: center; margin-left: auto;">2</span>
+              </button>
+            </li>
+            <li class="banking-menu-item">
               <button data-tab="tab-transfer">
                 <svg viewBox="0 0 24 24"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>
-                Transfers & ACH
+                Transfers & Wires
               </button>
             </li>
             <li class="banking-menu-item">
               <button data-tab="tab-billpay">
                 <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
-                Bill Pay Center
+                Bill Pay & Stop Checks
+              </button>
+            </li>
+            <li class="banking-menu-item">
+              <button data-tab="tab-positive-pay" id="menu-btn-pospay">
+                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                Positive Pay Center
               </button>
             </li>
             <li class="banking-menu-item">
@@ -129,15 +165,39 @@
               </button>
             </li>
             <li class="banking-menu-item">
+              <button data-tab="tab-receivables">
+                <svg viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+                Receivables & Lockbox
+              </button>
+            </li>
+            <li class="banking-menu-item">
               <button data-tab="tab-payroll">
                 <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
                 Direct Deposit (ACH)
               </button>
             </li>
             <li class="banking-menu-item">
+              <button data-tab="tab-cards">
+                <svg viewBox="0 0 24 24"><path d="M21 4H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H3V8h18v10z"/></svg>
+                Corporate Cards
+              </button>
+            </li>
+            <li class="banking-menu-item">
+              <button data-tab="tab-liquidity">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                Sweeps & LOC
+              </button>
+            </li>
+            <li class="banking-menu-item">
               <button data-tab="tab-estatements">
                 <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
                 eStatements
+              </button>
+            </li>
+            <li class="banking-menu-item">
+              <button data-tab="tab-compliance" id="menu-btn-compliance">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                Compliance & Limits
               </button>
             </li>
             <li class="banking-menu-item">
@@ -149,6 +209,11 @@
           </ul>
         </div>
         <div>
+          <!-- Session Lock HUD -->
+          <div style="font-size: 10px; color: var(--text-muted); padding: 4px 16px; border-top: 1px solid var(--border-color); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+            <span>Session Lock:</span>
+            <span id="session-lock-timer" style="font-family: monospace; font-weight: bold;">05:00</span>
+          </div>
           <button id="logout-btn" class="banking-menu-item" style="width: 100%; border: none; background: none; color: #fca5a5; font-family: inherit; font-size: 14px; text-align: left; padding: 12px 16px; cursor: pointer; display: flex; align-items: center; gap: 12px;">
             <svg viewBox="0 0 24 24" style="fill: currentColor; width: 16px; height: 16px;"><path d="M13 3h-2v10h2V3zm4.72 2.28l-1.41 1.41A6.97 6.97 0 0 1 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-1.91.76-3.64 2-4.91L5.59 4.67A8.92 8.92 0 0 0 3 12c0 4.97 4.02 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.28-6.72z"/></svg>
             Terminate Session
@@ -194,20 +259,23 @@
               <div class="account-type" id="label-checking">Commercial Checking</div>
               <div class="account-number">Acct No: ••••-7291</div>
               <div class="account-balance" id="balance-checking">$0.00</div>
+              <div style="font-size: 10px; color: #a7f3d0; margin-top: 4px;" id="checking-float-info">Collected: $0.00 | Available: $0.00</div>
             </div>
             <div class="account-card savings">
               <div class="account-type" id="label-savings">Corporate Yield Savings</div>
               <div class="account-number">Acct No: ••••-3304</div>
               <div class="account-balance" id="balance-savings">$0.00</div>
+              <div style="font-size: 10px; color: #a7f3d0; margin-top: 4px;" id="savings-float-info">Collected: $0.00 | Available: $0.00</div>
             </div>
             <div class="account-card escrow">
               <div class="account-type" id="label-escrow">Fiduciary Escrow</div>
               <div class="account-number">Acct No: ••••-0081</div>
               <div class="account-balance" id="balance-escrow">$0.00</div>
+              <div style="font-size: 10px; color: #a7f3d0; margin-top: 4px;" id="escrow-float-info">Collected: $0.00 | Available: $0.00</div>
             </div>
           </div>
 
-          <!-- Double Column Widget Panel (Credit Score Gauge & Budgeting Canvas) -->
+          <!-- Double Column Widget Panel (Credit Score Gauge & Projections Canvas) -->
           <div style="display: grid; grid-template-columns: 300px 1fr; gap: 24px; margin-bottom: 40px;">
             <!-- Credit Score Widget -->
             <div class="ledger-card" style="padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
@@ -223,18 +291,24 @@
               <div style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">Your profile has 0 payment anomalies and excellent credit utilization.</div>
             </div>
 
-            <!-- Budgeting Canvas Chart -->
-            <div class="ledger-card" style="padding: 20px; display: grid; grid-template-columns: 1fr 240px; gap: 20px; align-items: center;">
-              <div>
-                <h4 style="font-family: sans-serif; font-size: 13px; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin-bottom: 12px;">Cash Flow Analysis (Budget Chart)</h4>
-                <div style="height: 180px; width: 100%; display: flex; align-items: center; justify-content: center;">
-                  <canvas id="budgetCanvas" width="220" height="180"></canvas>
+            <!-- Projections & Projections Chart -->
+            <div class="ledger-card" style="padding: 20px;">
+              <h4 style="font-family: sans-serif; font-size: 13px; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin-bottom: 12px;">Fiduciary Projections & Spend Analysis</h4>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <!-- Projection Graph -->
+                <div style="text-align: center; border-right: 1px solid var(--border-color); padding-right: 20px;">
+                  <h5 style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;">15-Day Cash Flow Forecast</h5>
+                  <canvas id="forecastCanvas" width="220" height="150" style="max-width:100%; max-height: 150px;"></canvas>
                 </div>
-              </div>
-              <div style="border-left: 1px solid var(--border-color); padding-left: 20px;">
-                <h5 style="font-family: sans-serif; font-weight: 600; font-size: 12px; text-transform: uppercase; margin-bottom: 10px;">Ledger Spending Breakdown</h5>
-                <div id="chart-legend" style="display: flex; flex-direction: column; gap: 8px; font-size: 11px;">
-                  <!-- Dynamically populated legend -->
+                <!-- Spend chart -->
+                <div>
+                  <h5 style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;">Ledger Spending Breakdown</h5>
+                  <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 8px;">
+                    <canvas id="budgetCanvas" width="130" height="110" style="max-height: 110px;"></canvas>
+                  </div>
+                  <div id="chart-legend" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; font-size: 9px; max-height: 50px; overflow-y: auto;">
+                    <!-- Dynamically populated legend -->
+                  </div>
                 </div>
               </div>
             </div>
@@ -242,11 +316,23 @@
 
           <!-- Transaction Ledger -->
           <div class="ledger-card">
-            <div class="ledger-header">
-              <h3 style="font-size: 20px;">Fiduciary Transaction Ledger</h3>
-              <div class="ledger-filters">
-                <input type="text" id="ledger-search" class="search-input" placeholder="Filter descriptions...">
-                <select id="ledger-filter-type" class="filter-select">
+            <div class="ledger-header" style="flex-wrap: wrap; gap: 12px;">
+              <div style="display: flex; align-items: center; gap: 16px;">
+                <h3 style="font-size: 20px; margin: 0;">Fiduciary Transaction Ledger</h3>
+                <div style="display: flex; gap: 6px;">
+                  <button id="btn-download-bai2" class="page-btn" style="margin: 0; padding: 4px 10px; font-size: 10px; display: flex; align-items: center; gap: 4px;">📥 BAI2 Export</button>
+                  <button id="btn-download-mt940" class="page-btn" style="margin: 0; padding: 4px 10px; font-size: 10px; display: flex; align-items: center; gap: 4px;">📥 MT940 Export</button>
+                </div>
+              </div>
+              <div class="ledger-filters" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                <input type="text" id="ledger-search" class="search-input" placeholder="Filter descriptions..." style="width: 150px;">
+                
+                <!-- Additional Filter: Date, Amount Min/Max, Check Number -->
+                <input type="number" id="ledger-amt-min" class="search-input" placeholder="Min $" style="width: 75px; font-size: 11px;">
+                <input type="number" id="ledger-amt-max" class="search-input" placeholder="Max $" style="width: 75px; font-size: 11px;">
+                <input type="text" id="ledger-check-num" class="search-input" placeholder="Check #" style="width: 70px; font-size: 11px;">
+                
+                <select id="ledger-filter-type" class="filter-select" style="font-size: 11px; padding: 4px 8px;">
                   <option value="all">All Entries</option>
                   <option value="deposit">Credits (Deposits)</option>
                   <option value="withdrawal">Debits (Withdrawals)</option>
@@ -271,15 +357,75 @@
           </div>
         </div>
 
-        <!-- 2. Transfer Funds Tab -->
+        <!-- 2. Maker-Checker Approvals Center Tab (NEW) -->
+        <div id="tab-approvals" class="banking-tab-pane" style="display: none; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 40px; box-shadow: var(--shadow-sm);">
+          <h3>Maker-Checker Approvals Workspace</h3>
+          <p class="tab-desc">Under commercial audit controls, all external ACH payrolls, wire dispatches, and Positive Pay exception updates require dual control verification.</p>
+          
+          <!-- Role Switching Controller -->
+          <div style="background-color: var(--bg-light); border: 1px solid var(--border-color); border-radius: 4px; padding: 15px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <span style="font-size: 13px; font-weight: 600; color: var(--text-dark);">Active Credentials Persona Role:</span>
+              <span id="approvals-role-text" style="font-family: monospace; font-size: 13px; font-weight: bold; color: var(--primary-color); margin-left: 6px;">Maker (Staff Analyst)</span>
+            </div>
+            <button id="btn-toggle-role" class="btn-login" style="margin: 0; padding: 6px 14px; font-size: 12px;">Toggle User Role Profile</button>
+          </div>
+
+          <!-- Pending Transactions Table -->
+          <div style="margin-bottom: 30px;">
+            <h4 style="font-family: sans-serif; font-size: 15px; font-weight: 600; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-bottom: 12px;">Transaction Approval Queue</h4>
+            <div style="overflow-x: auto;">
+              <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;" id="approvals-txn-table">
+                <thead>
+                  <tr style="background-color: var(--bg-light); border-bottom: 1.5px solid var(--border-color); font-weight: 600;">
+                    <th style="padding: 10px;">ID</th>
+                    <th style="padding: 10px;">Type</th>
+                    <th style="padding: 10px;">Initiator</th>
+                    <th style="padding: 10px;">Details</th>
+                    <th style="padding: 10px; text-align: right;">Amount</th>
+                    <th style="padding: 10px; text-align: center;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="approvals-txn-body">
+                  <!-- Generated dynamically in JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Positive Pay presented Exception List -->
+          <div>
+            <h4 style="font-family: sans-serif; font-size: 15px; font-weight: 600; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-bottom: 12px;">Positive Pay Exceptions Log</h4>
+            <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Checks presented for clearing that failed matching issue registries. Make direct Pay/Return decisions before standard end-of-day clearing cutoffs.</p>
+            <div style="overflow-x: auto;">
+              <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;" id="approvals-exceptions-table">
+                <thead>
+                  <tr style="background-color: var(--bg-light); border-bottom: 1.5px solid var(--border-color); font-weight: 600;">
+                    <th style="padding: 10px;">Check #</th>
+                    <th style="padding: 10px;">Presented Payee</th>
+                    <th style="padding: 10px;">Details</th>
+                    <th style="padding: 10px; text-align: right;">Amount</th>
+                    <th style="padding: 10px; text-align: center;">Decision</th>
+                  </tr>
+                </thead>
+                <tbody id="approvals-exceptions-body">
+                  <!-- Generated dynamically in JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Transfer Funds Tab -->
         <div id="tab-transfer" class="banking-tab-pane banking-tab-content">
-          <h3>Transfers & External ACH</h3>
-          <p class="tab-desc">Initiate immediate internal account balance adjustments or dispatch external ACH wire transfers to other banking institutions.</p>
+          <h3>Transfers & External Payment Dispatches</h3>
+          <p class="tab-desc">Initiate immediate internal account balance adjustments, prepare ACH batches, or configure wire dispatches to other banking entities.</p>
           
           <!-- ACH Switch tabs locally -->
           <div style="display: flex; gap: 12px; margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
             <button type="button" class="page-btn active" id="btn-subtab-internal" style="margin: 0; padding: 6px 14px; font-size: 13px;">Internal Transfers</button>
-            <button type="button" class="page-btn" id="btn-subtab-ach" style="margin: 0; padding: 6px 14px; font-size: 13px;">External ACH/Wire</button>
+            <button type="button" class="page-btn" id="btn-subtab-ach" style="margin: 0; padding: 6px 14px; font-size: 13px;">External ACH Batch</button>
+            <button type="button" class="page-btn" id="btn-subtab-wire" style="margin: 0; padding: 6px 14px; font-size: 13px;">Wire Transfer Dispatch</button>
           </div>
 
           <!-- Internal Form -->
@@ -332,16 +478,87 @@
                 <input type="number" id="ach-amount" min="10" max="1000000" step="100" required>
               </div>
             </div>
-            <button type="submit" class="btn-form-submit">Authorize ACH Wire Dispatch</button>
+            <button type="submit" class="btn-form-submit">Queue ACH Batch for Approval</button>
+          </form>
+
+          <!-- Wire Transfer Dispatch Form (NEW) -->
+          <form id="wire-dispatch-form" style="display: none;">
+            <div style="display: grid; grid-template-columns: 1.5fr 1.5fr 1fr; gap: 16px; margin-bottom: 16px;">
+              <div class="input-group">
+                <label for="wire-routing">Beneficiary ABA Routing / Swift BIC</label>
+                <div style="display: flex; gap: 6px;">
+                  <input type="text" id="wire-routing" placeholder="e.g. 987654321 or WYCOUS33" required style="flex-grow:1;">
+                  <button type="button" id="btn-validate-swift" class="page-btn" style="margin:0; padding:4px 10px; font-size:11px;">Verify</button>
+                </div>
+              </div>
+              <div class="input-group">
+                <label for="wire-account">Beneficiary Account Number</label>
+                <input type="text" id="wire-account" required>
+              </div>
+              <div class="input-group">
+                <label for="wire-type">Wire Destination</label>
+                <select id="wire-type" required>
+                  <option value="domestic">Domestic Fedwire</option>
+                  <option value="international">Swift International</option>
+                </select>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+              <div class="input-group">
+                <label for="wire-name">Beneficiary Name</label>
+                <input type="text" id="wire-name" placeholder="Legal corporate entity name" required>
+              </div>
+              <div class="input-group">
+                <label for="wire-amount">Wire Amount ($)</label>
+                <input type="number" id="wire-amount" min="100" max="5000000" step="100" required>
+              </div>
+            </div>
+
+            <!-- Intermediary Bank Configurations -->
+            <div style="background-color: var(--bg-cream); border: 1px solid var(--border-color); border-radius: 4px; padding: 15px; margin-bottom: 16px;">
+              <h5 style="margin-bottom: 8px; font-family: sans-serif; font-size: 12px; font-weight: 600; text-transform: uppercase;">Intermediary Routing Configuration (Optional)</h5>
+              <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 12px;">
+                <input type="text" id="wire-inter-routing" placeholder="Intermediary Routing ABA" style="font-size: 11px; padding: 6px;">
+                <input type="text" id="wire-inter-name" placeholder="Intermediary Institution Name" style="font-size: 11px; padding: 6px;">
+              </div>
+            </div>
+
+            <!-- FX Rate Booking Calculator -->
+            <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 4px; padding: 15px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+              <div>
+                <h5 style="margin-bottom: 4px; font-family: sans-serif; font-size: 12px; font-weight: 600; color: #166534;">Foreign Currency Conversion (FX Booking)</h5>
+                <p style="font-size: 11px; color: #15803d; margin-bottom: 0;">Calculate conversions for cross-border payouts.</p>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <select id="wire-fx-currency" style="padding: 6px; font-size: 11px; border: 1px solid #bbf7d0; border-radius: 4px;">
+                  <option value="USD">USD (United States Dollar)</option>
+                  <option value="IMP">Imperial Credits (Starfleet clearing - 0.85 rate)</option>
+                  <option value="FED">Federation Credits (Dharma clearance - 1.25 rate)</option>
+                  <option value="QUA">Quatloos (Triskelion clearing - 50.00 rate)</option>
+                </select>
+                <button type="button" id="btn-calc-fx" class="page-btn" style="margin:0; padding:6px 12px; font-size: 11px; background-color: #166534; color:#fff; border-color:#166534;">Calculate FX</button>
+              </div>
+              <div id="wire-fx-result" style="font-family: monospace; font-size: 12px; font-weight: bold; color: #166534;">
+                Rate Locked: 1.00 USD
+              </div>
+            </div>
+
+            <!-- Secure OTP authorization field -->
+            <div class="input-group" style="margin-bottom: 24px; max-width: 300px;">
+              <label for="wire-otp">Secure Token Code (Check Sidebar Widget)</label>
+              <input type="text" id="wire-otp" placeholder="Enter active OTP code" required style="font-family: monospace; font-size: 14px; letter-spacing: 0.05em;">
+            </div>
+
+            <button type="submit" class="btn-form-submit">Submit Wire for Approval</button>
           </form>
         </div>
 
-        <!-- 3. Bill Pay Tab -->
+        <!-- 4. Bill Pay Tab -->
         <div id="tab-billpay" class="banking-tab-pane banking-tab-content">
-          <h3>Bill Pay Control Center</h3>
-          <p class="tab-desc">Authorize standard disbursements and pay utilities, vendors, or suppliers dynamically from your checking balances.</p>
+          <h3>Bill Pay & Stop Checks</h3>
+          <p class="tab-desc">Authorize disbursements to registered payees or manage stop instructions on physical checks.</p>
           
-          <form id="billpay-form">
+          <form id="billpay-form" style="margin-bottom: 30px;">
             <div class="input-group" style="margin-bottom: 16px;">
               <label for="billpay-from">Select Funding Account</label>
               <select id="billpay-from" required>
@@ -375,9 +592,16 @@
           </form>
 
           <!-- Stop Check Payment Form (Traditional Bank Feature) -->
-          <div style="border-top: 1px solid var(--border-color); margin-top: 40px; padding-top: 30px;">
-            <h4>Request Stop Payment on Check</h4>
-            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 20px;">Submit a stop order on written physical drafts. A standard $25 fee applies.</p>
+          <div style="border-top: 1px solid var(--border-color); padding-top: 30px;">
+            <h4>Request Stop Payment on Checks</h4>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 20px;">Submit a stop instruction on written physical drafts. Select single check stop or check ranges. A standard $25 fee applies.</p>
+            
+            <div style="display: flex; gap: 12px; margin-bottom: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+              <button type="button" class="page-btn active" id="btn-stop-single" style="margin: 0; padding: 4px 10px; font-size: 11px;">Single Check</button>
+              <button type="button" class="page-btn" id="btn-stop-range" style="margin: 0; padding: 4px 10px; font-size: 11px;">Check Range</button>
+            </div>
+
+            <!-- Single Stop -->
             <form id="stoppayment-form">
               <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px;">
                 <div class="input-group">
@@ -393,12 +617,121 @@
                   <input type="text" id="stop-check-payee" required>
                 </div>
               </div>
-              <button type="submit" class="page-btn" style="width: 100%; margin: 0; padding: 12px; background-color: var(--secondary-color); color: #fff;">File Stop Payment Request</button>
+              <button type="submit" class="page-btn" style="width: 100%; margin: 0; padding: 12px; background-color: var(--secondary-color); color: #fff;">File Single Stop Payment Request</button>
+            </form>
+
+            <!-- Range Stop Form (NEW) -->
+            <form id="stoppayment-range-form" style="display: none;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+                <div class="input-group">
+                  <label for="stop-range-start">Starting Check #</label>
+                  <input type="text" id="stop-range-start" required>
+                </div>
+                <div class="input-group">
+                  <label for="stop-range-end">Ending Check #</label>
+                  <input type="text" id="stop-range-end" required>
+                </div>
+                <div class="input-group">
+                  <label for="stop-range-reason">Reason for Stop</label>
+                  <select id="stop-range-reason">
+                    <option value="lost">Lost Checkbook</option>
+                    <option value="stolen">Stolen Drafts</option>
+                    <option value="dispute">Transaction Dispute</option>
+                  </select>
+                </div>
+              </div>
+              <button type="submit" class="page-btn" style="width: 100%; margin: 0; padding: 12px; background-color: var(--secondary-color); color: #fff;">File Range Stop Payment Request</button>
             </form>
           </div>
         </div>
 
-        <!-- 4. Deposit Checks Tab -->
+        <!-- 5. Positive Pay Center Tab (NEW) -->
+        <div id="tab-positive-pay" class="banking-tab-pane" style="display: none; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 40px; box-shadow: var(--shadow-sm);">
+          <h3>Positive Pay Fraud Protection</h3>
+          <p class="tab-desc">Register check issue information with the bank. When checks are presented, the bank matches check numbers and amounts to prevent fraud.</p>
+          
+          <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 24px; margin-bottom: 30px;">
+            <!-- Register Issued Checks -->
+            <div style="border-right: 1px solid var(--border-color); padding-right: 20px;">
+              <h4 style="margin-bottom: 12px; font-family: sans-serif; font-weight: 600;">Register Check Issue Files</h4>
+              <div style="display: flex; gap: 8px; margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+                <button type="button" class="page-btn active" id="btn-pospay-upload" style="margin:0; padding:4px 8px; font-size:11px;">Upload CSV File</button>
+                <button type="button" class="page-btn" id="btn-pospay-manual" style="margin:0; padding:4px 8px; font-size:11px;">Manual Register</button>
+              </div>
+
+              <!-- Upload csv layout -->
+              <div id="pospay-upload-area">
+                <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Paste check issue CSV log. Layout format: <code>CheckNumber,Amount,PayeeName</code> (one check per line).</p>
+                <textarea id="pospay-csv-content" placeholder="e.g.&#10;109923,2450.00,Dwight Schrute&#10;109924,4200.00,Jim Halpert" style="width: 100%; height: 120px; font-family: monospace; font-size: 11px; padding: 10px; border: 1px solid var(--border-color); border-radius: 4px; background-color: var(--bg-cream); margin-bottom: 12px;"></textarea>
+                <button type="button" id="btn-pospay-submit-csv" class="btn-login" style="width: 100%; padding: 10px;">Verify & Upload Check Issues</button>
+              </div>
+
+              <!-- Manual single issue layout -->
+              <form id="pospay-manual-form" style="display: none;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                  <div class="input-group">
+                    <label for="pospay-check-num">Check Number</label>
+                    <input type="text" id="pospay-check-num" required>
+                  </div>
+                  <div class="input-group">
+                    <label for="pospay-check-amount">Check Amount ($)</label>
+                    <input type="number" id="pospay-check-amount" step="0.01" required>
+                  </div>
+                </div>
+                <div class="input-group" style="margin-bottom: 16px;">
+                  <label for="pospay-check-payee">Payee Name</label>
+                  <input type="text" id="pospay-check-payee" required>
+                </div>
+                <button type="submit" class="btn-login" style="width: 100%; padding: 10px;">Register Issued Check</button>
+              </form>
+            </div>
+
+            <!-- Positive Pay Settings -->
+            <div>
+              <h4 style="margin-bottom: 12px; font-family: sans-serif; font-weight: 600;">Fraud Control Covenants</h4>
+              <div style="background-color: var(--bg-light); border: 1px solid var(--border-color); padding: 15px; border-radius: 4px; margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                  <span style="font-size: 12px; font-weight: 600;">Enable Positive Pay</span>
+                  <input type="checkbox" id="toggle-pospay-active" checked style="width:16px; height:16px;">
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <div>
+                    <span style="font-size: 12px; font-weight: 600; display: block;">Reverse Positive Pay</span>
+                    <span style="font-size: 9px; color: var(--text-muted);">Reject presented checks by default.</span>
+                  </div>
+                  <input type="checkbox" id="toggle-pospay-reverse" style="width:16px; height:16px;">
+                </div>
+              </div>
+              <!-- Reg D and Reg E Limits Counter -->
+              <div style="background-color: #fff8e1; border: 1px solid #ffe082; padding: 15px; border-radius: 4px; font-size: 11px;">
+                <h5 style="margin-bottom: 4px; font-weight: 600; color: #b78103;">Clearing Warnings Center</h5>
+                <p style="margin-bottom: 0; color: #8d6201;">Positive pay checks clear via Satirical Exceptions Desk. Reserve audit thresholds are actively monitored.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Registered Issues Log -->
+          <div>
+            <h4 style="font-family: sans-serif; font-size: 15px; font-weight: 600; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-bottom: 12px;">Registered Check Registry</h4>
+            <div style="max-height: 200px; overflow-y: auto;">
+              <table style="width: 100%; border-collapse: collapse; font-size: 11px; text-align: left;" id="pospay-ledger-table">
+                <thead>
+                  <tr style="background-color: var(--bg-light); border-bottom: 1.5px solid var(--border-color); font-weight: 600;">
+                    <th style="padding: 8px;">Check Number</th>
+                    <th style="padding: 8px;">Payee Name</th>
+                    <th style="padding: 8px; text-align: right;">Amount</th>
+                    <th style="padding: 8px; text-align: center;">Registry Status</th>
+                  </tr>
+                </thead>
+                <tbody id="pospay-ledger-body">
+                  <!-- Generated dynamically in JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Check Deposits Tab -->
         <div id="tab-deposit" class="banking-tab-pane banking-tab-content">
           <h3>Mobile Check Deposit</h3>
           <p class="tab-desc">Deposit checks instantly using your device camera, uploading an endorsed check draft file, or using a preloaded sample check draft.</p>
@@ -481,7 +814,63 @@
           </form>
         </div>
 
-        <!-- 5. Business Direct Deposit (ACH/NACHA File Generator) -->
+        <!-- 7. Receivables & Lockbox Tab (NEW) -->
+        <div id="tab-receivables" class="banking-tab-pane" style="display: none; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 40px; box-shadow: var(--shadow-sm);">
+          <h3>Receivables & Commercial Invoicing</h3>
+          <p class="tab-desc">Collect payments instantly using credit card gateways or run mock visual lockbox processes for incoming physical check sheets.</p>
+          
+          <div style="display: flex; gap: 12px; margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
+            <button type="button" class="page-btn active" id="btn-receivables-gateway" style="margin: 0; padding: 6px 14px; font-size: 13px;">Merchant Card Terminal</button>
+            <button type="button" class="page-btn" id="btn-receivables-lockbox" style="margin: 0; padding: 6px 14px; font-size: 13px;">Lockbox Express Batch</button>
+          </div>
+
+          <!-- Merchant Card Terminal -->
+          <form id="receivables-gateway-form">
+            <h4 style="margin-bottom: 16px; font-family: sans-serif; font-size: 14px; font-weight:600;">Point of Sale Card Payout Gateway</h4>
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px;">
+              <div class="input-group">
+                <label for="merchant-card-num">Card Number (16 Digits)</label>
+                <input type="text" id="merchant-card-num" placeholder="4000 1234 5678 9010" required>
+              </div>
+              <div class="input-group">
+                <label for="merchant-card-cvv">CVV</label>
+                <input type="text" id="merchant-card-cvv" placeholder="e.g. 382" required>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+              <div class="input-group">
+                <label for="merchant-card-exp">Expiry (MM/YY)</label>
+                <input type="text" id="merchant-card-exp" placeholder="12/28" required>
+              </div>
+              <div class="input-group">
+                <label for="merchant-amount">Capture Amount ($)</label>
+                <input type="number" id="merchant-amount" placeholder="e.g. 5000" min="1" max="100000" required>
+              </div>
+              <div class="input-group">
+                <label for="merchant-payee">Payee Customer Name</label>
+                <input type="text" id="merchant-payee" placeholder="Corporate client" required>
+              </div>
+            </div>
+            <button type="submit" class="btn-form-submit">Capture Electronic Payout</button>
+          </form>
+
+          <!-- Lockbox Express Batch -->
+          <div id="receivables-lockbox-area" style="display: none;">
+            <h4 style="margin-bottom: 12px; font-family: sans-serif; font-size: 14px; font-weight:600;">Lockbox Batch Check Image Scanner</h4>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Simulate lockbox collection drops. Incoming corporate drafts are run through the high-speed sorting scanner automatically.</p>
+            <div style="display: flex; gap: 12px; align-items: flex-start; flex-wrap: wrap;">
+              <div style="flex: 1.5; border: 1px dashed var(--border-color); padding: 15px; border-radius: 4px; text-align: center; background-color: var(--bg-cream);">
+                <canvas id="lockbox-canvas" width="400" height="180" style="max-width: 100%; border: 1px solid var(--border-color); background-color: #fff; display: block; margin: 0 auto 12px;"></canvas>
+                <button type="button" id="btn-lockbox-scan-next" class="btn-login" style="margin:0;">Trigger Lockbox Scan Batch</button>
+              </div>
+              <div style="flex: 1; min-width: 250px; background-color: #0f172a; color: #38bdf8; font-family: monospace; font-size: 10.5px; padding: 15px; border-radius: 4px; height: 216px; overflow-y: auto;" id="lockbox-console">
+                [LOCKBOX BATCH ENGINE DEFERRED]
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8. Direct Deposit NACHA Tab -->
         <div id="tab-payroll" class="banking-tab-pane" style="display: none; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 40px; box-shadow: var(--shadow-sm);">
           <h3>Direct Deposit NACHA File Generator</h3>
           <p class="tab-desc">Fulfill employee payroll cycles by generating standard, compliant 94-character fixed-width NACHA (ACH) formatted data logs.</p>
@@ -558,7 +947,130 @@
           </div>
         </div>
 
-        <!-- 6. eStatements Tab -->
+        <!-- 9. Corporate Cards Tab (NEW) -->
+        <div id="tab-cards" class="banking-tab-pane" style="display: none; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 40px; box-shadow: var(--shadow-sm);">
+          <h3>Corporate Card Controls & Expense Management</h3>
+          <p class="tab-desc">Monitor employee credit cards, assign category spend limits, toggle card locks, and issue single-use virtual cards.</p>
+          
+          <div style="display: grid; grid-template-columns: 1.8fr 1fr; gap: 24px; margin-bottom: 30px;">
+            <!-- Active Cards Directory -->
+            <div style="border-right: 1px solid var(--border-color); padding-right: 20px;">
+              <h4 style="margin-bottom: 16px; font-family: sans-serif; font-size: 14px; font-weight:600;">Active Employee Corporate Cards</h4>
+              <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 11px; text-align: left;" id="cards-ledger-table">
+                  <thead>
+                    <tr style="background-color: var(--bg-light); border-bottom: 1.5px solid var(--border-color); font-weight: 600;">
+                      <th style="padding: 8px;">Cardholder</th>
+                      <th style="padding: 8px;">Card Number</th>
+                      <th style="padding: 8px;">Limit</th>
+                      <th style="padding: 8px;">Current Balance</th>
+                      <th style="padding: 8px; text-align: center;">Controls</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cards-ledger-body">
+                    <!-- Loaded dynamically in JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Virtual Card Generator -->
+            <div>
+              <h4 style="margin-bottom: 12px; font-family: sans-serif; font-size: 14px; font-weight:600;">Issue Single-Use Virtual Card</h4>
+              <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Generate secure virtual card tokens to pay vendor bills securely without exposing corporate limits.</p>
+              <form id="cards-virtual-form" style="margin-bottom: 16px;">
+                <div class="input-group" style="margin-bottom: 10px;">
+                  <label for="vcard-amount">Virtual Spend Cap ($)</label>
+                  <input type="number" id="vcard-amount" min="10" max="50000" placeholder="$0.00" required>
+                </div>
+                <div class="input-group" style="margin-bottom: 12px;">
+                  <label for="vcard-payee">Assigned Vendor Payee</label>
+                  <input type="text" id="vcard-payee" placeholder="e.g. Soylent Corp" required>
+                </div>
+                <button type="submit" class="btn-login" style="width: 100%;">Generate Virtual Token</button>
+              </form>
+              <!-- Virtual Card Output display -->
+              <div id="vcard-output" style="display: none; background-color: var(--bg-cream); border: 1px dashed var(--accent-color); padding: 12px; border-radius: 4px; font-family: monospace; font-size: 11px; text-align: center;">
+                <div style="font-weight: bold; color: var(--primary-color); margin-bottom: 4px;" id="vcard-disp-payee">VENDOR CAP</div>
+                <div style="font-size: 14px; font-weight: bold; margin-bottom: 4px;" id="vcard-disp-num">0000 0000 0000 0000</div>
+                <div style="display: flex; justify-content: center; gap: 12px;">
+                  <span id="vcard-disp-exp">EXP: 00/00</span>
+                  <span id="vcard-disp-cvv">CVV: 000</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10. Sweeps & Liquidity Tab (NEW) -->
+        <div id="tab-liquidity" class="banking-tab-pane" style="display: none; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 40px; box-shadow: var(--shadow-sm);">
+          <h3>Liquidity Sweeps & Credit Portals</h3>
+          <p class="tab-desc">Configure automated balance sweeps or manage your active Commercial Line of Credit (LOC).</p>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+            <!-- Sweep Rules Configuration -->
+            <div style="border-right: 1px solid var(--border-color); padding-right: 20px;">
+              <h4 style="margin-bottom: 16px; font-family: sans-serif; font-size: 14px; font-weight:600;">Automated Sweep Registry Rules</h4>
+              <div class="input-group" style="margin-bottom: 12px;">
+                <label for="sweep-threshold">Checking Balance Sweep Threshold ($)</label>
+                <input type="number" id="sweep-threshold" value="100000" min="5000">
+                <span style="font-size: 9px; color: var(--text-muted);">Balances exceeding this threshold will automatically sweep at end-of-day.</span>
+              </div>
+              <div class="input-group" style="margin-bottom: 16px;">
+                <label for="sweep-target">Liquidity Sweep Target Program</label>
+                <select id="sweep-target">
+                  <option value="savings">Corporate Yield Savings (0.85% APY)</option>
+                  <option value="timber">Offshore Hydraulic Timber Sweeps (CRH - Satirical)</option>
+                  <option value="none">Disabled - Retain Checking Deposits</option>
+                </select>
+              </div>
+              <button type="button" id="btn-save-sweeps" class="btn-login" style="width: 100%;">Save Sweep Configurations</button>
+            </div>
+
+            <!-- Commercial Line of Credit Drawer -->
+            <div>
+              <h4 style="margin-bottom: 12px; font-family: sans-serif; font-size: 14px; font-weight:600;">Corporate Credit Facilities</h4>
+              <div style="background-color: var(--bg-light); border: 1px solid var(--border-color); border-radius: 4px; padding: 15px; margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px;">
+                  <span>LOC Available Cap:</span>
+                  <span style="font-weight: bold; color: var(--primary-color);" id="loc-cap-display">$5,000,000.00</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px;">
+                  <span>LOC Outstanding Balance:</span>
+                  <span style="font-weight: bold; color: #b91c1c;" id="loc-bal-display">$0.00</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 12px;">
+                  <span>Current Interest Rate:</span>
+                  <span style="font-weight: bold;">7.25% Prime Adjusted</span>
+                </div>
+              </div>
+
+              <!-- Drawdown & Repay buttons -->
+              <div style="display: flex; gap: 8px;">
+                <button type="button" id="btn-loc-draw-tab" class="page-btn active" style="flex:1; margin:0; padding:6px;">Drawdown Credit</button>
+                <button type="button" id="btn-loc-repay-tab" class="page-btn" style="flex:1; margin:0; padding:6px;">Repay Balance</button>
+              </div>
+
+              <!-- Drawdown LOC Form -->
+              <form id="loc-draw-form" style="margin-top: 12px;">
+                <div style="display: flex; gap: 8px;">
+                  <input type="number" id="loc-draw-amount" min="1000" max="5000000" placeholder="Draw Amount $" required style="flex-grow:1; padding: 6px;" class="search-input">
+                  <button type="submit" class="btn-login" style="margin:0; padding: 6px 12px; font-size: 12px;">Draw</button>
+                </div>
+              </form>
+
+              <!-- Repay LOC Form -->
+              <form id="loc-repay-form" style="margin-top: 12px; display: none;">
+                <div style="display: flex; gap: 8px;">
+                  <input type="number" id="loc-repay-amount" min="1000" max="5000000" placeholder="Repay Amount $" required style="flex-grow:1; padding: 6px;" class="search-input">
+                  <button type="submit" class="btn-login" style="margin:0; padding: 6px 12px; font-size: 12px; background-color:#ef4444; border-color:#ef4444;">Repay</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11. eStatements Tab -->
         <div id="tab-estatements" class="banking-tab-pane banking-tab-content">
           <h3>eStatements Portal</h3>
           <p class="tab-desc">Access official monthly ledger statements of deposits, withdrawals, and interest clearings.</p>
@@ -586,12 +1098,72 @@
           </div>
         </div>
 
-        <!-- 7. Support Secure Messaging Tab -->
-        <div id="tab-support" class="banking-tab-pane" style="display: none; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 40px; box-shadow: var(--shadow-sm); max-width: 800px;">
-          <h3>Fiduciary Secure Messaging</h3>
-          <p class="tab-desc">Submit tickets directly to our commercial relationship or fraud desks. All messages are encrypted.</p>
+        <!-- 12. Entitlements & Compliance Tab (NEW) -->
+        <div id="tab-compliance" class="banking-tab-pane" style="display: none; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 40px; box-shadow: var(--shadow-sm);">
+          <h3>Regulatory compliance & User Entitlements</h3>
+          <p class="tab-desc">Configure user privileges, process tax W-9 documentation, and configure layout ADA modes.</p>
           
-          <div style="display: grid; grid-template-columns: 200px 1fr; gap: 24px; min-height: 350px;">
+          <div style="display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; margin-bottom: 30px;">
+            <!-- User Entitlements Checkboxes -->
+            <div style="border-right: 1px solid var(--border-color); padding-right: 20px;">
+              <h4 style="margin-bottom: 12px; font-family: sans-serif; font-size: 14px; font-weight:600;">System Entitlements Matrix</h4>
+              <p style="font-size:11px; color: var(--text-muted); margin-bottom: 12px;">Grant or revoke functional privileges from the current user session database.</p>
+              
+              <div style="display: flex; flex-direction: column; gap: 10px; font-size: 12px;" id="entitlements-checkbox-grid">
+                <label style="display:flex; align-items:center; gap:8px;">
+                  <input type="checkbox" id="privilege-maker-wire" checked> Maker Role: Allow Wire Transfer Dispatch
+                </label>
+                <label style="display:flex; align-items:center; gap:8px;">
+                  <input type="checkbox" id="privilege-checker-wire" checked> Checker Role: Allow Wire Transfer Approvals
+                </label>
+                <label style="display:flex; align-items:center; gap:8px;">
+                  <input type="checkbox" id="privilege-maker-ach" checked> Maker Role: Allow ACH Payroll Generation
+                </label>
+                <label style="display:flex; align-items:center; gap:8px;">
+                  <input type="checkbox" id="privilege-checker-ach" checked> Checker Role: Allow ACH Payroll Approvals
+                </label>
+                <label style="display:flex; align-items:center; gap:8px;">
+                  <input type="checkbox" id="privilege-positive-pay" checked> Allow Positive Pay File Uploads
+                </label>
+              </div>
+              <button type="button" id="btn-save-entitlements" class="btn-login" style="margin-top: 16px; width: 100%;">Save Entitlements Privileges</button>
+            </div>
+
+            <!-- compliance Forms (W-9 & 1099-INT) -->
+            <div>
+              <h4 style="margin-bottom: 12px; font-family: sans-serif; font-size: 14px; font-weight:600;">Tax Documents & Disclosures</h4>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <button type="button" id="btn-compliance-w9" class="page-btn" style="margin:0; text-align:left; padding: 10px; font-size: 12px;">📁 File Federal Form W-9 (Request TIN)</button>
+                <button type="button" id="btn-compliance-1099" class="page-btn" style="margin:0; text-align:left; padding: 10px; font-size: 12px;">📁 Download IRS Form 1099-INT Summary</button>
+              </div>
+
+              <!-- Accessibility & Language settings -->
+              <div style="background-color: var(--bg-light); border: 1px solid var(--border-color); border-radius: 4px; padding: 15px; margin-top: 20px;">
+                <h5 style="margin-bottom: 8px; font-family: sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase;">Interface Localizations</h5>
+                <div class="input-group" style="margin-bottom: 10px;">
+                  <label for="compliance-lang-select" style="font-size:10px;">Translation Dialect</label>
+                  <select id="compliance-lang-select" style="padding: 4px; font-size:11px;">
+                    <option value="en">English (US)</option>
+                    <option value="sim">Simlish (Satirical)</option>
+                    <option value="kli">Klingon (Satirical)</option>
+                    <option value="bin">Binary Code (Satirical)</option>
+                  </select>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px;">
+                  <span>Enlarge Text Spacing</span>
+                  <input type="checkbox" id="toggle-ada-font" style="width:16px; height:16px;">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 13. Support Secure Messaging Tab -->
+        <div id="tab-support" class="banking-tab-pane" style="display: none; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 40px; box-shadow: var(--shadow-sm);">
+          <h3>Fiduciary Secure Messaging & Advisory Desk</h3>
+          <p class="tab-desc">Submit tickets directly to our commercial relationship or fraud desks. All sessions are encrypted.</p>
+          
+          <div style="display: grid; grid-template-columns: 200px 1fr; gap: 24px; min-height: 350px; margin-bottom: 30px;">
             <!-- Ticket List -->
             <div style="border-right: 1px solid var(--border-color); padding-right: 20px;">
               <h4 style="font-family: sans-serif; font-size: 13px; text-transform: uppercase; font-weight: 600; color: var(--text-muted); margin-bottom: 12px;">Active Tickets</h4>
@@ -605,10 +1177,48 @@
               <div style="max-height: 220px; overflow-y: auto; padding: 10px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); margin-bottom: 16px; display: flex; flex-direction: column; gap: 12px; background-color: var(--bg-light);" id="chat-messages-box">
                 <!-- Dynamically populated -->
               </div>
-              <form id="chat-input-form" style="display: flex; gap: 8px;">
+              <form id="chat-input-form" style="display: flex; gap: 8px; align-items: center;">
+                <!-- Simulated Secure attachment uploader -->
+                <button type="button" id="btn-support-attach" class="page-btn" style="margin:0; padding:10px; font-size:12px;" title="Attach Audit Document">📎</button>
                 <input type="text" id="chat-user-message" placeholder="Type your message to support..." style="flex-grow: 1; padding: 10px;" class="search-input" required>
                 <button type="submit" class="btn-login" style="margin: 0; padding: 10px 18px;">Send</button>
               </form>
+              <div id="support-upload-progress" style="display:none; font-size:10px; color:var(--text-muted); margin-top:4px;">
+                Uploading document... <span id="support-progress-val">0%</span>
+                <div style="background-color:#cbd5e1; height:4px; border-radius:2px; overflow:hidden; margin-top:2px;">
+                  <div id="support-progress-bar" style="background-color:var(--primary-color); height:100%; width:0%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- banker Scheduler & Screen Share Mocks (NEW) -->
+          <div style="border-top: 1px solid var(--border-color); padding-top: 24px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px;">
+            <!-- Banker appointment scheduler -->
+            <div style="border-right: 1px solid var(--border-color); padding-right: 20px;">
+              <h4 style="font-family: sans-serif; font-size: 14px; font-weight: 600; margin-bottom: 8px;">Schedule Banker Consultation</h4>
+              <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Book an appointment with your dedicated corporate relationship manager.</p>
+              <form id="support-banker-form">
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom:8px;">
+                  <select id="scheduler-banker" style="padding:6px; font-size:11px;" required>
+                    <option value="justin">Justin Beaver (Hydraulic sweeps)</option>
+                    <option value="art">Arthur Pendelton (Fraud Analyst)</option>
+                    <option value="clara">Clara Henderson (Compliance Lead)</option>
+                  </select>
+                  <input type="date" id="scheduler-date" style="padding:6px; font-size:11px;" required>
+                </div>
+                <button type="submit" class="page-btn" style="width:100%; margin:0; padding:6px; background-color: var(--primary-color); color:#fff; border-color:var(--primary-color);">Reserve Meeting Slot</button>
+              </form>
+            </div>
+
+            <!-- Co-browsing Screen Share simulator console -->
+            <div>
+              <h4 style="font-family: sans-serif; font-size: 14px; font-weight: 600; margin-bottom: 8px;">Technical Co-Browsing Console</h4>
+              <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Launch a mock secure screen-share console for remote support assistance.</p>
+              <button type="button" id="btn-support-screenshare" class="btn-login" style="width: 100%; padding: 6px; font-size: 12px;">Launch Co-Browsing Session</button>
+              <div id="screenshare-console" style="display:none; border: 1px solid var(--border-color); border-radius: 4px; background-color:#0f172a; color:#10b981; font-family: monospace; font-size: 9.5px; padding: 10px; margin-top: 10px; height: 80px; overflow-y: auto;">
+                [CO-BROWSING OFFLINE]
+              </div>
             </div>
           </div>
         </div>
