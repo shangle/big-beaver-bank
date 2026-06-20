@@ -149,7 +149,7 @@ const init = () => {
     const renderTour = (key) => {
       const tour = tutorials[key];
       demoDisplay.innerHTML = `
-        <h4 style="font-family: sans-serif; font-weight: bold; font-size: 18px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 16px; color: var(--primary-color);">${tour.title}</h4>
+        <h3 style="font-family: sans-serif; font-weight: bold; font-size: 18px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 16px; color: var(--primary-color);">${tour.title}</h3>
         <div style="line-height: 1.6; font-size: 13.5px;">${tour.content}</div>
       `;
     };
