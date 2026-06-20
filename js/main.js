@@ -1003,14 +1003,11 @@ const init = () => {
       // Core definition
       kbDetailDefinition.textContent = termObj.definition;
 
-      // How it works
-      kbDetailHow.textContent = termObj.howItWorks;
-
-      // What can go wrong
-      kbDetailWrong.textContent = termObj.whatCanGoWrong;
-
-      // Safeguards
-      kbDetailSafeguards.textContent = termObj.safeguards;
+      // Main rich body (Wikipedia / Tutorial style)
+      const kbDetailBody = document.getElementById('kb-detail-body');
+      if (kbDetailBody) {
+        kbDetailBody.innerHTML = termObj.content;
+      }
 
       // Related terms cross links
       kbDetailRelated.innerHTML = '';
