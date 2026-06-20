@@ -530,7 +530,7 @@ nav a:hover, nav a.active {
 
 .testimonial-company {
   font-size: 11px;
-  color: var(--accent-color);
+  color: #684d1c;
   text-transform: uppercase;
   font-weight: 700;
 }
@@ -1114,10 +1114,13 @@ footer {
 .footer-copy {
   font-size: 11.5px;
 }
+.footer-copy a {
+  color: #b3ccbf !important;
+}
 
 .footer-fdic-subtle {
   font-size: 10.5px;
-  color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.5);
   max-width: 550px;
   line-height: 1.4;
 }
