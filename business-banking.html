@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Business Banking | Big Beaver Bank</title>
   <meta name="description" content="Manage your business cash flow with commercial checking, operating credit lines, merchant services, and custom commercial cards from Big Beaver Bank.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230b2f1d%22/><text y=%2275%22 x=%2222%22 font-size=%2270%22 fill=%22%23c5a059%22 font-family=%22Georgia, serif%22 font-weight=%22bold%22>B</text></svg>">
 </head>
@@ -81,7 +84,7 @@
         <button class="btn-login" style="padding: 10px 20px;" onclick="openBusinessEnrollmentForm()">Contact Commercial Officer</button>
       </div>
       <div class="feature-image" style="max-width: 450px;">
-        <img src="img/small_business.png" alt="Baker smiling in shop supported by BBB commercial credit" style="border-radius: var(--radius-sm);">
+        <img src="img/small_business.png" alt="Baker smiling in shop supported by BBB commercial credit" style="border-radius: var(--radius-sm);" width="1024" height="1024">
       </div>
     </div>
   </section>
@@ -189,7 +192,7 @@
             </div>
             <div class="input-group">
               <label for="biz-revenues">Annual Gross Revenues ($)</label>
-              <input type="number" id="biz-revenues" min="50000" step="10000" required>
+              <input type="number" id="biz-revenues" min="50000" step="any" required>
             </div>
           </div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
@@ -204,7 +207,7 @@
             </div>
             <div class="input-group">
               <label for="biz-amount">Requested Financing Amount ($)</label>
-              <input type="number" id="biz-amount" min="50000" step="25000" required>
+              <input type="number" id="biz-amount" min="50000" step="any" required>
             </div>
           </div>
           <button type="submit" class="btn-form-submit">Submit Commercial Financing Inquiry</button>

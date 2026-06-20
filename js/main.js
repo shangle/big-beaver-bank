@@ -725,6 +725,381 @@ const init = () => {
     `;
     window.showBankModal('Booking Confirmed', successHTML);
   };
+
+  // --- NEWSROOM TAG FILTERING ---
+  const params = new URLSearchParams(window.location.search);
+  const activeTag = params.get('tag');
+  const tagFilterBar = document.getElementById('tag-filter-bar');
+  const activeTagName = document.getElementById('active-tag-name');
+  
+  if (activeTag) {
+    const blogCards = document.querySelectorAll('.blog-card');
+    let foundCount = 0;
+    
+    blogCards.forEach(card => {
+      const cardTagsStr = card.getAttribute('data-tags') || '';
+      const tags = cardTagsStr.split(',');
+      if (tags.includes(activeTag)) {
+        card.style.display = 'flex';
+        foundCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+    
+    if (tagFilterBar && activeTagName) {
+      activeTagName.textContent = '#' + activeTag;
+      tagFilterBar.style.display = 'flex';
+    }
+  }
+
+  // --- KNOWLEDGEBASE CONTROLLER ---
+  const kbSearchInput = document.getElementById('kb-search-input');
+  const kbTermsList = document.getElementById('kb-terms-list');
+  const kbCountLabel = document.getElementById('kb-count-label');
+  const kbDetailPane = document.getElementById('kb-detail-pane');
+  const kbDefaultView = document.getElementById('kb-default-view');
+  const kbContentView = document.getElementById('kb-content-view');
+
+  const kbDetailTerm = document.getElementById('kb-detail-term');
+  const kbDetailCategory = document.getElementById('kb-detail-category');
+  const kbDetailDefinition = document.getElementById('kb-detail-definition');
+  const kbDetailHow = document.getElementById('kb-detail-how');
+  const kbDetailWrong = document.getElementById('kb-detail-wrong');
+  const kbDetailSafeguards = document.getElementById('kb-detail-safeguards');
+  const kbDetailRelated = document.getElementById('kb-detail-related');
+  
+  const kbDiagramContainer = document.getElementById('kb-diagram-container');
+  const kbDiagramSvgWrapper = document.getElementById('kb-diagram-svg-wrapper');
+
+  const makeId = (term) => term.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+  if (typeof BANKING_KNOWLEDGEBASE !== 'undefined' && kbTermsList) {
+    let currentCategory = 'all';
+    let currentSearch = '';
+    let activeTermId = null;
+
+    const renderTermsList = () => {
+      kbTermsList.innerHTML = '';
+      
+      const filtered = BANKING_KNOWLEDGEBASE.filter(item => {
+        const matchesCategory = currentCategory === 'all' || item.category === currentCategory;
+        const matchesSearch = currentSearch === '' || 
+          item.term.toLowerCase().includes(currentSearch) || 
+          item.definition.toLowerCase().includes(currentSearch);
+        return matchesCategory && matchesSearch;
+      });
+
+      kbCountLabel.textContent = `Showing ${filtered.length} terms`;
+
+      if (filtered.length === 0) {
+        kbTermsList.innerHTML = '<div style="font-size:12px; color:var(--text-muted); text-align:center; padding:20px;">No matching terms found.</div>';
+        return;
+      }
+
+      filtered.forEach(item => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'kb-term-item';
+        if (item.id === activeTermId) {
+          btn.classList.add('active');
+        }
+        btn.textContent = item.term;
+        btn.addEventListener('click', () => {
+          activeTermId = item.id;
+          // update selection styling
+          document.querySelectorAll('.kb-term-item').forEach(el => el.classList.remove('active'));
+          btn.classList.add('active');
+          showTermDetails(item.id);
+        });
+        kbTermsList.appendChild(btn);
+      });
+    };
+
+    const renderDiagram = (diagramId) => {
+      if (!kbDiagramSvgWrapper) return;
+      
+      let svgContent = '';
+      const markerDef = `
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--text-muted)" />
+          </marker>
+        </defs>
+      `;
+
+      if (diagramId === 'ach-flow') {
+        svgContent = `
+          <svg viewBox="0 0 800 130" width="100%">
+            ${markerDef}
+            <!-- Nodes -->
+            <rect x="15" y="35" width="105" height="45" class="svg-flow-node svg-flow-node-active" />
+            <text x="67" y="61" class="svg-flow-text">1. Originator</text>
+            <text x="67" y="74" style="font-size:8px; fill:var(--text-muted); text-anchor:middle;">Initiates Transfer</text>
+
+            <rect x="170" y="35" width="105" height="45" class="svg-flow-node" />
+            <text x="222" y="61" class="svg-flow-text">2. ODFI Bank</text>
+            <text x="222" y="74" style="font-size:8px; fill:var(--text-muted); text-anchor:middle;">Batches instructions</text>
+
+            <rect x="325" y="35" width="125" height="45" class="svg-flow-node" />
+            <text x="387" y="61" class="svg-flow-text">3. ACH Operator</text>
+            <text x="387" y="74" style="font-size:8px; fill:var(--text-muted); text-anchor:middle;">Clears &amp; Settlements</text>
+
+            <rect x="500" y="35" width="105" height="45" class="svg-flow-node" />
+            <text x="552" y="61" class="svg-flow-text">4. RDFI Bank</text>
+            <text x="552" y="74" style="font-size:8px; fill:var(--text-muted); text-anchor:middle;">Validates Receiver</text>
+
+            <rect x="655" y="35" width="105" height="45" class="svg-flow-node" />
+            <text x="707" y="61" class="svg-flow-text">5. Receiver</text>
+            <text x="707" y="74" style="font-size:8px; fill:var(--text-muted); text-anchor:middle;">Funds Posted</text>
+
+            <!-- Connectors -->
+            <line x1="120" y1="57" x2="170" y2="57" class="svg-flow-arrow" />
+            <line x1="275" y1="57" x2="325" y2="57" class="svg-flow-arrow" />
+            <line x1="450" y1="57" x2="500" y2="57" class="svg-flow-arrow" />
+            <line x1="605" y1="57" x2="655" y2="57" class="svg-flow-arrow" />
+          </svg>
+        `;
+      } else if (diagramId === 'wire-flow') {
+        svgContent = `
+          <svg viewBox="0 0 800 130" width="100%">
+            ${markerDef}
+            <!-- Nodes -->
+            <rect x="15" y="35" width="105" height="45" class="svg-flow-node svg-flow-node-active" />
+            <text x="67" y="61" class="svg-flow-text">1. Sender</text>
+            <text x="67" y="74" style="font-size:8px; fill:var(--text-muted); text-anchor:middle;">Directs Wire</text>
+
+            <rect x="170" y="35" width="105" height="45" class="svg-flow-node" />
+            <text x="222" y="61" class="svg-flow-text">2. Originating Bank</text>
+            <text x="222" y="74" style="font-size:8px; fill:var(--text-muted); text-anchor:middle;">Verifies Balances</text>
+
+            <rect x="325" y="35" width="125" height="45" class="svg-flow-node" />
+            <text x="387" y="61" class="svg-flow-text">3. Fedwire/SWIFT</text>
+            <text x="387" y="74" style="font-size:8px; fill:var(--text-muted); text-anchor:middle;">Instant Netting</text>
+
+            <rect x="500" y="35" width="105" height="45" class="svg-flow-node" />
+            <text x="552" y="61" class="svg-flow-text">4. Recipient Bank</text>
+            <text x="552" y="74" style="font-size:8px; fill:var(--text-muted); text-anchor:middle;">Posts Balance</text>
+
+            <rect x="655" y="35" width="105" height="45" class="svg-flow-node" />
+            <text x="707" y="61" class="svg-flow-text">5. Beneficiary</text>
+            <text x="707" y="74" style="font-size:8px; fill:var(--text-muted); text-anchor:middle;">Real-Time Credit</text>
+
+            <!-- Connectors -->
+            <line x1="120" y1="57" x2="170" y2="57" class="svg-flow-arrow" />
+            <line x1="275" y1="57" x2="325" y2="57" class="svg-flow-arrow" />
+            <line x1="450" y1="57" x2="500" y2="57" class="svg-flow-arrow" />
+            <line x1="605" y1="57" x2="655" y2="57" class="svg-flow-arrow" />
+          </svg>
+        `;
+      } else if (diagramId === 'pospay-flow') {
+        svgContent = `
+          <svg viewBox="0 0 800 200" width="100%">
+            ${markerDef}
+            <!-- Flow nodes -->
+            <rect x="15" y="75" width="110" height="45" class="svg-flow-node" />
+            <text x="70" y="96" class="svg-flow-text">1. Presented Check</text>
+            <text x="70" y="109" style="font-size:8px; fill:var(--text-muted); text-anchor:middle;">At teller or clearing</text>
+
+            <line x1="125" y1="97" x2="165" y2="97" class="svg-flow-arrow" />
+
+            <rect x="165" y="75" width="110" height="45" class="svg-flow-node" />
+            <text x="220" y="96" class="svg-flow-text">2. OCR Check Scan</text>
+            <text x="220" y="109" style="font-size:8px; fill:var(--text-muted); text-anchor:middle;">Reads Transit/Account</text>
+
+            <line x1="275" y1="97" x2="315" y2="97" class="svg-flow-arrow" />
+
+            <!-- Decision Box -->
+            <polygon points="315,97 365,70 415,97 365,124" style="fill:var(--bg-white); stroke:var(--primary-color); stroke-width:2px;" />
+            <text x="365" y="100" style="font-family:sans-serif; font-size:10px; font-weight:700; fill:var(--primary-color); text-anchor:middle;">Match?</text>
+
+            <!-- Yes path -->
+            <line x1="365" y1="70" x2="365" y2="40" class="svg-flow-arrow" />
+            <line x1="365" y1="40" x2="455" y2="40" class="svg-flow-arrow" />
+            <rect x="455" y="20" width="125" height="40" class="svg-flow-node" style="stroke:#047857;" />
+            <text x="517" y="44" class="svg-flow-text" style="fill:#047857;">Auto Clear (Pay)</text>
+
+            <!-- No path -->
+            <line x1="365" y1="124" x2="365" y2="155" class="svg-flow-arrow" />
+            <line x1="365" y1="155" x2="455" y2="155" class="svg-flow-arrow" />
+            <rect x="455" y="135" width="125" height="40" class="svg-flow-node" style="stroke:#b91c1c; fill:#fef2f2;" />
+            <text x="517" y="159" class="svg-flow-text" style="fill:#b91c1c;">Flag Exception</text>
+
+            <line x1="580" y1="155" x2="630" y2="155" class="svg-flow-arrow" />
+
+            <!-- Checker Decisions -->
+            <rect x="630" y="135" width="145" height="40" class="svg-flow-node svg-flow-node-active" />
+            <text x="702" y="153" class="svg-flow-text">Checker Pay/Return Decision</text>
+            <text x="702" y="165" style="font-size:7px; fill:var(--text-muted); text-anchor:middle;">Manual Exception approval</text>
+          </svg>
+        `;
+      } else if (diagramId === 'maker-checker-flow') {
+        svgContent = `
+          <svg viewBox="0 0 800 130" width="100%">
+            ${markerDef}
+            <!-- Nodes -->
+            <rect x="20" y="35" width="120" height="45" class="svg-flow-node svg-flow-node-active" />
+            <text x="80" y="61" class="svg-flow-text">1. Maker Drafts Batch</text>
+            <text x="80" y="73" style="font-size:8px; fill:var(--text-muted); text-anchor:middle;">Inputs Transfer values</text>
+
+            <line x1="140" y1="57" x2="200" y2="57" class="svg-flow-arrow" />
+
+            <rect x="200" y="35" width="150" height="45" class="svg-flow-node" style="fill:var(--bg-cream);" />
+            <text x="275" y="61" class="svg-flow-text">2. Approvals Registry Log</text>
+            <text x="275" y="73" style="font-size:8px; fill:var(--text-muted); text-anchor:middle;">Holds pending check validation</text>
+
+            <line x1="350" y1="57" x2="410" y2="57" class="svg-flow-arrow" />
+
+            <rect x="410" y="35" width="150" height="45" class="svg-flow-node" />
+            <text x="485" y="61" class="svg-flow-text">3. Checker Approves Item</text>
+            <text x="485" y="73" style="font-size:8px; fill:var(--text-muted); text-anchor:middle;">Authorizes ledger deduction</text>
+
+            <line x1="560" y1="57" x2="620" y2="57" class="svg-flow-arrow" />
+
+            <rect x="620" y="35" width="130" height="45" class="svg-flow-node" style="stroke:#047857;" />
+            <text x="685" y="61" class="svg-flow-text" style="fill:#047857;">4. Clears Transaction</text>
+            <text x="685" y="73" style="font-size:8px; fill:var(--text-muted); text-anchor:middle;">Funds Posted in Ledger</text>
+          </svg>
+        `;
+      }
+      
+      kbDiagramSvgWrapper.innerHTML = svgContent;
+    };
+
+    const showTermDetails = (termId) => {
+      const termObj = BANKING_KNOWLEDGEBASE.find(item => item.id === termId);
+      if (!termObj) {
+        kbContentView.style.display = 'none';
+        kbDefaultView.style.display = 'block';
+        return;
+      }
+
+      kbDefaultView.style.display = 'none';
+      kbContentView.style.display = 'block';
+
+      kbDetailTerm.textContent = termObj.term;
+      
+      // Category map
+      const catMap = {
+        payments: 'Payments & Clearing',
+        security: 'Security & Treasury',
+        lending: 'Lending & Mortgages',
+        accounts: 'Accounts & Regulations',
+        satirical: 'Satirical & Fictional'
+      };
+      
+      kbDetailCategory.textContent = catMap[termObj.category] || termObj.category;
+      
+      // Setup colors based on category
+      const colorMap = {
+        payments: '#0b2f1d',
+        security: '#991b1b',
+        lending: '#1e3a8a',
+        accounts: '#1f2723',
+        satirical: '#854d0e'
+      };
+      kbDetailCategory.style.backgroundColor = colorMap[termObj.category] || 'var(--primary-color)';
+
+      // Core definition
+      kbDetailDefinition.textContent = termObj.definition;
+
+      // How it works
+      kbDetailHow.textContent = termObj.howItWorks;
+
+      // What can go wrong
+      kbDetailWrong.textContent = termObj.whatCanGoWrong;
+
+      // Safeguards
+      kbDetailSafeguards.textContent = termObj.safeguards;
+
+      // Related terms cross links
+      kbDetailRelated.innerHTML = '';
+      if (termObj.related && termObj.related.length > 0) {
+        termObj.related.forEach(relId => {
+          const relTerm = BANKING_KNOWLEDGEBASE.find(item => item.id === relId);
+          if (relTerm) {
+            const link = document.createElement('button');
+            link.type = 'button';
+            link.className = 'kb-related-link';
+            link.textContent = relTerm.term;
+            link.addEventListener('click', () => {
+              activeTermId = relTerm.id;
+              // update active styles in side panel
+              document.querySelectorAll('.kb-term-item').forEach(el => {
+                if (el.textContent === relTerm.term) {
+                  el.classList.add('active');
+                  el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                  el.classList.remove('active');
+                }
+              });
+              showTermDetails(relTerm.id);
+            });
+            kbDetailRelated.appendChild(link);
+          }
+        });
+      } else {
+        kbDetailRelated.textContent = 'None';
+      }
+
+      // Diagram
+      if (termObj.diagram) {
+        kbDiagramContainer.style.display = 'block';
+        renderDiagram(termObj.diagram);
+      } else {
+        kbDiagramContainer.style.display = 'none';
+        if (kbDiagramSvgWrapper) kbDiagramSvgWrapper.innerHTML = '';
+      }
+      
+      // Scroll details to top
+      kbDetailPane.scrollTop = 0;
+    };
+
+    // Category button clicks
+    const catButtons = document.querySelectorAll('.kb-cat-btn');
+    catButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        catButtons.forEach(el => el.classList.remove('active'));
+        btn.classList.add('active');
+        currentCategory = btn.getAttribute('data-category');
+        renderTermsList();
+      });
+    });
+
+    // Live search input
+    if (kbSearchInput) {
+      kbSearchInput.addEventListener('input', (e) => {
+        currentSearch = e.target.value.toLowerCase().trim();
+        renderTermsList();
+      });
+    }
+
+    // Initialize list
+    renderTermsList();
+    
+    // Auto-load first item or a specific hash/param if present
+    const params = new URLSearchParams(window.location.search);
+    const searchParam = params.get('kb');
+    if (searchParam) {
+      const termObj = BANKING_KNOWLEDGEBASE.find(item => item.id === makeId(searchParam) || makeId(item.term) === makeId(searchParam));
+      if (termObj) {
+        activeTermId = termObj.id;
+        renderTermsList();
+        showTermDetails(termObj.id);
+        
+        // scroll list to active
+        setTimeout(() => {
+          const items = document.querySelectorAll('.kb-term-item');
+          items.forEach(el => {
+            if (el.textContent === termObj.term) {
+              el.classList.add('active');
+              el.scrollIntoView({ block: 'nearest' });
+            }
+          });
+        }, 100);
+      }
+    }
+  }
 };
 
 // Check if ready state is already interactive or complete

@@ -261,7 +261,7 @@ const renderArticle = (article, index) => {
       </div>
     `).join('');
 
-  const tagsHtml = article.tags.map(t => `<span class="txn-category" style="margin-right: 6px; margin-bottom: 6px; background-color: var(--bg-light); color: var(--text-dark); border-radius: 4px; padding: 4px 8px; font-size: 11px;">#${t}</span>`).join('');
+  const tagsHtml = article.tags.map(t => `<a href="../blog.html?tag=${encodeURIComponent(t)}" class="txn-category" style="margin-right: 6px; margin-bottom: 6px; background-color: var(--bg-light); color: var(--text-dark); border-radius: 4px; padding: 4px 8px; font-size: 11px; text-decoration: none; display: inline-block; transition: background-color 0.2s;">#${t}</a>`).join('');
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -270,6 +270,9 @@ const renderArticle = (article, index) => {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${article.title} | Big Beaver Bank Newsroom</title>
   <meta name="description" content="${article.excerpt.replace(/"/g, '&quot;')}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230b2f1d%22/><text y=%2275%22 x=%2222%22 font-size=%2270%22 fill=%22%23c5a059%22 font-family=%22Georgia, serif%22 font-weight=%22bold%22>B</text></svg>">
 </head>
@@ -337,7 +340,7 @@ const renderArticle = (article, index) => {
         <h1 class="article-title" style="font-size: 32px; margin-bottom: 20px;">${article.title}</h1>
         
         <div style="margin-bottom: 24px; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border-color);">
-          <img src="${article.image}" alt="${article.title}" style="width: 100%; height: auto; display: block;">
+          <img src="${article.image}" alt="${article.title}" style="width: 100%; height: auto; display: block;" width="1024" height="1024">
         </div>
 
         <div class="article-content" style="font-size: 15px; line-height: 1.75;">
@@ -422,14 +425,17 @@ articles.forEach((article, index) => {
 // Generate blog.html (Index page)
 const renderBlogIndex = (articleList) => {
   const cardsHtml = articleList.map(art => `
-      <div class="blog-card" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
+      <div class="blog-card" data-tags="${art.tags.join(',')}" style="display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-sm); transition: transform 0.2s, box-shadow 0.2s;">
         <div style="height: 180px; overflow: hidden; border-bottom: 1px solid var(--border-color);">
-          <img src="${art.image.replace('../', '')}" alt="${art.title}" style="width: 100%; height: 100%; object-fit: cover;">
+          <img src="${art.image.replace('../', '')}" alt="${art.title}" style="width: 100%; height: 100%; object-fit: cover;" width="1024" height="1024">
         </div>
         <div class="blog-card-content" style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
           <div class="blog-card-meta">${art.category} • ${art.date}</div>
-          <h3 class="blog-card-title" style="font-size: 18px; margin-bottom: 12px; font-family: sans-serif;"><a href="blog/${art.slug}.html">${art.title}</a></h3>
-          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; flex-grow: 1;">${art.excerpt}</p>
+          <h2 class="blog-card-title" style="font-size: 18px; margin-bottom: 8px; font-family: sans-serif;"><a href="blog/${art.slug}.html">${art.title}</a></h2>
+          <p class="blog-card-excerpt" style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.6; flex-grow: 1;">${art.excerpt}</p>
+          <div style="margin-top: auto; margin-bottom: 16px; display: flex; flex-wrap: wrap; gap: 6px;">
+            ${art.tags.map(t => `<a href="?tag=${encodeURIComponent(t)}" class="blog-tag" style="font-size: 11px; background-color: var(--bg-light); color: var(--text-dark); padding: 2px 6px; border-radius: 4px; text-decoration: none; font-weight: 500;">#${t}</a>`).join('')}
+          </div>
           <a href="blog/${art.slug}.html" class="blog-card-link" style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Read Article &rarr;</a>
         </div>
       </div>
@@ -442,6 +448,9 @@ const renderBlogIndex = (articleList) => {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Newsroom & Research | Big Beaver Bank</title>
   <meta name="description" content="Read institutional market analysis, whitepapers, and financial education articles published by Big Beaver Bank.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230b2f1d%22/><text y=%2275%22 x=%2222%22 font-size=%2270%22 fill=%22%23c5a059%22 font-family=%22Georgia, serif%22 font-weight=%22bold%22>B</text></svg>">
 </head>
@@ -497,9 +506,15 @@ const renderBlogIndex = (articleList) => {
 
   <!-- Newsroom Content -->
   <main class="container" style="padding: 40px 0 80px;">
-    <div class="blog-header">
+    <div class="blog-header" style="margin-bottom: 30px;">
       <h1 style="font-size: 44px; margin-bottom: 16px;">Newsroom & Financial Education</h1>
       <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Review consumer budgeting tips, commercial credit guides, and community initiatives published by our treasury group.</p>
+    </div>
+
+    <!-- Active Tag Filter Bar -->
+    <div id="tag-filter-bar" style="display: none; justify-content: space-between; align-items: center; background-color: var(--bg-light); border: 1px solid var(--border-color); padding: 12px 20px; border-radius: var(--radius-sm); margin-bottom: 30px;">
+      <span style="font-size: 14px;">Showing articles tagged with: <strong id="active-tag-name" style="color: var(--primary-color);"></strong></span>
+      <a href="blog.html" style="font-size: 12px; font-weight: 600; text-transform: uppercase; color: #b91c1c; text-decoration: none;">Clear Filter &times;</a>
     </div>
 
     <!-- Articles Grid -->

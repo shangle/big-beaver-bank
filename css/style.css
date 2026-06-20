@@ -1343,3 +1343,88 @@ body.high-contrast button:hover {
   color: var(--text-dark);
   line-height: 1.6;
 }
+
+/* Knowledgebase Center Styles */
+.kb-cat-btn {
+  background-color: var(--bg-white);
+  border: 1px solid var(--border-color);
+  color: var(--text-dark);
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.kb-cat-btn:hover {
+  background-color: var(--bg-light);
+  border-color: var(--text-muted);
+}
+.kb-cat-btn.active {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #fff;
+}
+.kb-term-item {
+  background-color: var(--bg-white);
+  border: 1px solid var(--border-color);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+  font-family: sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--primary-color);
+}
+.kb-term-item:hover {
+  background-color: var(--bg-light);
+  border-color: var(--accent-color);
+}
+.kb-term-item.active {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #fff;
+}
+.kb-related-link {
+  font-size: 12px;
+  background-color: var(--bg-white);
+  border: 1px solid var(--border-color);
+  color: var(--primary-color);
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+.kb-related-link:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+  border-color: var(--primary-color);
+}
+/* Flowchart Styles */
+.svg-flow-node {
+  fill: var(--bg-white);
+  stroke: var(--primary-color);
+  stroke-width: 2px;
+  rx: 4px;
+  ry: 4px;
+}
+.svg-flow-node-active {
+  stroke: var(--accent-color);
+  fill: var(--bg-cream);
+}
+.svg-flow-text {
+  font-family: sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  fill: var(--primary-color);
+  text-anchor: middle;
+}
+.svg-flow-arrow {
+  fill: none;
+  stroke: var(--text-muted);
+  stroke-width: 2px;
+  marker-end: url(#arrow);
+}
