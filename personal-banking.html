@@ -122,7 +122,7 @@
       
       <div id="wizard-questions">
         <div style="margin-bottom: 16px;">
-          <label style="font-size: 13.5px; font-weight: 600; display: block; margin-bottom: 6px;">1. What is your typical average monthly balance?</label>
+          <label for="wiz-balance" style="font-size: 13.5px; font-weight: 600; display: block; margin-bottom: 6px;">1. What is your typical average monthly balance?</label>
           <select id="wiz-balance" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 13px;">
             <option value="low">Under $500</option>
             <option value="mid">$500 to $4,999</option>
@@ -131,7 +131,7 @@
         </div>
 
         <div style="margin-bottom: 16px;">
-          <label style="font-size: 13.5px; font-weight: 600; display: block; margin-bottom: 6px;">2. Do you plan to set up monthly Direct Deposit?</label>
+          <label for="wiz-dd" style="font-size: 13.5px; font-weight: 600; display: block; margin-bottom: 6px;">2. Do you plan to set up monthly Direct Deposit?</label>
           <select id="wiz-dd" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 13px;">
             <option value="yes">Yes, regularly</option>
             <option value="no">No, or irregular</option>
@@ -139,7 +139,7 @@
         </div>
 
         <div style="margin-bottom: 20px;">
-          <label style="font-size: 13.5px; font-weight: 600; display: block; margin-bottom: 6px;">3. How often do you use non-Big Beaver Bank ATMs?</label>
+          <label for="wiz-atm" style="font-size: 13.5px; font-weight: 600; display: block; margin-bottom: 6px;">3. How often do you use non-Big Beaver Bank ATMs?</label>
           <select id="wiz-atm" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 13px;">
             <option value="rare">Rarely or Never</option>
             <option value="sometimes">1-2 times a month</option>
@@ -236,27 +236,27 @@
         <form onsubmit="event.preventDefault(); document.getElementById('mortgage-conf').style.display='block'; this.reset();">
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
             <div class="input-group">
-              <label>First Name</label>
-              <input type="text" required>
+              <label for="prequal-first-name">First Name</label>
+              <input type="text" id="prequal-first-name" required>
             </div>
             <div class="input-group">
-              <label>Last Name</label>
-              <input type="text" required>
+              <label for="prequal-last-name">Last Name</label>
+              <input type="text" id="prequal-last-name" required>
             </div>
           </div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
             <div class="input-group">
-              <label>Annual Household Income ($)</label>
-              <input type="number" min="10000" step="5000" required>
+              <label for="prequal-income">Annual Household Income ($)</label>
+              <input type="number" id="prequal-income" min="10000" step="5000" required>
             </div>
             <div class="input-group">
-              <label>Estimated Down Payment ($)</label>
-              <input type="number" min="1000" step="1000" required>
+              <label for="prequal-down-payment">Estimated Down Payment ($)</label>
+              <input type="number" id="prequal-down-payment" min="1000" step="1000" required>
             </div>
           </div>
           <div class="input-group" style="margin-bottom: 24px;">
-            <label>Property Target ZIP Code</label>
-            <input type="text" pattern="[0-9]{5}" placeholder="e.g., 49441" required>
+            <label for="prequal-zip">Property Target ZIP Code</label>
+            <input type="text" id="prequal-zip" pattern="[0-9]{5}" placeholder="e.g., 49441" required>
           </div>
           <button type="submit" class="btn-form-submit">Submit Pre-Qualification Application</button>
         </form>

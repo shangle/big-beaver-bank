@@ -78,16 +78,16 @@
         
         <form onsubmit="event.preventDefault(); document.getElementById('card-lock-conf').style.display='block'; this.reset();">
           <div class="input-group" style="margin-bottom: 16px;">
-            <label>Cardholder Full Name</label>
-            <input type="text" required>
+            <label for="lost-card-name">Cardholder Full Name</label>
+            <input type="text" id="lost-card-name" required>
           </div>
           <div class="input-group" style="margin-bottom: 16px;">
-            <label>Last 4 Digits of Card Number</label>
-            <input type="text" pattern="[0-9]{4}" placeholder="xxxx" required>
+            <label for="lost-card-number">Last 4 Digits of Card Number</label>
+            <input type="text" id="lost-card-number" pattern="[0-9]{4}" placeholder="xxxx" required>
           </div>
           <div class="input-group" style="margin-bottom: 24px;">
-            <label>Primary Account ZIP Code</label>
-            <input type="text" pattern="[0-9]{5}" required>
+            <label for="lost-card-zip">Primary Account ZIP Code</label>
+            <input type="text" id="lost-card-zip" pattern="[0-9]{5}" required>
           </div>
           <button type="submit" class="btn-form-submit" style="background-color: #dc2626;">Suspend Card Operations</button>
         </form>
@@ -105,22 +105,22 @@
         
         <form onsubmit="event.preventDefault(); document.getElementById('travel-conf').style.display='block'; this.reset();">
           <div class="input-group" style="margin-bottom: 16px;">
-            <label>Destination (States or Countries)</label>
-            <input type="text" placeholder="e.g., California, Japan" required>
+            <label for="travel-destination">Destination (States or Countries)</label>
+            <input type="text" id="travel-destination" placeholder="e.g., California, Japan" required>
           </div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
             <div class="input-group">
-              <label>Departure Date</label>
-              <input type="date" required>
+              <label for="travel-depart">Departure Date</label>
+              <input type="date" id="travel-depart" required>
             </div>
             <div class="input-group">
-              <label>Return Date</label>
-              <input type="date" required>
+              <label for="travel-return">Return Date</label>
+              <input type="date" id="travel-return" required>
             </div>
           </div>
           <div class="input-group" style="margin-bottom: 24px;">
-            <label>Primary Contact Phone Number</label>
-            <input type="tel" required>
+            <label for="travel-phone">Primary Contact Phone Number</label>
+            <input type="tel" id="travel-phone" required>
           </div>
           <button type="submit" class="btn-form-submit">Register Travel Plans</button>
         </form>
