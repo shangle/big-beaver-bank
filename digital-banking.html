@@ -75,11 +75,11 @@
         
         <div style="display: flex; gap: 12px; margin-bottom: 30px;">
           <!-- Mock app store badge styling -->
-          <a href="#" onclick="alert('Simulated App Store: Download file payload for BBB Mobile app is undergoing regional store audit. Available soon!')" style="display: inline-block; background-color: #000; color: #fff; padding: 8px 16px; border-radius: 6px; font-family: sans-serif; font-size: 11px; text-decoration: none; border: 1px solid #333;">
+          <a href="#" onclick="event.preventDefault(); openMobileAppDownload('App Store')" style="display: inline-block; background-color: #000; color: #fff; padding: 8px 16px; border-radius: 6px; font-family: sans-serif; font-size: 11px; text-decoration: none; border: 1px solid #333;">
             <div style="font-size: 8px; text-transform: uppercase;">Download on the</div>
             <div style="font-size: 14px; font-weight: 700;">App Store</div>
           </a>
-          <a href="#" onclick="alert('Simulated Google Play: App payload packaging is in final verification checks.')" style="display: inline-block; background-color: #000; color: #fff; padding: 8px 16px; border-radius: 6px; font-family: sans-serif; font-size: 11px; text-decoration: none; border: 1px solid #333;">
+          <a href="#" onclick="event.preventDefault(); openMobileAppDownload('Google Play')" style="display: inline-block; background-color: #000; color: #fff; padding: 8px 16px; border-radius: 6px; font-family: sans-serif; font-size: 11px; text-decoration: none; border: 1px solid #333;">
             <div style="font-size: 8px; text-transform: uppercase;">Get it on</div>
             <div style="font-size: 14px; font-weight: 700;">Google Play</div>
           </a>

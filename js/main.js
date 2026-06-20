@@ -395,6 +395,336 @@ const init = () => {
       });
     }
   }
+
+  // --- CUSTOM PREMIUM BANK MODAL SYSTEM ---
+  window.showBankModal = (title, contentHTML) => {
+    let overlay = document.getElementById('bank-modal-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'bank-modal-overlay';
+      overlay.className = 'bank-modal-overlay';
+      overlay.innerHTML = `
+        <div class="bank-modal-container">
+          <button class="bank-modal-close" onclick="closeBankModal()">&times;</button>
+          <h3 class="bank-modal-title" id="bank-modal-title"></h3>
+          <div class="bank-modal-content" id="bank-modal-content"></div>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+    }
+    
+    document.getElementById('bank-modal-title').textContent = title;
+    document.getElementById('bank-modal-content').innerHTML = contentHTML;
+    
+    // Show modal
+    setTimeout(() => {
+      overlay.classList.add('active');
+    }, 10);
+  };
+
+  window.closeBankModal = () => {
+    const overlay = document.getElementById('bank-modal-overlay');
+    if (overlay) {
+      overlay.classList.remove('active');
+    }
+  };
+
+  // Business Banking Enrollment Form
+  window.openBusinessEnrollmentForm = () => {
+    const formHTML = `
+      <form onsubmit="event.preventDefault(); window.showBusinessSuccess();">
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:15px; line-height:1.5;">
+          Complete the commercial registration fields below to establish your corporate profile and access Sparta clearing channels.
+        </div>
+        <div class="input-group" style="margin-bottom:12px;">
+          <label style="font-weight:600; display:block; margin-bottom:4px; font-size:12px;">Registered Entity Name</label>
+          <input type="text" placeholder="e.g., Acme Corporation" style="width:100%; padding:8px; border:1px solid var(--border-color); border-radius:4px; font-size:13px;" required />
+        </div>
+        <div class="input-group" style="margin-bottom:12px;">
+          <label style="font-weight:600; display:block; margin-bottom:4px; font-size:12px;">Corporate Officer Email</label>
+          <input type="email" placeholder="e.g., treasury@acme.com" style="width:100%; padding:8px; border:1px solid var(--border-color); border-radius:4px; font-size:13px;" required />
+        </div>
+        <div class="input-group" style="margin-bottom:18px;">
+          <label style="font-weight:600; display:block; margin-bottom:4px; font-size:12px;">Primary Services Focus</label>
+          <select style="width:100%; padding:8px; border:1px solid var(--border-color); border-radius:4px; font-size:13px;">
+            <option>Commercial Checking & Sweeps</option>
+            <option>Timber Sweeps & Yield Enhancement</option>
+            <option>Relativistic Capital Lease Models</option>
+            <option>Section 12-B Clearing Bypass</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-form-submit" style="width:100%; padding:12px;">Submit Commercial Application</button>
+      </form>
+    `;
+    window.showBankModal('Commercial Account Enrollment', formHTML);
+  };
+
+  window.showBusinessSuccess = () => {
+    const successHTML = `
+      <div style="text-align:center; padding:10px 0;">
+        <div style="font-size:44px; margin-bottom:16px;">🏢</div>
+        <h4 style="color:#047857; font-size:18px; margin-bottom:8px; font-family:sans-serif; font-weight:700;">Commercial Application Logged</h4>
+        <p style="font-size:13px; color:var(--text-muted); line-height:1.6; margin-bottom:20px;">
+          Thank you. Your corporate profile has been recorded in the Sparta clearance registry. Reference ID: <strong>BBB-BIZ-88402</strong>. An onboarding officer will contact you within 24 business hours.
+        </p>
+        <div style="font-size:11px; background-color:var(--bg-light); border:1px solid var(--border-color); padding:10px; border-radius:4px; color:var(--text-muted); line-height:1.5;">
+          <strong>Notice:</strong> Big Beaver Bank is a satirical simulation project. No actual financial accounts or business profile registration has occurred.
+        </div>
+      </div>
+    `;
+    window.showBankModal('Application Received', successHTML);
+  };
+
+  // Personal Checking Enrollment Form
+  window.openPersonalEnrollmentForm = (tier) => {
+    const formHTML = `
+      <form onsubmit="event.preventDefault(); window.showPersonalSuccess('${tier}');">
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:15px; line-height:1.5;">
+          Establish checking credentials for: <strong>${tier}</strong>.
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+          <div class="input-group">
+            <label style="font-weight:600; display:block; margin-bottom:4px; font-size:12px;">First Name</label>
+            <input type="text" style="width:100%; padding:8px; border:1px solid var(--border-color); border-radius:4px; font-size:13px;" required />
+          </div>
+          <div class="input-group">
+            <label style="font-weight:600; display:block; margin-bottom:4px; font-size:12px;">Last Name</label>
+            <input type="text" style="width:100%; padding:8px; border:1px solid var(--border-color); border-radius:4px; font-size:13px;" required />
+          </div>
+        </div>
+        <div class="input-group" style="margin-bottom:18px;">
+          <label style="font-weight:600; display:block; margin-bottom:4px; font-size:12px;">Primary Email Address</label>
+          <input type="email" placeholder="e.g., customer@domain.com" style="width:100%; padding:8px; border:1px solid var(--border-color); border-radius:4px; font-size:13px;" required />
+        </div>
+        <button type="submit" class="btn-form-submit" style="width:100%; padding:12px;">Open Secure Account</button>
+      </form>
+    `;
+    window.showBankModal('Personal Checking Enrollment', formHTML);
+  };
+
+  window.showPersonalSuccess = (tier) => {
+    const successHTML = `
+      <div style="text-align:center; padding:10px 0;">
+        <div style="font-size:44px; margin-bottom:16px;">💳</div>
+        <h4 style="color:#047857; font-size:18px; margin-bottom:8px; font-family:sans-serif; font-weight:700;">Account Opening Complete</h4>
+        <p style="font-size:13px; color:var(--text-muted); line-height:1.6; margin-bottom:20px;">
+          Welcome! Your checking credentials for <strong>${tier}</strong> have been generated. Reference: <strong>BBB-PERS-22941</strong>. Debit card provisioning has been queued.
+        </p>
+        <div style="font-size:11px; background-color:var(--bg-light); border:1px solid var(--border-color); padding:10px; border-radius:4px; color:var(--text-muted); line-height:1.5;">
+          <strong>Notice:</strong> Big Beaver Bank is a purely fictional institution. No real checking account has been established, and no physical card will be shipped.
+        </div>
+      </div>
+    `;
+    window.showBankModal('Account Provisioned', successHTML);
+  };
+
+  // App Store Download Simulation
+  window.openMobileAppDownload = (store) => {
+    const progressHTML = `
+      <div style="text-align:center; padding:10px 0;">
+        <div style="font-size:14px; font-weight:600; margin-bottom:10px; color:var(--primary-color);" id="dl-status">Connecting to secure store server...</div>
+        <div style="width:100%; height:12px; background-color:var(--bg-light); border:1px solid var(--border-color); border-radius:6px; overflow:hidden; margin-bottom:15px;">
+          <div id="dl-progress-bar" style="width:0%; height:100%; background-color:#10b981; transition:width 0.15s ease-out;"></div>
+        </div>
+        <div style="font-size:11px; color:var(--text-muted);">Retrieving Big Beaver Bank Mobile Client v2.6.1 via ${store}</div>
+      </div>
+    `;
+    window.showBankModal('Downloading Mobile Client', progressHTML);
+    
+    // Animate progress
+    let percent = 0;
+    const interval = setInterval(() => {
+      percent += Math.floor(Math.random() * 15) + 5;
+      if (percent >= 100) {
+        percent = 100;
+        clearInterval(interval);
+        document.getElementById('dl-status').textContent = 'Installation payload decrypted!';
+        document.getElementById('dl-status').style.color = '#047857';
+        setTimeout(() => {
+          const successHTML = `
+            <div style="text-align:center; padding:10px 0;">
+              <div style="font-size:44px; margin-bottom:16px;">📲</div>
+              <h4 style="color:#047857; font-size:18px; margin-bottom:8px; font-family:sans-serif; font-weight:700;">Client Setup Complete</h4>
+              <p style="font-size:13px; color:var(--text-muted); line-height:1.6; margin-bottom:20px;">
+                The mobile banking application has successfully completed simulated installation on your device layout container.
+              </p>
+              <div style="font-size:11px; background-color:var(--bg-light); border:1px solid var(--border-color); padding:10px; border-radius:4px; color:var(--text-muted); line-height:1.5;">
+                <strong>Notice:</strong> Big Beaver Bank is a satirical project. No actual executable application files have been downloaded or installed on your physical device.
+              </div>
+            </div>
+          `;
+          window.showBankModal('Mobile Client Configured', successHTML);
+        }, 500);
+      }
+      const bar = document.getElementById('dl-progress-bar');
+      const status = document.getElementById('dl-status');
+      if (bar) bar.style.width = percent + '%';
+      if (status && percent < 100) status.textContent = `Downloading packages: ${percent}%...`;
+    }, 150);
+  };
+
+  // Support Console: Co-Browse Request Form
+  window.openCoBrowseForm = () => {
+    const formHTML = `
+      <form onsubmit="event.preventDefault(); window.startCoBrowseSession();">
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:15px; line-height:1.5;">
+          Initiate a read-only co-browsing session to let a Sparta relationship officer verify your console layout.
+        </div>
+        <div class="input-group" style="margin-bottom:18px;">
+          <label style="font-weight:600; display:block; margin-bottom:4px; font-size:12px;">Assistance Department</label>
+          <select id="cobrowse-dept" style="width:100%; padding:8px; border:1px solid var(--border-color); border-radius:4px; font-size:13px;">
+            <option>Treasury Clearing Assistance Desk</option>
+            <option>Timber Sweep Engineering Desk</option>
+            <option>Section 12-B Exception Audits</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-form-submit" style="width:100%; padding:12px;">Request Remote Session</button>
+      </form>
+    `;
+    window.showBankModal('Technical Co-Browsing Console', formHTML);
+  };
+
+  window.startCoBrowseSession = () => {
+    const dept = document.getElementById('cobrowse-dept').value;
+    const progressHTML = `
+      <div style="background-color:#1e293b; color:#38bdf8; font-family:monospace; padding:15px; border-radius:4px; font-size:11.5px; text-align:left; line-height:1.5; min-height:150px;">
+        <div id="cb-line-1">&gt; Generating secure connection token...</div>
+        <div id="cb-line-2" style="display:none;">&gt; Dispatching request to Sparta routing desk...</div>
+        <div id="cb-line-3" style="display:none;">&gt; Establishing encrypted reverse tunnel...</div>
+        <div id="cb-line-4" style="display:none; color:#34d399;">&gt; Tunnel established! Officer connected to console.</div>
+      </div>
+    `;
+    window.showBankModal('Connecting to Help Desk...', progressHTML);
+    
+    setTimeout(() => { document.getElementById('cb-line-2').style.display = 'block'; }, 600);
+    setTimeout(() => { document.getElementById('cb-line-3').style.display = 'block'; }, 1200);
+    setTimeout(() => { 
+      document.getElementById('cb-line-4').style.display = 'block';
+      setTimeout(() => {
+        const successHTML = `
+          <div style="text-align:center; padding:10px 0;">
+            <div style="font-size:44px; margin-bottom:16px;">🖥️</div>
+            <h4 style="color:#047857; font-size:18px; margin-bottom:8px; font-family:sans-serif; font-weight:700;">Co-Browse Tunnel Established</h4>
+            <p style="font-size:13px; color:var(--text-muted); line-height:1.6; margin-bottom:20px;">
+              Session token verified. A representative from the <strong>${dept}</strong> has joined your viewport container.
+            </p>
+            <div style="font-size:11px; background-color:var(--bg-light); border:1px solid var(--border-color); padding:10px; border-radius:4px; color:var(--text-muted); line-height:1.5;">
+              <strong>Notice:</strong> Big Beaver Bank is a satirical project. No real remote desktop connection has been created, and no external party has access to your system.
+            </div>
+          </div>
+        `;
+        window.showBankModal('Session Established', successHTML);
+      }, 800);
+    }, 1800);
+  };
+
+  // Support Console: Secure Attachment Form
+  window.openAttachmentForm = () => {
+    const formHTML = `
+      <form onsubmit="event.preventDefault(); window.startFileUploadSim();">
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:15px; line-height:1.5;">
+          Upload documents or check image files securely to Sparta verification registries.
+        </div>
+        <div class="input-group" style="margin-bottom:18px;">
+          <label style="font-weight:600; display:block; margin-bottom:4px; font-size:12px;">Select File Payload (JPEG, PNG, CSV, BAI2)</label>
+          <input type="file" id="attach-file" style="width:100%; padding:4px;" required />
+        </div>
+        <button type="submit" class="btn-form-submit" style="width:100%; padding:12px;">Scan & Upload Checksum</button>
+      </form>
+    `;
+    window.showBankModal('Secure Attachment Portal', formHTML);
+  };
+
+  window.startFileUploadSim = () => {
+    const fileField = document.getElementById('attach-file');
+    const filename = fileField && fileField.files[0] ? fileField.files[0].name : 'attachment_payload.dat';
+    
+    const progressHTML = `
+      <div style="text-align:center; padding:10px 0;">
+        <div style="font-size:14px; font-weight:600; margin-bottom:10px; color:var(--primary-color);" id="ul-status">Reading local file bytes...</div>
+        <div style="width:100%; height:12px; background-color:var(--bg-light); border:1px solid var(--border-color); border-radius:6px; overflow:hidden; margin-bottom:15px;">
+          <div id="ul-progress-bar" style="width:0%; height:100%; background-color:#10b981; transition:width 0.1s linear;"></div>
+        </div>
+        <div style="font-size:11px; color:var(--text-muted);">Hashing and transferring: ${filename}</div>
+      </div>
+    `;
+    window.showBankModal('Transferring Document', progressHTML);
+    
+    let percent = 0;
+    const interval = setInterval(() => {
+      percent += Math.floor(Math.random() * 20) + 10;
+      if (percent >= 100) {
+        percent = 100;
+        clearInterval(interval);
+        document.getElementById('ul-status').textContent = 'CRC32 checksum verified!';
+        document.getElementById('ul-status').style.color = '#047857';
+        setTimeout(() => {
+          const successHTML = `
+            <div style="text-align:center; padding:10px 0;">
+              <div style="font-size:44px; margin-bottom:16px;">📎</div>
+              <h4 style="color:#047857; font-size:18px; margin-bottom:8px; font-family:sans-serif; font-weight:700;">File Attachment Received</h4>
+              <p style="font-size:13px; color:var(--text-muted); line-height:1.6; margin-bottom:20px;">
+                The file <strong>${filename}</strong> has been hashed (CRC32: 0x9AFB381C) and buffered in the Sparta registry.
+              </p>
+              <div style="font-size:11px; background-color:var(--bg-light); border:1px solid var(--border-color); padding:10px; border-radius:4px; color:var(--text-muted); line-height:1.5;">
+                <strong>Notice:</strong> Big Beaver Bank is a satirical site. No real file transmission occurred, and your file was not sent to any external server.
+              </div>
+            </div>
+          `;
+          window.showBankModal('Upload Complete', successHTML);
+        }, 500);
+      }
+      const bar = document.getElementById('ul-progress-bar');
+      const status = document.getElementById('ul-status');
+      if (bar) bar.style.width = percent + '%';
+      if (status && percent < 100) status.textContent = `Uploading: ${percent}%...`;
+    }, 100);
+  };
+
+  // Support Console: Banker Appointment Scheduler Form
+  window.openSchedulerForm = () => {
+    const formHTML = `
+      <form onsubmit="event.preventDefault(); window.startSchedulerSim();">
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:15px; line-height:1.5;">
+          Schedule an online video consult or in-person meeting with our Sparta relationship advisors.
+        </div>
+        <div class="input-group" style="margin-bottom:12px;">
+          <label style="font-weight:600; display:block; margin-bottom:4px; font-size:12px;">Select Sparta Specialist</label>
+          <select id="schedule-banker" style="width:100%; padding:8px; border:1px solid var(--border-color); border-radius:4px; font-size:13px;">
+            <option>Dwight Schrute (Spreadsheet Auditing Desk)</option>
+            <option>Omega Mart representative (Anomalous Asset Risk)</option>
+            <option>Weyland-Yutani Officer (Relativistic Bonds)</option>
+            <option>Dharma Station Lead (Clearance Clearings)</option>
+          </select>
+        </div>
+        <div class="input-group" style="margin-bottom:18px;">
+          <label style="font-weight:600; display:block; margin-bottom:4px; font-size:12px;">Preferred Appointment Date</label>
+          <input type="date" id="schedule-date" style="width:100%; padding:8px; border:1px solid var(--border-color); border-radius:4px; font-size:13px;" required />
+        </div>
+        <button type="submit" class="btn-form-submit" style="width:100%; padding:12px;">Reserve Consultation Slot</button>
+      </form>
+    `;
+    window.showBankModal('Sparta Appointment Scheduler', formHTML);
+  };
+
+  window.startSchedulerSim = () => {
+    const banker = document.getElementById('schedule-banker').value;
+    const date = document.getElementById('schedule-date').value;
+    
+    const successHTML = `
+      <div style="text-align:center; padding:10px 0;">
+        <div style="font-size:44px; margin-bottom:16px;">📅</div>
+        <h4 style="color:#047857; font-size:18px; margin-bottom:8px; font-family:sans-serif; font-weight:700;">Appointment Reserved</h4>
+        <p style="font-size:13px; color:var(--text-muted); line-height:1.6; margin-bottom:20px;">
+          Confirmed: Consultation reserved with <strong>${banker}</strong> on <strong>${date}</strong>. A calendar invite has been dispatched.
+        </p>
+        <div style="font-size:11px; background-color:var(--bg-light); border:1px solid var(--border-color); padding:10px; border-radius:4px; color:var(--text-muted); line-height:1.5;">
+          <strong>Notice:</strong> Big Beaver Bank is a satirical site. No real calendar invitation will be sent, and no virtual session will occur.
+        </div>
+      </div>
+    `;
+    window.showBankModal('Booking Confirmed', successHTML);
+  };
 };
 
 // Check if ready state is already interactive or complete

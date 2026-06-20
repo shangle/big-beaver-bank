@@ -1271,3 +1271,68 @@ body.high-contrast button:hover {
 #mfa-timer-ring {
   transition: stroke-dashoffset 1s linear;
 }
+
+/* Custom Premium Bank Modal Overlay */
+.bank-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(12, 56, 34, 0.7); /* Translucent forest green */
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.bank-modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.bank-modal-container {
+  background-color: var(--bg-white);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  max-width: 500px;
+  width: 90%;
+  padding: 30px;
+  transform: scale(0.92);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+.bank-modal-overlay.active .bank-modal-container {
+  transform: scale(1);
+}
+.bank-modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--text-muted);
+  line-height: 1;
+  transition: color 0.15s ease;
+}
+.bank-modal-close:hover {
+  color: var(--primary-color);
+}
+.bank-modal-title {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 22px;
+  font-family: 'Playfair Display', Georgia, serif;
+  color: var(--primary-color);
+  font-weight: 700;
+}
+.bank-modal-content {
+  font-size: 13.5px;
+  color: var(--text-dark);
+  line-height: 1.6;
+}
