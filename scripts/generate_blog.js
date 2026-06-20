@@ -224,21 +224,63 @@ for (let i = articles.length; i < 36; i++) {
   const dateStr = dateObj.toISOString().split('T')[0];
   const slug = `fiduciary-insights-comp-${comp.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${i}`;
 
+  const templates = [
+    {
+      title: `Fiduciary Cash Management and Capital Structure for ${comp.name}`,
+      excerpt: `A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for ${comp.name}'s operations in ${comp.industry.toLowerCase()}.`,
+      content: `
+        <p>In the current macroeconomic environment, commercial treasury managers must balance liquidity reserves against capital deployment targets. For corporate clients like ${comp.name}, operating in ${comp.industry.toLowerCase()} requires custom financial programs that protect cash flows from market volatility.</p>
+        <p>Big Beaver Bank has structured a comprehensive commercial package for ${comp.name}. This credit program includes revolving operating lines, merchant services, and custom ${comp.ref}. By integrating our automated cash sweeps, the company can maximize earnings credit rates on idle balances and offset monthly fees.</p>
+        <h2>Corporate Risk Management</h2>
+        <p>Managing operational risk is a core component of treasury stability. Through our specialized divisions, we underwrite custom hedges and commodity swaps that protect our partners from shipping bottlenecks, price hikes, and local distribution disruptions. These programs guarantee that projects proceed on schedule.</p>
+        <p>Looking to optimize your company's cash flow or secure SBA lending? Review our complete service offerings at the <a href="../business-banking.html">Business Banking Center</a> or contact a relationship officer.</p>
+      `
+    },
+    {
+      title: `Mitigating Operational and Escrow Risks at ${comp.name}`,
+      excerpt: `How ${comp.name} utilizes advanced commercial escrow structures and risk mitigation controls at Big Beaver Bank to secure vendor transactions.`,
+      content: `
+        <p>Operational complexity in the modern economy demands rigorous oversight of transactional flows. For a company like ${comp.name}, known for its focus on ${comp.industry.toLowerCase()}, minor discrepancies in contract execution can lead to substantial financial exposure.</p>
+        <p>To address this, Big Beaver Bank designed a multi-tier commercial escrow facility for ${comp.name}. By establishing automated trust gateways and strict maker-checker validation roles, we ensure that payouts are only released upon verification of delivery milestones. This mitigation strategy minimizes default risk and speeds up vendor settlements.</p>
+        <h2>Dual Control Mechanisms</h2>
+        <p>Our treasury services team integrated Maker-Checker verification into ${comp.name}'s payroll and vendor disbursement pipelines. This setup requires two independent authorizations for outbound ACH batches, blocking phishing and insider threats before they clear the ledger.</p>
+        <p>Interested in protecting your business from payment fraud? Discover our security options at the <a href="../digital-banking.html">Digital Banking Console</a> or speak with our risk team.</p>
+      `
+    },
+    {
+      title: `Optimizing Treasury Sweeps and Yield Sweeps for ${comp.name}`,
+      excerpt: `An analysis of cash sweep options and automated liquidity sweeps designed to maximize yield for ${comp.name}'s treasury reserves.`,
+      content: `
+        <p>For corporate entities with substantial daily sales volumes, holding excess cash in non-interest-bearing checking accounts results in missed earnings. ${comp.name}, operating in ${comp.industry.toLowerCase()}, requires an active yield sweep program to put working capital to work.</p>
+        <p>Big Beaver Bank deployed an automated **Treasury Yield Sweep** for ${comp.name}. Every evening, balances exceeding a target threshold are swept into high-yield commercial deposit facilities or specialized timber yield sweeps. In the morning, funds are swept back to cover operational debits, ensuring continuous liquidity.</p>
+        <h2>Automated Cash Pooling</h2>
+        <p>Our sweep services enable corporate treasuries to aggregate cash across subsidiary accounts. This cash pooling simplifies administration and increases the yields available to ${comp.name}. Learn more about our automated cash management services at our <a href="../business-banking.html">Business Accounts Center</a>.</p>
+      `
+    },
+    {
+      title: `Commercial Lines of Credit and Debt Restructuring for ${comp.name}`,
+      excerpt: `A study on how revolving credit lines and Prime-Adjusted facilities support the long-term expansion plans of ${comp.name}.`,
+      content: `
+        <p>Scaling corporate infrastructure requires flexible access to capital. For ${comp.name}, a leader in the ${comp.industry.toLowerCase()} sector, traditional fixed-term loans do not always match the speed of capital expenditure needs.</p>
+        <p>We structured a Prime-Adjusted revolving commercial line of credit for ${comp.name}. This facility allows them to draw funds on-demand to finance new acquisitions, upgrade legacy hardware, and restructure higher-rate debts. The interest rate adjustments are tied directly to index benchmarks, keeping borrowing costs competitive.</p>
+        <h2>Flexible Working Capital</h2>
+        <p>With a revolving facility, ${comp.name} only pays interest on the drawn balance, preserving operating cash flow. We also integrated standard letters of credit to guarantee payment to overseas suppliers. Review our commercial financing options at our <a href="../business-banking.html">Business Credit Center</a>.</p>
+      `
+    }
+  ];
+
+  const templateIdx = Math.floor(i / fictionalCompanies.length) % templates.length;
+  const activeTemplate = templates[templateIdx];
+
   articles.push({
-    title: `Fiduciary Cash Management and Capital Structure for ${comp.name}`,
+    title: activeTemplate.title,
     slug: slug,
     date: dateStr,
     category: cat,
     tags: [...tags, comp.name],
     image: image,
-    excerpt: `A detailed corporate case study examining credit facilities, risk protection, and cash sweeps structured for ${comp.name}'s operations in ${comp.industry.toLowerCase()}.`,
-    content: `
-      <p>In the current macroeconomic environment, commercial treasury managers must balance liquidity reserves against capital deployment targets. For corporate clients like ${comp.name}, operating in ${comp.industry.toLowerCase()} requires custom financial programs that protect cash flows from market volatility.</p>
-      <p>Big Beaver Bank has structured a comprehensive commercial package for ${comp.name}. This credit program includes revolving operating lines, merchant services, and custom ${comp.ref}. By integrating our automated cash sweeps, the company can maximize earnings credit rates on idle balances and offset monthly fees.</p>
-      <h2>Corporate Risk Management</h2>
-      <p>Managing operational risk is a core component of treasury stability. Through our specialized divisions, we underwrite custom hedges and commodity swaps that protect our partners from shipping bottlenecks, price hikes, and local distribution disruptions. These programs guarantee that projects proceed on schedule.</p>
-      <p>Looking to optimize your company's cash flow or secure SBA lending? Review our complete service offerings at the <a href="../business-banking.html">Business Banking Center</a> or contact a relationship officer.</p>
-    `
+    excerpt: activeTemplate.excerpt,
+    content: activeTemplate.content
   });
 }
 
