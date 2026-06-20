@@ -139,7 +139,7 @@
       line-height: 1.6;
     }
     .cms-btn-publish {
-      background-color: #10b981;
+      background-color: #047857;
       color: white;
       border: none;
       padding: 14px 28px;
@@ -151,10 +151,10 @@
       align-items: center;
       gap: 10px;
       transition: background-color 0.2s;
-      box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2);
+      box-shadow: 0 4px 6px -1px rgba(4, 120, 87, 0.2);
     }
     .cms-btn-publish:hover {
-      background-color: #059669;
+      background-color: #035e43;
     }
     .compliance-modal {
       display: none;
@@ -288,7 +288,7 @@
         <div>
           <div class="user-profile" style="border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 16px; margin-bottom: 16px;">
             <div class="user-name" id="admin-display-name" style="font-size: 16px; font-weight: 600; color: var(--accent-color);">admin_compliance</div>
-            <div style="font-size: 11px; color: #64748b; margin-top: 4px;">Role: Web Editor Level 2</div>
+            <div style="font-size: 11px; color: #cbd5e1; margin-top: 4px;">Role: Web Editor Level 2</div>
           </div>
           
           <ul class="cms-menu">
@@ -318,14 +318,14 @@
             <div class="cms-card">
               <h3>Homepage Alerts</h3>
               <div class="cms-field-group">
-                <div class="cms-field-label">Header Alert Text</div>
+                <label class="cms-field-label" for="home-alert-text">Header Alert Text</label>
                 <div>
                   <input type="text" class="cms-input" id="home-alert-text" value="System Security Updates: Review guidelines for strong administrative credentials.">
                   <div style="font-size: 11px; color: #64748b; margin-top: 4px;">Displays inside the green warning ribbon at the top of the home page.</div>
                 </div>
               </div>
               <div class="cms-field-group">
-                <div class="cms-field-label">Alert Link Path</div>
+                <label class="cms-field-label" for="home-alert-link">Alert Link Path</label>
                 <div>
                   <input type="text" class="cms-input" id="home-alert-link" value="support.html#security">
                 </div>
@@ -335,13 +335,13 @@
             <div class="cms-card">
               <h3>Hero Copy</h3>
               <div class="cms-field-group">
-                <div class="cms-field-label">Primary Hero Title</div>
+                <label class="cms-field-label" for="home-hero-title">Primary Hero Title</label>
                 <div>
                   <input type="text" class="cms-input" id="home-hero-title" value="A Fictional Community Bank, Rooted in Tradition.">
                 </div>
               </div>
               <div class="cms-field-group">
-                <div class="cms-field-label">Hero Description Subtext</div>
+                <label class="cms-field-label" for="home-hero-subtext">Hero Description Subtext</label>
                 <div>
                   <textarea class="cms-textarea" id="home-hero-subtext">Providing personal checking, commercial credit, and digital NACHA payroll services to families and regional small businesses since 1984.</textarea>
                 </div>
@@ -366,19 +366,19 @@
             <div class="cms-card">
               <h3>Consumer Checking & Savings Accounts</h3>
               <div class="cms-field-group">
-                <div class="cms-field-label">Preferred Checking APY</div>
+                <label class="cms-field-label" for="rate-checking-apy">Preferred Checking APY</label>
                 <div>
                   <input type="text" class="cms-input" id="rate-checking-apy" value="0.05%">
                 </div>
               </div>
               <div class="cms-field-group">
-                <div class="cms-field-label">Round-Up Savings APY</div>
+                <label class="cms-field-label" for="rate-savings-apy">Round-Up Savings APY</label>
                 <div>
                   <input type="text" class="cms-input" id="rate-savings-apy" value="4.25%">
                 </div>
               </div>
               <div class="cms-field-group">
-                <div class="cms-field-label">Checking Account Monthly Fee</div>
+                <label class="cms-field-label" for="checking-fee">Checking Account Monthly Fee</label>
                 <div>
                   <input type="text" class="cms-input" id="checking-fee" value="$0.00 (With eStatements)">
                 </div>
@@ -388,19 +388,19 @@
             <div class="cms-card">
               <h3>Residential Mortgage Center</h3>
               <div class="cms-field-group">
-                <div class="cms-field-label">30-Year Fixed Mortgage APR</div>
+                <label class="cms-field-label" for="rate-mortgage-30">30-Year Fixed Mortgage APR</label>
                 <div>
                   <input type="text" class="cms-input" id="rate-mortgage-30" value="6.25%">
                 </div>
               </div>
               <div class="cms-field-group">
-                <div class="cms-field-label">15-Year Fixed Mortgage APR</div>
+                <label class="cms-field-label" for="rate-mortgage-15">15-Year Fixed Mortgage APR</label>
                 <div>
                   <input type="text" class="cms-input" id="rate-mortgage-15" value="5.50%">
                 </div>
               </div>
               <div class="cms-field-group">
-                <div class="cms-field-label">Minimum Down Payment Ratio</div>
+                <label class="cms-field-label" for="mortgage-down">Minimum Down Payment Ratio</label>
                 <div>
                   <input type="text" class="cms-input" id="mortgage-down" value="3.00%">
                 </div>
@@ -425,13 +425,13 @@
             <div class="cms-card">
               <h3>Commercial Checking & Operating Sweep</h3>
               <div class="cms-field-group">
-                <div class="cms-field-label">Preferred Treasury checking APY</div>
+                <label class="cms-field-label" for="rate-business-checking">Preferred Treasury checking APY</label>
                 <div>
                   <input type="text" class="cms-input" id="rate-business-checking" value="0.10%">
                 </div>
               </div>
               <div class="cms-field-group">
-                <div class="cms-field-label">Daily Sweep Threshold</div>
+                <label class="cms-field-label" for="business-sweep">Daily Sweep Threshold</label>
                 <div>
                   <input type="text" class="cms-input" id="business-sweep" value="$100,000.00">
                 </div>
@@ -441,13 +441,13 @@
             <div class="cms-card">
               <h3>Commercial Credit Lines</h3>
               <div class="cms-field-group">
-                <div class="cms-field-label">SBA 7(a) Interest Rate CAP</div>
+                <label class="cms-field-label" for="rate-sba-cap">SBA 7(a) Interest Rate CAP</label>
                 <div>
                   <input type="text" class="cms-input" id="rate-sba-cap" value="8.50%">
                 </div>
               </div>
               <div class="cms-field-group">
-                <div class="cms-field-label">Standard Operating Line Limit</div>
+                <label class="cms-field-label" for="rate-operating-limit">Standard Operating Line Limit</label>
                 <div>
                   <input type="text" class="cms-input" id="rate-operating-limit" value="$5,000,000.00">
                 </div>
@@ -472,7 +472,7 @@
             <div class="cms-card">
               <h3>Article Selector</h3>
               <div class="cms-field-group">
-                <div class="cms-field-label">Select Active Article</div>
+                <label class="cms-field-label" for="blog-article-selector">Select Active Article</label>
                 <div>
                   <select class="cms-select" id="blog-article-selector">
                     <!-- Prepopulated dynamically in cms.js -->
@@ -484,25 +484,25 @@
             <div class="cms-card">
               <h3>Article Metadata & Body</h3>
               <div class="cms-field-group">
-                <div class="cms-field-label">Article Title</div>
+                <label class="cms-field-label" for="blog-article-title">Article Title</label>
                 <div>
                   <input type="text" class="cms-input" id="blog-article-title" value="">
                 </div>
               </div>
               <div class="cms-field-group">
-                <div class="cms-field-label">Article Category</div>
+                <label class="cms-field-label" for="blog-article-category">Article Category</label>
                 <div>
                   <input type="text" class="cms-input" id="blog-article-category" value="">
                 </div>
               </div>
               <div class="cms-field-group">
-                <div class="cms-field-label">Article Tags (Comma separated)</div>
+                <label class="cms-field-label" for="blog-article-tags">Article Tags (Comma separated)</label>
                 <div>
                   <input type="text" class="cms-input" id="blog-article-tags" value="">
                 </div>
               </div>
               <div class="cms-field-group">
-                <div class="cms-field-label">Article Content (HTML blocks)</div>
+                <label class="cms-field-label" for="blog-article-content">Article Content (HTML blocks)</label>
                 <div>
                   <textarea class="cms-textarea" id="blog-article-content" style="min-height: 250px;"></textarea>
                 </div>
