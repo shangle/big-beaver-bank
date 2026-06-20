@@ -176,7 +176,7 @@ const init = () => {
     // PJ Hoffmaster park coordinates: 43.12, -86.26
     // Shangri-La Island (HQ): 43.12, -86.36 (5 miles in Lake Michigan)
     const hqCoords = [43.12, -86.36];
-    const initialCoords = [43.12, -86.30]; // Mid point
+    const initialCoords = [43.1609, -85.7100]; // Sparta, MI
     
     // Init Leaflet map
     const map = L.map('map').setView(initialCoords, 11);
@@ -225,8 +225,13 @@ const init = () => {
       markers = [];
 
       // Query OpenStreetMap Nominatim for banks near the query location
-      // User-agent header prevents rate-limiting
-      const url = `https://nominatim.openstreetmap.org/search?q=bank+near+${encodeURIComponent(query)}&format=json&limit=5`;
+      // Append ', United States' for 5-digit zip codes to help OSM resolve them correctly
+      let searchQuery = query;
+      if (/^\d{5}$/.test(query)) {
+        searchQuery = `${query}, United States`;
+      }
+
+      const url = `https://nominatim.openstreetmap.org/search?q=bank+near+${encodeURIComponent(searchQuery)}&format=json&limit=5`;
       
       fetch(url, {
         headers: {
@@ -302,12 +307,12 @@ const init = () => {
       branchesList.innerHTML = '';
       
       const mockLocations = [
-        { name: "Muskegon Shoreline Branch", lat: 43.234, lon: -86.248, addr: "880 W Norton Ave, Muskegon, MI 49441" },
-        { name: "Fruitport Plaza Plaza Branch", lat: 43.125, lon: -86.155, addr: "3540 East Sternberg Rd, Fruitport, MI 49415" },
-        { name: "Grand Haven Dunes ATM", lat: 43.064, lon: -86.225, addr: "1720 Washington St, Grand Haven, MI 49417" }
+        { name: "Sparta Rogue River Branch", lat: 43.1612, lon: -85.7122, addr: "150 S State St, Sparta, MI 49345" },
+        { name: "Kent City Fiduciary Annex", lat: 43.2201, lon: -85.7511, addr: "240 N Main St, Kent City, MI 49330" },
+        { name: "Alpine Township Commercial ATM", lat: 43.0825, lon: -85.6980, addr: "5200 Alpine Ave NW, Comstock Park, MI 49321" }
       ];
 
-      map.setView([43.12, -86.20], 12);
+      map.setView([43.1609, -85.7100], 12);
 
       mockLocations.forEach((loc, idx) => {
         const marker = L.marker([loc.lat, loc.lon], { icon: branchIcon }).addTo(map);
